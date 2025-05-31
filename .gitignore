@@ -1,0 +1,39 @@
+# Ambiente virtual
+
+.venv/
+
+# Ambiente
+
+.env
+
+# Cache do Python
+
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Logs
+
+*.log
+
+# Configurações de IDE/editor
+
+.vscode/
+.idea/
+*.swp
+
+# Arquivos de sistema
+
+.DS_Store
+Thumbs.db
+
+# Docker
+
+*.db
+*.sock
+
+# Outras boas práticas
+
+*.bak
+*.tmp
