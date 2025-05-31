@@ -58,7 +58,11 @@ pip install -r requirements.txt
 
 # 7. Configuração de Variáveis de Ambiente
 
+Crie um arquivo chamado .env na raiz do projeto e adicione seu token do bot:
+
 DISCORD_TOKEN=seu_token
+
+Esse arquivo não deve ser enviado para o Git, pois contém informações sensíveis. Então, deve ser incluído no .gitignore.
 
 # 8. Execução do Projeto
 
@@ -71,3 +75,11 @@ I. Build da Imagem
 
 II. Rodar o Container
 - docker run -it --name lua_bot projeto_lua
+
+# 10. Contribuição
+
+Sinta-se livre para abrir Issues, sugerir melhorias ou enviar Pull Requests.
+
+# 11. Licença
+
+Este projeto está licenciado sob a licença MIT.
