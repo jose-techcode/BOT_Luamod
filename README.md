@@ -56,11 +56,15 @@ cd projeto_lua
 
 pip install -r requirements.txt
 
-# 7. Execução do Projeto
+# 7. Configuração de Variáveis de Ambiente
+
+DISCORD_TOKEN=seu_token
+
+# 8. Execução do Projeto
 
 python bot.py
 
-# 8. Rodar em Docker
+# 9. Rodar em Docker
 
 I. Build da Imagem
 - docker build -t projeto_lua .
