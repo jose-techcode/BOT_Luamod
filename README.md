@@ -46,12 +46,11 @@ II. Moderadores
 - Bash
 
 Clone o repositório
-git clone
-link
+git clone https://github.com/jose-techcode/projeto_lua
 
 # 5. Pasta do Projeto
 
-pasta
+cd projeto_lua
 
 # 6. Instalação de Dependências
 
