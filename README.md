@@ -66,4 +66,4 @@ I. Build da Imagem
 - docker build -t projeto_lua .
 
 II. Rodar o Container
-- docker run -d --name lua_bot projeto_lua
+- docker run -it --name lua_bot projeto_lua
