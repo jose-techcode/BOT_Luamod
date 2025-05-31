@@ -5,21 +5,33 @@ O "Projeto Lua" é um bot de discord em que a sua atribuição principal é mode
 # 2. Funcionalidades
 
 I. Membros comuns
-- !help
-- !lua
-- !avatar
-- !info
-- !infoserver
+
+- !help — Mostra a lista de comandos.
+
+- !lua — Mostra informações sobre o bot.
+
+- !avatar — Exibe o avatar de um membro.
+
+- !info — Mostra informações do seu perfil.
+
+- !infoserver — Exibe informações do servidor.
 
 II. Moderadores
-- !apagar (quantidade)
-- !lentidao (quantidade em segundos)
-- !silenciar (membro) (quantidade em segundos)
-- !dessilenciar (membro)
-- !expulsar (membro)
-- !banir (membro)
-- !desbanir (ID do membro)
-- !dm (membro) (mensagem)
+- !apagar (quantidade) — Apaga mensagens do chat.
+
+- !lentidao (segundos) — Ativa o modo lento no canal.
+
+- !silenciar (membro) (segundos) — Silencia um membro temporariamente.
+
+- !dessilenciar (membro) — Remove o silêncio de um membro.
+
+- !expulsar (membro) — Expulsa um membro do servidor.
+
+- !banir (membro) — Bane um membro do servidor.
+
+- !desbanir (ID) — Remove o banimento de um usuário pelo ID.
+
+- !dm (membro) (mensagem) — Envia uma mensagem privada para um membro.
 
 # 3. Tecnologias
 
