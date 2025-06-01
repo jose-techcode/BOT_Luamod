@@ -82,4 +82,4 @@ Sinta-se livre para abrir Issues, sugerir melhorias ou enviar Pull Requests.
 
 # 11. Licença
 
-Este projeto está licenciado sob a licença MIT.
+Este projeto está licenciado sob a licença AGPL.
