@@ -8,7 +8,8 @@ WORKDIR /app
 COPY . /app
 
 # Instala as dependências
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
 
 # Comando para rodar o bot
 CMD ["python", "bot.py"]
