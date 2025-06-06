@@ -19,9 +19,9 @@ I. Membros comuns
 II. Moderadores
 - !apagar (quantidade) — Apaga mensagens do chat.
 
-- !lentidao (segundos) — Ativa o modo lento no canal.
+- !lento (segundos) — Ativa o modo lento no canal.
 
-- !silenciar (membro) (segundos) — Silencia um membro temporariamente.
+- !silenciar (membro) (minutos) — Silencia um membro temporariamente.
 
 - !dessilenciar (membro) — Remove o silêncio de um membro.
 
