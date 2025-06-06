@@ -35,12 +35,12 @@ class Admin(commands.Cog):
             await ctx.send(f"Não foi possível apagar as mensagens! Erro: {e}")
 
 
-    # Comando: !lentidao
+    # Comando: !lento
 
 
     @commands.command()
     @commands.has_permissions(manage_channels=True)
-    async def lentidao(self, ctx, tempo: int):
+    async def lento(self, ctx, tempo: int):
         
         # ctx.channel.edit serve editar as configurações do canal
         # slowmode_delay é para especificar o tipo de edição que será realizado no servidor
@@ -62,24 +62,15 @@ class Admin(commands.Cog):
     @commands.has_permissions(manage_roles=True)
     async def silenciar(self, ctx, member: discord.Member, tempo: int):
         
-        # "cargo" serve para procurar o cargo chamado "mutado", se não existir, retorna o erro
-        # ctx.send traz uma mensagem se não tiver o cargo "mutado"
-        # member.add_roles serve para adicionar o cargo "mutado" quando o membro for silenciado
+        # member.timeout define a variável do tempo em que o usuário será silenciado
         # ctx.send confirma que o membro foi silenciado
         # asyncio.sleep serve para aplicar o tempo definido na hora da punição
-        # member.remove_roles irá retirar o cargo de "mutado" do membro que cumprir o silenciamento
         # except irá tratar sobre o silenciamento quando não for possível silenciar tal usuário
         
         try:
-            cargo = discord.utils.get(ctx.guild.roles, name="mutado")
-            if not cargo:
-                await ctx.send("O cargo 'mutado' não foi encontrado no servidor.")
-                return
-            await member.add_roles(cargo, reason="Silenciado pelo bot")
-            await ctx.send(f"{member.mention} foi silenciado por {tempo} segundos.")
-            await asyncio.sleep(tempo)
-            await member.remove_roles(cargo, reason="Tempo de silenciamento expirado.")
-            await ctx.send(f"{member.mention} não está mais silenciado.")
+            await member.timeout(timedelta(minutes=tempo),
+            reason="Motivo não especificado")
+            await ctx.send(f"{member.mention} foi silenciado por {tempo} minutos.")
         
         except Exception as e:
             await ctx.send(f"Não foi possível silenciar o usuário! Erro: {e}")
@@ -92,19 +83,13 @@ class Admin(commands.Cog):
     @commands.has_permissions(manage_roles=True)
     async def dessilenciar(self, ctx, member: discord.Member):
         
-        # cargo é a variável que serve para acessar o gerenciamento do nome "mutado" no servidor
-        # if not cargo trata sobre quando não tem o nome "mutado" no servidor
-        # member.remove_roles é para remover o cargo "mutado" que aplica silenciamento
-        # ctx.send confirma que o dessilenciamento foi um sucesso
+        # member.timeout é o tipo de comando para silenciar ou dessilenciar o usuário
+        # ctx.send confirma que o dessilenciamento foi um sucesso, seja manualmente ou automaticamente
         # except irá tratar erros relacionados ao dessilenciamento do usuário
         
         try:
-            cargo = discord.utils.get(ctx.guild.roles, name="mutado")
-            if not cargo:
-                await ctx.send("O cargo 'mutado' não foi encontrado no servidor.")
-                return
-            await member.remove_roles(cargo, reason="Dessilenciado manualmente")
-            await ctx.send(f"{member.mention} foi dessilenciado!")
+            await member.timeout(None, reason="Dessilenciado manualmente com sucesso!")
+            await ctx.send(f"{member.mention} foi dessilenciado manualmente ou automaticamente!")
         
         except Exception as e:
             await ctx.send(f"Não foi possível dessilenciar o membro! Erro: {e}")
