@@ -55,6 +55,52 @@ class Admin(commands.Cog):
             await ctx.send(f"Não foi possível definir um tempo de lentidão no canal! Erro: {e}")
 
 
+    # Comando: !trancar
+
+
+    @commands.command()
+    @commands.has_permissions(manage_channels = True)
+    async def trancar(self, ctx):
+        
+        # overwirte é a variável que permite sobrescrever as permissões do canal de um servidor
+        # overwirte.send_messages é referente a poder ou a não poder mandar mensagens em determinado canal
+        # ctx.channel.set_permissions é para definir as permissões do canal
+        # ctx.send confirma que o canal foi trancado
+        # except trata casos onde o bloqueio do canal dá errado
+
+        try:
+            overwrite = ctx.channel.overwrites_for(ctx.guild.default_role)
+            overwrite.send_messages = False
+            await ctx.channel.set_permissions(ctx.guild.default_role, overwrite=overwrite)
+            await ctx.send("Canal trancado!")
+        
+        except Exception as e:
+            await ctx.send(f"Não foi possível trancar o canal! Erro: {e}")
+
+
+    # Comando: !destrancar
+
+    
+    @commands.command()
+    @commands.has_permissions(manage_channels = True)
+    async def destrancar(self, ctx):
+
+        # overwirte é a variável que permite sobrescrever as permissões do canal de um servidor
+        # overwirte.send_messages é referente a poder ou a não poder mandar mensagens em um canal
+        # ctx.channel.set_permissions é para definir as permissões do canal
+        # ctx.send confirma que o canal foi destrancado
+        # except trata erros em que não foi possível destrancar determinado canal
+
+        try:
+            overwrite = ctx.channel.overwrites_for(ctx.guild.default_role)
+            overwrite.send_messages = True
+            await ctx.channel.set_permissions(ctx.guild.default_role, overwrite=overwrite)
+            await ctx.send("Canal destrancado!")
+        
+        except Exception as e:
+            await ctx.send(f"Não foi possível destrancar o canal! Erro: {e}")
+
+
     # Comando: !silenciar (dessilenciar automático)
 
 
