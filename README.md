@@ -17,9 +17,14 @@ I. Membros comuns
 - !infoserver — Exibe informações do servidor.
 
 II. Moderadores
+
 - !apagar (quantidade) — Apaga mensagens do chat.
 
 - !lento (segundos) — Ativa o modo lento no canal.
+
+- !trancar - Tranca um canal.
+
+- !destrancar - Destranca um canal que estava trancado.
 
 - !silenciar (membro) (minutos) — Silencia um membro temporariamente.
 
