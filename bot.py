@@ -2,13 +2,7 @@ import discord
 from discord.ext import commands
 import asyncio
 from datetime import timedelta
-from dotenv import load_dotenv
-import os
-
-# Pegar e carregar variáveis do .env
-
-load_dotenv()
-token = os.getenv("DISCORD_TOKEN")
+from storage import DISCORD_TOKEN
 
 # Permissões do bot:
 
@@ -46,7 +40,7 @@ async def load_cogs():
 async def main():
     async with bot:
         await load_cogs()
-        await bot.start(token)
+        await bot.start(DISCORD_TOKEN)
 
 # Executar o bot
 
