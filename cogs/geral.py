@@ -56,14 +56,47 @@ class Geral(commands.Cog):
                      icon_url=ctx.author.avatar.url if ctx.author.avatar else None)
             await ctx.send(embed=embed)
         except Exception as e:
-            print(f"Erro ao ver o avatar: {e}")
- 
+            ctx.send(f"Erro ao ver o avatar: {e}")
+
+    # Comando: !infouser
+
+    @commands.command()
+    async def infouser(self, ctx, member: discord.Member = None):
+        # roles é uma variável referente aos cargos que o membro tem no servidor
+        # todos os embed.add_field são uma informação separada sobre o membro
+        # member.display_avat.url é para mostrar a imagem do membro
+        # member.name é o nome do membro
+        # {member} é a tag do membro
+        # member.id é o id do membro
+        # member.created.at.strftime é a data de criação da conta do usuário
+        # member.joined.at.strftime é a data em que o usuário entrou no servidor
+        # join(roles) é uma integração com a variável roles
+        member = member or ctx.author
+        roles = [role.mention for role in member.roles if role != ctx.guild.default_role]
+        try:
+            embed = discord.Embed(
+                title=f"Informações de usuário",
+                color=discord.Color.blurple()
+            )
+            embed.set_thumbnail(url=member.display_avatar.url) # member.display_avat.url
+            embed.add_field(name="Nome", value=member.name, inline=True) # member.name
+            embed.add_field(name="Tag", value=f"{member}", inline=True) # {member}
+            embed.add_field(name="ID", value=member.id, inline=True) # member.id
+            embed.add_field(name="Conta criada em", value=member.created_at.strftime("%d/%m/%Y %H:%M"), inline=False) # member.created.at.strftime
+            embed.add_field(name="Entrou no servidor", value=member.joined_at.strftime("%d/%m/%Y %H:%M"), inline=False) # member.joined_at.strftime
+            embed.add_field(name="Cargos", value=", ".join(roles) if roles else "Nenhum", inline=False) # join(roles)
+            await ctx.send(embed=embed)
+        except Exception as e:
+            await ctx.send(f"Erro ao obter informações! Erro: {e}")
+
+
     # Comando: !infobot
 
     @commands.command()
     async def infobot(self, ctx):
         # embed, title, description e color são uma introdução à informações do bot
-        # todos os embed.add_field são uma informação separada
+        # todos os embed.add_field são uma informação separada sobre o bot
+        # ctx.me.display_avatar.url é a imagem do bot
         # user.name é referente ao nome do bot
         # user.id é referente ao id do bot
         # {len(commands.guilds)} é referente a todos os servidores do bot
@@ -72,10 +105,10 @@ class Geral(commands.Cog):
         # embed.set_footer serve para retornar uma "assinatura"
         try:
             embed = discord.Embed(
-            title="🤖 Informações do Bot",
-            description="Informações sobre o bot Lua!",
+            title="Informações do bot Lua",
             color=discord.Color.blue()
             )
+            embed.set_thumbnail(url=ctx.me.display_avatar.url) # ctx.me.display_avatar.url
             embed.add_field(name="Nome", value=self.bot.user.name, inline=True) # user.name
             embed.add_field(name="ID", value=self.bot.user.id, inline=True) # user.id
             embed.add_field(name="Servidores",
@@ -94,7 +127,7 @@ class Geral(commands.Cog):
     @commands.command()
     async def infoserver(self, ctx):
         # guild, embed, title e color são referentes ao servidor em que o bot foi acionado
-        # embed.set_thumbnail e url se referem a foto do servidor
+        # ctx.guild.icon.url é a imagem do servidor
         # todos os embed.add_field são uma informação separada do servidor
         # guild.id é referente ao id do servidor
         # guild.onwer é referente ao dono do servidor
@@ -105,11 +138,10 @@ class Geral(commands.Cog):
         try:
             guild = ctx.guild
             embed = discord.Embed(
-                title=f"📑 Informações do servidor: {guild.name}",
+                title=f"Informações do servidor: {guild.name}",
                 color=discord.Color.green()
                 )
-            embed.set_thumbnail(
-            url=guild.icon.url if guild.icon else discord.Embed.Empty)
+            embed.set_thumbnail(url=ctx.guild.icon.url if ctx.guild.icon else "") # ctx.guild.icon.url
             embed.add_field(name="ID", value=guild.id, inline=True) # guild.id
             embed.add_field(name="Dono", value=guild.owner, inline=True) # guild.owner
             embed.add_field(name="Membros", value=guild.member_count, inline=True) # guild.member_count
