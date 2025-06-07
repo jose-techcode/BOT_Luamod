@@ -17,8 +17,6 @@ class Geral(commands.Cog):
 
     @commands.command()
     async def lua(self, ctx):
-        # ctx.send para mandar para o canal em que o comando foi acionado
-        # except trata erros em relação a não conseguir se apresentar no canal acionado
         try:
             await ctx.send("Olá, me chamo Lua! Sou um bot inspirado na linguagem de programação Lua! Mas meus comandos são escritos em Python!")
             await ctx.send("https://pt.wikipedia.org/wiki/Lua_%28linguagem_de_programa%C3%A7%C3%A3o%29")
@@ -29,16 +27,13 @@ class Geral(commands.Cog):
         
     @commands.command()
     async def ping(self, ctx):
-        # ctx.send serve para mandar a mensagem abaixo quando o comando for acionado
-        # ctx.author.mention é o nome membro que acionou o comando
-        # except é para avisar sobre erros na execução do comando
+        # latency é a variável que permite definir a latência do bot
         try:
             latency = round(self.bot.latency * 1000)
             await ctx.send(f"A latência é: {latency}ms")
         except Exception as e:
             print(f"Erro ao executar o comando !ping: {e}")
     
-
     # Comando: !avatar
 
     @commands.command()
@@ -49,8 +44,6 @@ class Geral(commands.Cog):
         # embed.set_image serve para definir a imagem do avatar
         # embed.set_footer coloca uma observação no embed
         # icon_url serve para acionar a embed para quem acionou o comando ou para quem foi acionado pelo comando
-        # ctx.send manda a embed no canal em que o comando foi acionado
-        # except trata de erros que ocorrerem na execução do comando
         try:
             member = member or ctx.author
             avatar_url = member.avatar.url if member.avatar else member.default_avatar.url
@@ -65,10 +58,10 @@ class Geral(commands.Cog):
         except Exception as e:
             print(f"Erro ao ver o avatar: {e}")
  
-    # Comando: !info
+    # Comando: !infobot
 
     @commands.command()
-    async def info(self, ctx):
+    async def infobot(self, ctx):
         # embed, title, description e color são uma introdução à informações do bot
         # todos os embed.add_field são uma informação separada
         # user.name é referente ao nome do bot
@@ -77,8 +70,6 @@ class Geral(commands.Cog):
         # {len(set(commands.get_all_member()))} é referente ao número total de membros que o bot abrange
         # {round(commands.latency * 1000)} é referente ao ping do bot
         # embed.set_footer serve para retornar uma "assinatura"
-        # ctx.send manda a embed no canal em que o comando foi executado
-        # except trata de erros do comando das informações do bot
         try:
             embed = discord.Embed(
             title="🤖 Informações do Bot",
@@ -93,7 +84,7 @@ class Geral(commands.Cog):
                     value=f"{len(set(self.bot.get_all_members()))}", inline=True) # {len(set(commands.get_all_member()))}
             embed.add_field(name="Latência",
                     value=f"{round(self.bot.latency * 1000)}ms", inline=True) # {round(commands.latency * 1000)}   
-            embed.set_footer(text="Desenvolvido loucamente no estilo php por Joseph")
+            embed.set_footer(text="Desenvolvido no estilo php por Joseph.")
             await ctx.send(embed=embed)
         except Exception as e:
             print(f"Erro ao executar o comando de informações do bot: {e}")
@@ -111,8 +102,6 @@ class Geral(commands.Cog):
         # guild.created_at.strftime serve para expressar a data em ano, mês, dia, hora e minuto
         # guild.text_channels serve para mostrar o tamanho de canais de texto no servidor
         # guild.voice_channels serve para mostrar o tamanho de canais de voz no servidor
-        # ctx.send manda a embed no canal em que foi acionado
-        # except trata de erros na execução do comando das informações do servidor
         try:
             guild = ctx.guild
             embed = discord.Embed(
