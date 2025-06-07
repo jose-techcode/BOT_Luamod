@@ -40,7 +40,7 @@ II. Moderadores
 
 - !dm (membro) (mensagem) — Envia uma mensagem privada para um membro.
 
-III.
+III. Desenvolvedores
 
 - !reiniciar - Reinicia o bot.
 
