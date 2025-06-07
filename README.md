@@ -10,9 +10,11 @@ I. Membros comuns
 
 - !lua — Mostra informações sobre o bot.
 
-- !avatar — Exibe o avatar de um membro.
+- !avatar (pessoa) — Exibe o avatar de um membro.
 
 - !info — Mostra informações do seu perfil.
+
+- !infouser (pessoa) - Mostra as informações do usuário.
 
 - !infoserver — Exibe informações do servidor.
 
@@ -37,6 +39,16 @@ II. Moderadores
 - !desbanir (ID) — Remove o banimento de um usuário pelo ID.
 
 - !dm (membro) (mensagem) — Envia uma mensagem privada para um membro.
+
+III.
+
+- !reiniciar - Reinicia o bot.
+
+- !desligar - Desliga o bot.
+
+- !verlogs - Vê o histórico de logs do bot.
+
+- !limparlogs - Limpa o histórico de logs do bot.
 
 # 3. Tecnologias
 
