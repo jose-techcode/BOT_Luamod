@@ -1,8 +1,22 @@
 import discord
 from discord.ext import commands
 import asyncio
+import logging
 from datetime import timedelta
 from storage import DISCORD_TOKEN
+
+# Configuração simples de log com arquivo
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    filename="bot.log",
+    filemode="a",  # 'a' para adicionar ao final do arquivo
+    encoding="utf-8"
+)
+logging.info("Bot iniciado com sucesso.")
+logging.warning("Algo inesperado aconteceu.")
+logging.error("Erro crítico.")
 
 # Permissões do bot:
 
@@ -30,7 +44,8 @@ async def on_command_error(ctx, error):
 async def load_cogs():
     cogs = [
         "cogs.geral",
-        "cogs.admin"
+        "cogs.admin",
+        "cogs.dev"
     ]
     for cog in cogs:
         await bot.load_extension(cog)
