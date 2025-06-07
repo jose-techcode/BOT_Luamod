@@ -12,7 +12,7 @@ I. Membros comuns
 
 - !avatar (pessoa) — Exibe o avatar de um membro.
 
-- !info — Mostra informações do seu perfil.
+- !infobot — Mostra informações do seu perfil.
 
 - !infouser (pessoa) - Mostra as informações do usuário.
 
