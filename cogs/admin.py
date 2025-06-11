@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import asyncio
 from datetime import timedelta
+import re
 
 # --Comandos de moderação: !apagar, !lento, !silenciar, "dessilenciar automático", !dessilenciar, !trancar, !destrancar !expulsar, !banir, !desbanir, !dm
 
@@ -10,6 +11,19 @@ from datetime import timedelta
 class Admin(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.link_regex = re.compile(r"https?://(?:www\.)?\S+", re.IGNORECASE) # links genéricos
+        self.link_discord_regex = re.compile(r"(?:https?:\/\/)?(?:www\.)?(discord\.gg|discord\.com\/invite)\/[a-zA-Z0-9]+", re.IGNORECASE) # Links de convites de servidores do discord
+
+    @commands.Cog.listener()
+    async def on_message(self, message):
+        if message.content.startswith("!"):
+            return
+
+        # Verifica link
+        
+        if self.link_regex.search(message.content) or self.link_discord_regex.search(message.content):
+            await message.delete()
+            await message.channel.send(f"{message.author.mention}, não são permitidos links!")
 
     # Comando: !apagar
 
