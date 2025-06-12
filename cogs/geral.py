@@ -32,7 +32,7 @@ class Geral(commands.Cog):
             latency = round(self.bot.latency * 1000)
             await ctx.send(f"A latência é: {latency}ms")
         except Exception as e:
-            print(f"Erro ao executar o comando !ping: {e}")
+            await ctx.send(f"Erro ao executar o comando !ping: {e}")
     
     # Comando: !avatar
 
@@ -56,7 +56,7 @@ class Geral(commands.Cog):
                      icon_url=ctx.author.avatar.url if ctx.author.avatar else None)
             await ctx.send(embed=embed)
         except Exception as e:
-            ctx.send(f"Erro ao ver o avatar: {e}")
+            await ctx.send(f"Erro ao ver o avatar: {e}")
 
     # Comando: !infouser
 
@@ -120,7 +120,7 @@ class Geral(commands.Cog):
             embed.set_footer(text="Desenvolvido no estilo php por Joseph.")
             await ctx.send(embed=embed)
         except Exception as e:
-            print(f"Erro ao executar o comando de informações do bot: {e}")
+            await ctx.send(f"Erro ao executar o comando de informações do bot: {e}")
 
     # Comando: !infoserver
 
@@ -153,7 +153,7 @@ class Geral(commands.Cog):
             guild.voice_channels), inline=True) # guild.voice_channels
             await ctx.send(embed=embed)
         except Exception as e:
-            print(f"Erro ao executar o comando de informações do servidor: {e}")
+            await ctx.send(f"Erro ao executar o comando de informações do servidor: {e}")
 
 # Registro de cog
 
