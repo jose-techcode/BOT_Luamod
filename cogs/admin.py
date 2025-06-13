@@ -3,27 +3,129 @@ from discord.ext import commands
 import asyncio
 from datetime import timedelta
 import re
+import json
+import os
 
 # --Comandos de moderação: !apagar, !lento, !silenciar, "dessilenciar automático", !dessilenciar, !trancar, !destrancar !expulsar, !banir, !desbanir, !dm
+
+# JSON
+
+ARQUIVO_JSON = "warns.json"
+
+def carregar_avisos():
+        if not os.path.exists(ARQUIVO_JSON):
+            return {}
+        with open(ARQUIVO_JSON, "r") as j:
+            return json.load(j)
+    
+def salvar_avisos(dados):
+        with open(ARQUIVO_JSON, "w") as j:
+            json.dump(dados, j, indent=4)
 
 # Estrutura cog (herança)
 
 class Admin(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.link_regex = re.compile(r"https?://(?:www\.)?\S+", re.IGNORECASE) # links genéricos
-        self.link_discord_regex = re.compile(r"(?:https?:\/\/)?(?:www\.)?(discord\.gg|discord\.com\/invite)\/[a-zA-Z0-9]+", re.IGNORECASE) # Links de convites de servidores do discord
+        self.regex_links = [
+    re.compile(r"https?://\S+"),
+    re.compile(r"\[([^\]]+)\]\((https?://[^\s\)]+)\)"),
+    re.compile(r"(https?:\/\/)?(www\.)?(discord\.gg|discord\.com\/invite)\/[a-zA-Z0-9]+"),
+    re.compile(r"https?://(bit\.ly|tinyurl\.com|t\.co|is\.gd|goo\.gl)/\S+"),
+    re.compile(r"\b(?:www\.)?[a-zA-Z0-9\-]+\.[a-z]{2,}(?:\/\S*)?\b")
+]
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        if message.content.startswith("!"):
-            return
-
+        if message.author == self.bot.user:
+            return # Ignora mensagens do bot
         # Verifica link
-        
-        if self.link_regex.search(message.content) or self.link_discord_regex.search(message.content):
-            await message.delete()
-            await message.channel.send(f"{message.author.mention}, não são permitidos links!")
+        for regex in self.regex_links:
+            if regex.search(message.content):
+                await message.delete()
+                break
+
+    @commands.Cog.listener()
+    async def on_message_edit(self, before, after):
+        if after.author == self.bot.user:
+            return  # Ignora edições feitas pelo bot
+        for regex in self.regex_links:
+            if regex.search(after.content):
+                await after.delete()
+                break
+
+    # Comando: !avisar
+
+    @commands.command()
+    @commands.has_permissions(manage_messages=True)
+    async def avisar(self, ctx, member: discord.Member, *, motivo: str):
+        try:
+            avisos = carregar_avisos()
+            user_id = str(member.id)
+            if user_id not in avisos:
+                avisos[user_id] = []
+            avisos[user_id].append(motivo)
+            salvar_avisos(avisos)
+            await ctx.send(f"{member.mention} foi avisado por: {motivo}")
+        except Exception as e:
+            await ctx.send(f"Erro ao avisar o usuário! Erro: {e}")
+
+    # Comando: !desavisar
+
+    @commands.command()
+    @commands.has_permissions(manage_messages=True)
+    async def desavisar(self, ctx, member: discord.Member):
+        try:
+            avisos = carregar_avisos()
+            user_id = str(member.id)
+            if user_id in avisos:
+                del avisos[user_id]
+            else:
+                await ctx.send(f"{member.mention} não tem avisos registrados!")
+                return
+            salvar_avisos(avisos)
+            await ctx.send(f"{member.mention} foi desavisado!")
+        except Exception as e:
+            await ctx.send(f"Erro ao desavisar o usuário! Erro: {e}")
+
+    # Comando: !veravisos
+
+    @commands.command()
+    @commands.has_permissions(manage_messages=True)
+    async def veravisos(self, ctx, member: discord.Member = None):
+        try:
+            membro = member or ctx.author
+            user_id = str(membro.id)
+            avisos = carregar_avisos().get(user_id, [])
+            if avisos:
+                mensagem = "**Avisos:**\n\n"
+                motivos = "\n".join(f"{i+1}. {m}" for i, m in enumerate(avisos))
+                membro = await self.bot.fetch_user(int(user_id))
+                mensagem += f"{membro.mention} - {membro} - {membro.id} - {len(avisos)} aviso(s):```{motivos}```"
+                await ctx.send(mensagem[:2000])
+            else:
+                await ctx.send(f"{membro.mention} não tem nenhum aviso registrado.")
+        except Exception as e:
+            await ctx.send(f"Erro ao ver os avisos! Erro: {e}")
+
+    # Comando: !listaavisos
+
+    @commands.command()
+    @commands.has_permissions(manage_messages=True)
+    async def listaavisos(self, ctx):
+        # self.bot.fetch_user serve para buscar o ID de um usuário pela API do discord
+        try:
+            avisos = carregar_avisos()
+            if not avisos:
+                await ctx.send("Nenhum usuário foi avisado ainda")
+                return
+            mensagem = "**Lista de usuários avisados:**\n\n"
+            for user_id, qtd in avisos.items():
+                membro = await self.bot.fetch_user(int(user_id))
+                mensagem += f"```{membro.name} - {membro} — {membro.id} - aviso(s): {len(qtd)}```"
+            await ctx.send(mensagem[:2000]) # Limite de caracteres
+        except Exception as e:
+            await ctx.send(f"Erro ao ver a lista de avisos! Erro: {e}")
 
     # Comando: !apagar
 
@@ -93,7 +195,7 @@ class Admin(commands.Cog):
         try:
             await member.timeout(timedelta(minutes=tempo),
             reason="Motivo não especificado")
-            await ctx.send(f"{member.mention} foi silenciado por {tempo} minutos.")
+            await ctx.send(f"{member.mention} foi silenciado por {tempo} minuto(s).")
         except Exception as e:
             await ctx.send(f"Não foi possível silenciar o usuário! Erro: {e}")
 
