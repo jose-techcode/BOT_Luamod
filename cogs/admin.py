@@ -93,6 +93,8 @@ class Admin(commands.Cog):
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def veravisos(self, ctx, member: discord.Member = None):
+        # self.bot.fetch_user serve para buscar o ID do usuário pela API do discord
+        # motivos é uma variável que enumera os motivos dos avisos em determinado usuário
         try:
             membro = member or ctx.author
             user_id = str(membro.id)
@@ -102,7 +104,7 @@ class Admin(commands.Cog):
                 motivos = "\n".join(f"{i+1}. {m}" for i, m in enumerate(avisos))
                 membro = await self.bot.fetch_user(int(user_id))
                 mensagem += f"{membro.mention} - {membro} - {membro.id} - {len(avisos)} aviso(s):```{motivos}```"
-                await ctx.send(mensagem[:2000])
+                await ctx.send(mensagem[:2000]) # Limite de caracteres
             else:
                 await ctx.send(f"{membro.mention} não tem nenhum aviso registrado.")
         except Exception as e:
@@ -114,6 +116,7 @@ class Admin(commands.Cog):
     @commands.has_permissions(manage_messages=True)
     async def listaavisos(self, ctx):
         # self.bot.fetch_user serve para buscar o ID de um usuário pela API do discord
+        # for serve para "organizar" a lista de avisadas
         try:
             avisos = carregar_avisos()
             if not avisos:
