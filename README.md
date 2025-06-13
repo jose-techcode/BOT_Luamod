@@ -20,6 +20,14 @@ I. Membros comuns
 
 II. Moderadores
 
+- !avisar (usuário) (motivo) - Avisa um usuário.
+
+- !desavisar (usuário) - Retira todos os avisos do usuário.
+
+- !veravisos (usuário) - Vê a quantidade e o(s) motivo(s) do(s) aviso(s) de um usuário.
+
+- !listaavisos - Vê o(s) usuário(s) avisado(s) e a quantidade de aviso(s) que cada um tem.
+
 - !apagar (quantidade) — Apaga mensagens do chat.
 
 - !lento (segundos) — Ativa o modo lento no canal.
@@ -55,6 +63,7 @@ III. Desenvolvedores
 - Linguagem: Python
 - Biblioteca: Discord.py
 - Ambiente: Linux
+- Banco De Dados: Json
 - Versionamento de código: Git
 - Containerização: Docker
 
@@ -79,7 +88,11 @@ Crie um arquivo chamado .env na raiz do projeto e adicione seu token do bot:
 
 DISCORD_TOKEN=seu_token
 
-Esse arquivo não deve ser enviado para o Git, pois contém informações sensíveis. Então, deve ser incluído no .gitignore.
+No mesmo arquivo .env, se for criar comandos específicos para somente o desenvolvedor do bot usar, adicione:
+
+DEV_ID=seu_id
+
+Esses arquivos não devem ser enviados para o Github, pois contém informações sensíveis. Então, devem ser incluídos no .gitignore.
 
 # 8. Execução do Projeto
 
