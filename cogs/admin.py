@@ -6,7 +6,7 @@ import re
 import json
 import os
 
-# --Comandos de moderação: !apagar, !lento, !silenciar, "dessilenciar automático", !dessilenciar, !trancar, !destrancar !expulsar, !banir, !desbanir, !dm
+# --Comandos de moderação: !avisar, !desavisar, !veravisos, !listaavisos, !apagar, !lento, !trancar, !destrancar, !silenciar, !dessilenciar, !expulsar, !banir, !desbanir
 
 # JSON
 
@@ -251,18 +251,6 @@ class Admin(commands.Cog):
             await ctx.send(f"O usuário {user.mention} foi desbanido com sucesso!")
         except Exception as e:
             await ctx.send(f"Não foi possível desbanir o usuário com ID {user_id}. Erro: {e}")
-
-    # Comando: !dm
-
-    @commands.command()
-    @commands.has_permissions(administrator=True)
-    async def dm(self, ctx, membro: discord.Member, *, mensagem):
-        # membro.send é o comando para o administrador poder mandar mensagem na dm de um membro
-        try:
-            await membro.send(mensagem)
-            await ctx.send(f"Mensagem enviada para {membro.mention}!") 
-        except Exception as e:
-            await ctx.send(f"Não consegui enviar a DM. Talvez ela esteja bloqueada. Erro: {e}")
 
 # Registro de cog
 
