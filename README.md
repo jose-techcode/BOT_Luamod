@@ -6,57 +6,55 @@ O "Projeto Lua" é um bot de discord em que a sua atribuição principal é mode
 
 I. Membros comuns
 
-- !help — Mostra a lista de comandos.
+- <?help — Mostra a lista de comandos.
 
-- !lua — Mostra informações sobre o bot.
+- <?lua — Mostra um easter egg do bot.
 
-- !avatar (pessoa) — Exibe o avatar de um membro.
+- <?avatar (pessoa) — Exibe o avatar de um membro.
 
-- !infobot — Mostra informações do seu perfil.
+- <?infobot — Mostra informações do seu perfil.
 
-- !infouser (pessoa) - Mostra as informações do usuário.
+- <?infouser (pessoa) - Mostra as informações do usuário.
 
-- !infoserver — Exibe informações do servidor.
+- <?infoserver — Exibe informações do servidor.
 
 II. Moderadores
 
-- !avisar (usuário) (motivo) - Avisa um usuário.
+- <?avisar (usuário) (motivo) - Avisa um usuário.
 
-- !desavisar (usuário) - Retira todos os avisos do usuário.
+- <?desavisar (usuário) - Retira todos os avisos do usuário.
 
-- !veravisos (usuário) - Vê a quantidade e o(s) motivo(s) do(s) aviso(s) de um usuário.
+- <?avisos (usuário) - Vê a quantidade e o(s) motivo(s) do(s) aviso(s) de um usuário.
 
-- !listaavisos - Vê o(s) usuário(s) avisado(s) e a quantidade de aviso(s) que cada um tem.
+- <?avisados - Vê o(s) usuário(s) avisado(s) e a quantidade de aviso(s) que cada um tem.
 
-- !apagar (quantidade) — Apaga mensagens do chat.
+- <?apagar (quantidade) — Apaga mensagens do chat.
 
-- !lento (segundos) — Ativa o modo lento no canal.
+- <?lentear (segundos) — Ativa o modo lento no canal.
 
-- !trancar - Tranca um canal.
+- <?trancar - Tranca um canal.
 
-- !destrancar - Destranca um canal que estava trancado.
+- <?destrancar - Destranca um canal que estava trancado.
 
-- !silenciar (membro) (minutos) — Silencia um membro temporariamente.
+- <?silenciar (membro) (minutos) — Silencia um membro temporariamente.
 
-- !dessilenciar (membro) — Remove o silêncio de um membro.
+- <?dessilenciar (membro) — Remove o silêncio de um membro.
 
-- !expulsar (membro) — Expulsa um membro do servidor.
+- <?expulsar (membro) — Expulsa um membro do servidor.
 
-- !banir (membro) — Bane um membro do servidor.
+- <?banir (membro) — Bane um membro do servidor.
 
-- !desbanir (ID) — Remove o banimento de um usuário pelo ID.
-
-- !dm (membro) (mensagem) — Envia uma mensagem privada para um membro.
+- <?desbanir (ID) — Remove o banimento de um usuário pelo ID.
 
 III. Desenvolvedores
 
-- !reiniciar - Reinicia o bot.
+- <?reiniciar - Reinicia o bot.
 
-- !desligar - Desliga o bot.
+- <?desligar - Desliga o bot.
 
-- !verlogs - Vê o histórico de logs do bot.
+- <?verlogs - Vê o histórico de logs do bot.
 
-- !limparlogs - Limpa o histórico de logs do bot.
+- <?limparlogs - Limpa o histórico de logs do bot.
 
 # 3. Tecnologias
 
