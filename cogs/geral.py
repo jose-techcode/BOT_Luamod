@@ -89,39 +89,6 @@ class Geral(commands.Cog):
         except Exception as e:
             await ctx.send(f"Erro ao obter informações! Erro: {e}")
 
-
-    # Comando: infobot
-
-    @commands.command()
-    async def infobot(self, ctx):
-        # embed, title, description e color são uma introdução à informações do bot
-        # todos os embed.add_field são uma informação separada sobre o bot
-        # ctx.me.display_avatar.url é a imagem do bot
-        # user.name é referente ao nome do bot
-        # user.id é referente ao id do bot
-        # {len(commands.guilds)} é referente a todos os servidores do bot
-        # {len(set(commands.get_all_member()))} é referente ao número total de membros que o bot abrange
-        # {round(commands.latency * 1000)} é referente ao ping do bot
-        # embed.set_footer serve para retornar uma "assinatura"
-        try:
-            embed = discord.Embed(
-            title="Informações do bot Lua",
-            color=discord.Color.blue()
-            )
-            embed.set_thumbnail(url=ctx.me.display_avatar.url) # ctx.me.display_avatar.url
-            embed.add_field(name="Nome", value=self.bot.user.name, inline=True) # user.name
-            embed.add_field(name="ID", value=self.bot.user.id, inline=True) # user.id
-            embed.add_field(name="Servidores",
-                    value=f"{len(self.bot.guilds)}", inline=True) # {len(commands.guilds)}
-            embed.add_field(name="Usuários",
-                    value=f"{len(set(self.bot.get_all_members()))}", inline=True) # {len(set(commands.get_all_member()))}
-            embed.add_field(name="Latência",
-                    value=f"{round(self.bot.latency * 1000)}ms", inline=True) # {round(commands.latency * 1000)}   
-            embed.set_footer(text="Desenvolvido no estilo php por Joseph.")
-            await ctx.send(embed=embed)
-        except Exception as e:
-            await ctx.send(f"Erro ao executar o comando de informações do bot: {e}")
-
     # Comando: infoserver
 
     @commands.command()
@@ -154,6 +121,38 @@ class Geral(commands.Cog):
             await ctx.send(embed=embed)
         except Exception as e:
             await ctx.send(f"Erro ao executar o comando de informações do servidor: {e}")
+
+    # Comando: infobot
+
+    @commands.command()
+    async def infobot(self, ctx):
+        # embed, title, description e color são uma introdução à informações do bot
+        # todos os embed.add_field são uma informação separada sobre o bot
+        # ctx.me.display_avatar.url é a imagem do bot
+        # user.name é referente ao nome do bot
+        # user.id é referente ao id do bot
+        # {len(commands.guilds)} é referente a todos os servidores do bot
+        # {len(set(commands.get_all_member()))} é referente ao número total de membros que o bot abrange
+        # {round(commands.latency * 1000)} é referente ao ping do bot
+        # embed.set_footer serve para retornar uma "assinatura"
+        try:
+            embed = discord.Embed(
+            title="Informações do bot Lua",
+            color=discord.Color.blue()
+            )
+            embed.set_thumbnail(url=ctx.me.display_avatar.url) # ctx.me.display_avatar.url
+            embed.add_field(name="Nome", value=self.bot.user.name, inline=True) # user.name
+            embed.add_field(name="ID", value=self.bot.user.id, inline=True) # user.id
+            embed.add_field(name="Servidores",
+                    value=f"{len(self.bot.guilds)}", inline=True) # {len(commands.guilds)}
+            embed.add_field(name="Usuários",
+                    value=f"{len(set(self.bot.get_all_members()))}", inline=True) # {len(set(commands.get_all_member()))}
+            embed.add_field(name="Latência",
+                    value=f"{round(self.bot.latency * 1000)}ms", inline=True) # {round(commands.latency * 1000)}   
+            embed.set_footer(text="Desenvolvido no estilo php por Joseph.")
+            await ctx.send(embed=embed)
+        except Exception as e:
+            await ctx.send(f"Erro ao executar o comando de informações do bot: {e}")
 
 # Registro de cog
 
