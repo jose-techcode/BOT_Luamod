@@ -21,7 +21,7 @@ logging.error("Erro crítico.")
 # Permissões do bot:
 
 intents = discord.Intents.all()
-bot = commands.Bot(command_prefix="!", intents=intents)
+bot = commands.Bot(command_prefix="<?", intents=intents)
 
 # Quando o bot estiver ativo/online:
 
@@ -45,7 +45,7 @@ async def load_cogs():
     cogs = [
         "cogs.geral",
         "cogs.admin",
-        "cogs.dev"
+        "cogs.dev",
     ]
     for cog in cogs:
         await bot.load_extension(cog)
