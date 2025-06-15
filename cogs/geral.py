@@ -13,7 +13,7 @@ class Geral(commands.Cog):
 
     # Comando: !help (pré_definido)
 
-    # Comando: !lua
+    # Comando: lua
 
     @commands.command()
     async def lua(self, ctx):
@@ -23,7 +23,7 @@ class Geral(commands.Cog):
         except Exception as e:
             await ctx.send(f"Erro: {e}")
 
-    # Comando: !ping
+    # Comando: ping
         
     @commands.command()
     async def ping(self, ctx):
@@ -34,7 +34,7 @@ class Geral(commands.Cog):
         except Exception as e:
             await ctx.send(f"Erro ao executar o comando !ping: {e}")
     
-    # Comando: !avatar
+    # Comando: avatar
 
     @commands.command()
     async def avatar(self, ctx, member: discord.Member = None):
@@ -58,7 +58,7 @@ class Geral(commands.Cog):
         except Exception as e:
             await ctx.send(f"Erro ao ver o avatar: {e}")
 
-    # Comando: !infouser
+    # Comando: infouser
 
     @commands.command()
     async def infouser(self, ctx, member: discord.Member = None):
@@ -90,7 +90,7 @@ class Geral(commands.Cog):
             await ctx.send(f"Erro ao obter informações! Erro: {e}")
 
 
-    # Comando: !infobot
+    # Comando: infobot
 
     @commands.command()
     async def infobot(self, ctx):
@@ -122,7 +122,7 @@ class Geral(commands.Cog):
         except Exception as e:
             await ctx.send(f"Erro ao executar o comando de informações do bot: {e}")
 
-    # Comando: !infoserver
+    # Comando: infoserver
 
     @commands.command()
     async def infoserver(self, ctx):
