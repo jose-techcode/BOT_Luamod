@@ -6,7 +6,7 @@ import re
 import json
 import os
 
-# --Comandos de moderação: !avisar, !desavisar, !veravisos, !listaavisos, !apagar, !lento, !trancar, !destrancar, !silenciar, !dessilenciar, !expulsar, !banir, !desbanir
+# --Comandos de moderação: !avisar, !desavisar, !avisos, !avisados, !apagar, !lentear, !trancar, !destrancar, !silenciar, !dessilenciar, !expulsar, !banir, !desbanir
 
 # JSON
 
@@ -84,14 +84,17 @@ class Admin(commands.Cog):
     async def desavisar(self, ctx, member: commands.MemberConverter):
         try:
             avisos = carregar_avisos()
-            guild_id = str(ctx.guild.id)
             user_id = str(member.id)
-
+            guild_id = str(ctx.guild.id)
+            
             if guild_id in avisos and user_id in avisos[guild_id]:
-                avisos[guild_id][user_id] = []
+                del avisos[guild_id][user_id]
                 
-                salvar_avisos(avisos)
-                await ctx.send(f"{member.mention} foi desavisado!")
+                if not avisos[guild_id]:
+                    del avisos[guild_id]
+                    
+                    salvar_avisos(avisos)
+                    await ctx.send(f"{member.mention} foi desavisado completamente!")
             
             else:
                 await ctx.send(f"{member.mention} não tem avisos registrados neste servidor!")
@@ -99,11 +102,12 @@ class Admin(commands.Cog):
         except Exception as e:
             await ctx.send(f"Erro ao desavisar o usuário! Erro: {e}")
 
-    # Comando: veravisos
+
+    # Comando: avisos
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def veravisos(self, ctx, member: commands.MemberConverter = None):
+    async def avisos(self, ctx, member: commands.MemberConverter = None):
         # self.bot.fetch_user serve para buscar o ID do usuário pela API do discord
         # motivos é uma variável que enumera os motivos dos avisos em determinado usuário
         try:
@@ -115,7 +119,7 @@ class Admin(commands.Cog):
             avisos_guild = avisos.get(guild_id, {})
             avisos_usuario = avisos_guild.get(user_id, [])
             
-            if avisos:
+            if avisos_usuario:
                 mensagem = "**Avisos:**\n\n"
                 motivos = "\n".join(f"{i+1}. {m}" for i, m in enumerate(avisos_usuario))
                 membro = await self.bot.fetch_user(int(user_id))
@@ -128,11 +132,11 @@ class Admin(commands.Cog):
         except Exception as e:
             await ctx.send(f"Erro ao ver os avisos! Erro: {e}")
 
-    # Comando: listaavisos
+    # Comando: avisados
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def listaavisos(self, ctx):
+    async def avisados(self, ctx):
         try:
             guild_id = str(ctx.guild.id)
             avisos = carregar_avisos()
@@ -144,16 +148,22 @@ class Admin(commands.Cog):
             
             mensagem = "**Lista de usuários avisados neste servidor:**\n\n"
             
-            for user_id, qtd in avisos_guild.items():
+            for user_id, lista in avisos_guild.items():
+                if not lista:
+                    continue  # Ignora se a lista estiver vazia
+                
                 membro = await self.bot.fetch_user(int(user_id))
-                mensagem += f"```{membro.name} - {membro} — {membro.id} - aviso(s): {len(qtd)}```\n"
+                mensagem += f"```{membro.name} - {membro} — {membro.id} - aviso(s): {len(lista)}```\n"
             
-                await ctx.send(mensagem[:2000])  # Limite de caracteres do Discord
-
+            if mensagem.strip() == "**Lista de usuários avisados neste servidor:**":
+                await ctx.send("Nenhum usuário tem avisos ativos neste servidor.")
+            
+            else:
+                await ctx.send(mensagem[:2000])
+        
         except Exception as e:
             await ctx.send(f"Erro ao ver a lista de avisos! Erro: {e}")
 
-    
     # Comando: apagar
 
     @commands.command()
@@ -168,11 +178,11 @@ class Admin(commands.Cog):
         except Exception as e:
             await ctx.send(f"Não foi possível apagar as mensagens! Erro: {e}")
 
-    # Comando: lento
+    # Comando: lentear
 
     @commands.command()
     @commands.has_permissions(manage_channels=True)
-    async def lento(self, ctx, tempo: int):
+    async def lentear(self, ctx, tempo: int):
         # ctx.channel.edit serve editar as configurações do canal
         # slowmode_delay é para especificar o tipo de edição que será realizado no servidor
         try:
