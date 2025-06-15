@@ -54,83 +54,107 @@ class Admin(commands.Cog):
                 await after.delete()
                 break
 
-    # Comando: !avisar
+    # Comando: avisar
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def avisar(self, ctx, member: discord.Member, *, motivo: str):
+    async def avisar(self, ctx, member: commands.MemberConverter, *, motivo: str):
         try:
             avisos = carregar_avisos()
             user_id = str(member.id)
-            if user_id not in avisos:
-                avisos[user_id] = []
-            avisos[user_id].append(motivo)
+            guild_id = str(ctx.guild.id)
+            
+            if guild_id not in avisos:
+                avisos[guild_id] = {}
+            
+            if user_id not in avisos[guild_id]:
+                avisos[guild_id][user_id] = []
+
+            avisos[guild_id][user_id].append(motivo)
             salvar_avisos(avisos)
             await ctx.send(f"{member.mention} foi avisado por: {motivo}")
+        
         except Exception as e:
             await ctx.send(f"Erro ao avisar o usuário! Erro: {e}")
 
-    # Comando: !desavisar
+    # Comando: desavisar
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def desavisar(self, ctx, member: discord.Member):
+    async def desavisar(self, ctx, member: commands.MemberConverter):
         try:
             avisos = carregar_avisos()
+            guild_id = str(ctx.guild.id)
             user_id = str(member.id)
-            if user_id in avisos:
-                del avisos[user_id]
+
+            if guild_id in avisos and user_id in avisos[guild_id]:
+                avisos[guild_id][user_id] = []
+                
+                salvar_avisos(avisos)
+                await ctx.send(f"{member.mention} foi desavisado!")
+            
             else:
-                await ctx.send(f"{member.mention} não tem avisos registrados!")
-                return
-            salvar_avisos(avisos)
-            await ctx.send(f"{member.mention} foi desavisado!")
+                await ctx.send(f"{member.mention} não tem avisos registrados neste servidor!")
+
         except Exception as e:
             await ctx.send(f"Erro ao desavisar o usuário! Erro: {e}")
 
-    # Comando: !veravisos
+    # Comando: veravisos
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def veravisos(self, ctx, member: discord.Member = None):
+    async def veravisos(self, ctx, member: commands.MemberConverter = None):
         # self.bot.fetch_user serve para buscar o ID do usuário pela API do discord
         # motivos é uma variável que enumera os motivos dos avisos em determinado usuário
         try:
             membro = member or ctx.author
             user_id = str(membro.id)
-            avisos = carregar_avisos().get(user_id, [])
+            guild_id = str(ctx.guild.id)
+            
+            avisos = carregar_avisos()
+            avisos_guild = avisos.get(guild_id, {})
+            avisos_usuario = avisos_guild.get(user_id, [])
+            
             if avisos:
                 mensagem = "**Avisos:**\n\n"
-                motivos = "\n".join(f"{i+1}. {m}" for i, m in enumerate(avisos))
+                motivos = "\n".join(f"{i+1}. {m}" for i, m in enumerate(avisos_usuario))
                 membro = await self.bot.fetch_user(int(user_id))
-                mensagem += f"{membro.mention} - {membro} - {membro.id} - {len(avisos)} aviso(s):```{motivos}```"
+                mensagem += f"{membro.mention} - {membro} - {membro.id} - {len(avisos_usuario)} aviso(s):```{motivos}```"
                 await ctx.send(mensagem[:2000]) # Limite de caracteres
+            
             else:
                 await ctx.send(f"{membro.mention} não tem nenhum aviso registrado.")
+        
         except Exception as e:
             await ctx.send(f"Erro ao ver os avisos! Erro: {e}")
 
-    # Comando: !listaavisos
+    # Comando: listaavisos
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def listaavisos(self, ctx):
-        # self.bot.fetch_user serve para buscar o ID de um usuário pela API do discord
-        # for serve para "organizar" a lista de avisadas
         try:
+            guild_id = str(ctx.guild.id)
             avisos = carregar_avisos()
-            if not avisos:
-                await ctx.send("Nenhum usuário foi avisado ainda")
+            avisos_guild = avisos.get(guild_id, {})
+            
+            if not avisos_guild:
+                await ctx.send("Nenhum usuário foi avisado neste servidor.")
                 return
-            mensagem = "**Lista de usuários avisados:**\n\n"
-            for user_id, qtd in avisos.items():
+            
+            mensagem = "**Lista de usuários avisados neste servidor:**\n\n"
+            
+            for user_id, qtd in avisos_guild.items():
                 membro = await self.bot.fetch_user(int(user_id))
-                mensagem += f"```{membro.name} - {membro} — {membro.id} - aviso(s): {len(qtd)}```"
-            await ctx.send(mensagem[:2000]) # Limite de caracteres
+                mensagem += f"```{membro.name} - {membro} — {membro.id} - aviso(s): {len(qtd)}```\n"
+            
+                await ctx.send(mensagem[:2000])  # Limite de caracteres do Discord
+
         except Exception as e:
             await ctx.send(f"Erro ao ver a lista de avisos! Erro: {e}")
 
-    # Comando: !apagar
+    
+    # Comando: apagar
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
@@ -144,7 +168,7 @@ class Admin(commands.Cog):
         except Exception as e:
             await ctx.send(f"Não foi possível apagar as mensagens! Erro: {e}")
 
-    # Comando: !lento
+    # Comando: lento
 
     @commands.command()
     @commands.has_permissions(manage_channels=True)
@@ -157,7 +181,7 @@ class Admin(commands.Cog):
         except Exception as e:
             await ctx.send(f"Não foi possível definir um tempo de lentidão no canal! Erro: {e}")
 
-    # Comando: !trancar
+    # Comando: trancar
 
     @commands.command()
     @commands.has_permissions(manage_channels = True)
@@ -173,7 +197,7 @@ class Admin(commands.Cog):
         except Exception as e:
             await ctx.send(f"Não foi possível trancar o canal! Erro: {e}")
 
-    # Comando: !destrancar
+    # Comando: destrancar
 
     @commands.command()
     @commands.has_permissions(manage_channels = True)
@@ -189,7 +213,7 @@ class Admin(commands.Cog):
         except Exception as e:
             await ctx.send(f"Não foi possível destrancar o canal! Erro: {e}")
 
-    # Comando: !silenciar (dessilenciar automático)
+    # Comando: silenciar (dessilenciar automático)
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
@@ -202,7 +226,7 @@ class Admin(commands.Cog):
         except Exception as e:
             await ctx.send(f"Não foi possível silenciar o usuário! Erro: {e}")
 
-    # Comando: !dessilenciar (manual)
+    # Comando: dessilenciar (manual)
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
@@ -214,7 +238,7 @@ class Admin(commands.Cog):
         except Exception as e:
             await ctx.send(f"Não foi possível dessilenciar o membro! Erro: {e}")
 
-    # Comando: !expulsar
+    # Comando: expulsar
 
     @commands.command()
     @commands.has_permissions(kick_members=True)
@@ -226,7 +250,7 @@ class Admin(commands.Cog):
         except Exception as e:
             await ctx.send(f"Não foi possível expulsar determinado membro! Erro: {e}")
 
-    # Comando: !banir
+    # Comando: banir
 
     @commands.command()
     @commands.has_permissions(ban_members=True)
@@ -238,7 +262,7 @@ class Admin(commands.Cog):
         except Exception as e:
             await ctx.send(f"Não foi possível banir determinado membro! Erro: {e}")
 
-    # Comando: !desbanir
+    # Comando: desbanir
 
     @commands.command()
     @commands.has_permissions(ban_members=True)
