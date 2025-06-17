@@ -73,7 +73,6 @@ class Admin(commands.Cog):
             avisos[guild_id][user_id].append(motivo)
             salvar_avisos(avisos)
             await ctx.send(f"{member.mention} foi avisado por: {motivo}")
-        
         except Exception as e:
             await ctx.send(f"Erro ao avisar o usuário! Erro: {e}")
 
@@ -98,7 +97,6 @@ class Admin(commands.Cog):
             
             else:
                 await ctx.send(f"{member.mention} não tem avisos registrados neste servidor!")
-
         except Exception as e:
             await ctx.send(f"Erro ao desavisar o usuário! Erro: {e}")
 
@@ -128,7 +126,6 @@ class Admin(commands.Cog):
             
             else:
                 await ctx.send(f"{membro.mention} não tem nenhum aviso registrado.")
-        
         except Exception as e:
             await ctx.send(f"Erro ao ver os avisos! Erro: {e}")
 
@@ -160,7 +157,6 @@ class Admin(commands.Cog):
             
             else:
                 await ctx.send(mensagem[:2000])
-        
         except Exception as e:
             await ctx.send(f"Erro ao ver a lista de avisos! Erro: {e}")
 
