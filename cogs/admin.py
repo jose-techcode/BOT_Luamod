@@ -6,7 +6,7 @@ import re
 import json
 import os
 
-# --Comandos de moderação: !avisar, !desavisar, !avisos, !avisados, !apagar, !lentear, !trancar, !destrancar, !silenciar, !dessilenciar, !expulsar, !banir, !desbanir
+# --Comandos de moderação: avisar, desavisar, avisos, avisados, apagar, lentear, trancar, destrancar, silenciar, dessilenciar, expulsar, banir, desbanir
 
 # JSON
 

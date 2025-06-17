@@ -3,7 +3,7 @@ from discord.ext import commands
 import asyncio
 from datetime import timedelta
 
-# --Comandos gerais: !help, !lua, !ping, !avatar, !info, !infoserver
+# --Comandos gerais: help, lua, ping, avatar, info, infoserver
 
 # Estrutura cog (herança)
 
