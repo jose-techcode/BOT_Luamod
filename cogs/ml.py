@@ -4,7 +4,7 @@ import asyncio
 from sklearn.linear_model import LinearRegression
 import numpy
 
-# --Comandos de ML: soma, subtração, multiplicacaoo, divisao, potencia, radiciacao
+# --Comandos de ML: somar, subtrair, multiplicar, dividir, potencia, raizquadrada
 
 class Ml(commands.Cog):
     def __init__(self, bot):
