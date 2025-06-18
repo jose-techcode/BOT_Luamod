@@ -1,5 +1,5 @@
 import discord
-from discord.ext import commands
+from discord.ext import commands, tasks
 import asyncio
 from datetime import timedelta
 import os
@@ -14,8 +14,13 @@ from checks import is_dev
 class Dev(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.log_bot = "bot.log"
+        self.limpar_log.start() # Inicia a limpeza quando o bot for ligado
+
+    def cog_unload(self):
+        self.limpar_log.cancel() # Para a task quando o bot for desligado
     
-    # Comando: !reiniciar
+    # Comando: reiniciar
 
     @commands.command()
     @is_dev()
@@ -29,7 +34,7 @@ class Dev(commands.Cog):
         except Exception as e:
             await ctx.send(f"Erro ao reiniciar! Erro: {e}")
 
-    # Comando: !desligar
+    # Comando: desligar
 
     @commands.command()
     @is_dev()
@@ -41,11 +46,11 @@ class Dev(commands.Cog):
         except Exception as e:
             await ctx.send(f"Erro ao desligar! Erro: {e}")
 
-    # Comando: !verlogs
+    # Comando: verlog
 
     @commands.command()
     @is_dev()
-    async def verlogs(self, ctx, linhas: int = 10):
+    async def verlog(self, ctx, linhas: int = 10):
         # conteudo é a variável que exibe as últimas linhas 
         try:
             with open("bot.log", "r", encoding="utf-8") as f:
@@ -54,23 +59,40 @@ class Dev(commands.Cog):
 
             conteudo = ''.join(ultimas)
             if len(conteudo) > 1900:
-                conteudo = conteudo[-1900:]  # evita ultrapassar limite do Discord
+                conteudo = conteudo[-1900:]  # Evita ultrapassar limite do Discord
 
             await ctx.send(f"Últimas {linhas} linhas do log:\n```{conteudo}```")
         except Exception as e:
-            await ctx.send(f"Erro ao ler o log: {e}")
+            await ctx.send(f"Erro ao ler o bot.log: {e}")
 
-    # Comando: !limparlogs
+    # Comando: limparlog (manual)
 
     @commands.command()
     @is_dev()
-    async def limparlogs(self, ctx):
+    async def limparlog(self, ctx):
         # open serve para abrir o log do bot e o close em seguida para fechar
         try:
             open("bot.log", "w").close()
-            await ctx.send("Arquivo de log limpo com sucesso.")
+            await ctx.send("bot.log limpo com sucesso!")
         except Exception as e:
-            await ctx.send(f"Erro ao limpar log: {e}")
+            await ctx.send(f"Erro ao limpar o bot.log! Erro: {e}")
+
+    # Comando: limpar_log (automático)
+
+    @tasks.loop(minutes=10)
+    async def limpar_log(self):
+        # open serve para abrir o log do bot e o close em seguida para fechar
+        try:
+            open("bot.log", "w").close()
+            print("bot.log limpo com sucesso!")
+        except Exception as e:
+            print(f"Erro ao limpar o bot.log! Erro: {e}")
+
+    # Comando: before_limpar_log (automático)
+    
+    @limpar_log.before_loop
+    async def before_limpar_log(self):
+        await self.bot.wait_until_ready() # Certifica de que a limpeza só funcione quando o bot ligar
 
 async def setup(bot):
     await bot.add_cog(Dev(bot))
