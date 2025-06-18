@@ -14,9 +14,9 @@ logging.basicConfig(
     filemode="a",  # 'a' para adicionar ao final do arquivo
     encoding="utf-8"
 )
-logging.info("Bot iniciado com sucesso.")
-logging.warning("Algo inesperado aconteceu.")
-logging.error("Erro crítico.")
+logging.info("Teste.")
+logging.warning("Teste.")
+logging.error("Teste.")
 
 # Permissões do bot:
 
