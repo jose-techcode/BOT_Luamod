@@ -46,6 +46,7 @@ async def load_cogs():
         "cogs.geral",
         "cogs.admin",
         "cogs.dev",
+        "cogs.ml"
     ]
     for cog in cogs:
         await bot.load_extension(cog)
