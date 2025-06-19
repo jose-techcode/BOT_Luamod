@@ -1,6 +1,6 @@
 # 1. Bot Lua
 
-O "Projeto Lua" é um bot de discord em que a sua atribuição principal é moderar um servidor, bem como também ter algumas funcionalidades para membros comuns.
+O "Bot Lua" é um bot de discord em que a sua atribuição principal é moderar um servidor, bem como também ter algumas funcionalidades para membros comuns.
 
 # 2. Funcionalidades
 
