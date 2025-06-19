@@ -52,9 +52,9 @@ III. Desenvolvedores
 
 - desligar - Desliga o bot.
 
-- verlogs - Vê o histórico de logs do bot.
+- verlog - Vê o histórico de logs do bot.
 
-- limparlogs - Limpa o histórico de logs do bot.
+- limparlog - Limpa o histórico de logs do bot.
 
 # 3. Tecnologias
 
