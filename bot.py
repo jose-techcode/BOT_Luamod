@@ -29,15 +29,50 @@ bot = commands.Bot(command_prefix="?", intents=intents)
 async def on_ready():
     print(f"[LOG] Bot conectado como {bot.user.name} - {bot.user.id}")
 
-# Ignorar comandos não existentes
+# Tratamento de erros globais
 
 @bot.event
 async def on_command_error(ctx, error):
-    # Ignorar comandos não existentes
+    
+    # Tratamento de erros para ignorar comandos não existentes
     if isinstance(error, commands.CommandNotFound):
         print(f"[ERRO] Comando não encontrado: {ctx.message.content}")
-    else:
-        raise error # Outros erros aparecem
+        return
+
+    # Tratamento de erros com flood de comandos
+
+    if isinstance(error, commands.CommandOnCooldown):
+        await ctx.send(f"Aguarde {error.retry_after:.1f}s para usar esse comando novamente.")
+        return
+    
+    # Tratamento de erros com usuário sem permissão
+
+    if isinstance(error, commands.MissingPermissions):
+        await ctx.send("Tu não tem permissão para isso.")
+        return
+    
+    # Tratamento de erros com bot sem permissão
+
+    if isinstance(error, commands.BotMissingPermissions):
+        await ctx.send("Eu não tenho permissão para isso.")
+        return
+    
+    # Tratamento de erros com argumentos inválidos
+
+    if isinstance(error, commands.BadArgument):
+        await ctx.send("Argumento inválido. Verifique o comando em ajuda.")
+        return
+
+    # Tratamento de erros sem argumentos
+
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("Sem argumentos obrigatórios. Verifique o comando em ajuda.")
+        return
+
+    # Tratamento de erros com as cogs
+
+    logging.exception(f"Erro não tratado globalmente: {ctx.command}")
+    raise error
 
 # Carregar cogs
 
