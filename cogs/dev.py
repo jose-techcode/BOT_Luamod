@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands, tasks
 import asyncio
 from datetime import timedelta
+import logging
 import os
 import sys
 from storage import DEV_ID
@@ -32,7 +33,11 @@ class Dev(commands.Cog):
             await self.bot.close()
             os.execl(sys.executable, sys.executable, *sys.argv)
         except Exception as e:
-            await ctx.send(f"Erro ao reiniciar! Erro: {e}")
+            logging.exception(f"Erro no comando.")
+            if ctx.author.id == DEV_ID:
+                await ctx.send(f"Erro: {e}")
+            else:
+                await ctx.send("Algo deu errado...")
 
     # Comando: desligar
 
@@ -44,26 +49,34 @@ class Dev(commands.Cog):
             await ctx.send("Desligando...")
             await self.bot.close()
         except Exception as e:
-            await ctx.send(f"Erro ao desligar! Erro: {e}")
+            logging.exception(f"Erro no comando.")
+            if ctx.author.id == DEV_ID:
+                await ctx.send(f"Erro: {e}")
+            else:
+                await ctx.send("Algo deu errado...")
 
     # Comando: verlog
 
     @commands.command()
     @is_dev()
     async def verlog(self, ctx, linhas: int = 10):
-        # conteudo é a variável que exibe as últimas linhas 
+        # content é a variável que exibe as últimas linhas 
         try:
             with open("bot.log", "r", encoding="utf-8") as f:
                 todas = f.readlines()
                 ultimas = todas[-linhas:] if len(todas) >= linhas else todas
 
-            conteudo = ''.join(ultimas)
-            if len(conteudo) > 1900:
-                conteudo = conteudo[-1900:]  # Evita ultrapassar limite do Discord
+            content = ''.join(ultimas)
+            if len(content) > 1900:
+                content = content[-1900:]  # Evita ultrapassar limite do Discord
 
-            await ctx.send(f"Últimas {linhas} linhas do log:\n```{conteudo}```")
+            await ctx.send(f"Últimas {linhas} linhas do log:\n```{content}```")
         except Exception as e:
-            await ctx.send(f"Erro ao ler o bot.log: {e}")
+            logging.exception(f"Erro no comando.")
+            if ctx.author.id == DEV_ID:
+                await ctx.send(f"Erro: {e}")
+            else:
+                await ctx.send("Algo deu errado...")
 
     # Comando: limparlog (manual)
 
@@ -75,18 +88,19 @@ class Dev(commands.Cog):
             open("bot.log", "w").close()
             await ctx.send("bot.log limpo com sucesso!")
         except Exception as e:
-            await ctx.send(f"Erro ao limpar o bot.log! Erro: {e}")
+            logging.exception(f"Erro no comando.")
+            if ctx.author.id == DEV_ID:
+                await ctx.send(f"Erro: {e}")
+            else:
+                await ctx.send("Algo deu errado...")
 
     # Comando: limpar_log (automático)
 
     @tasks.loop(minutes=10)
     async def limpar_log(self):
         # open serve para abrir o log do bot e o close em seguida para fechar
-        try:
-            open("bot.log", "w").close()
-            print("bot.log limpo com sucesso!")
-        except Exception as e:
-            print(f"Erro ao limpar o bot.log! Erro: {e}")
+        open("bot.log", "w").close()
+        print("bot.log limpo com sucesso!")
 
     # Comando: before_limpar_log (automático)
     
