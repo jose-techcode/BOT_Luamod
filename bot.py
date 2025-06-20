@@ -9,10 +9,10 @@ from storage import DISCORD_TOKEN
 
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
+    format="%(asctime)s - %(levelname)s - %(message)s", # asctime = data, levelname = nível do erro, message = conteúdo do erro
     filename="bot.log",
     filemode="a",  # 'a' para adicionar ao final do arquivo
-    encoding="utf-8"
+    encoding="utf-8" # código universal para aceitar todos os caracteres no bot.log
 )
 logging.info("Teste.")
 logging.warning("Teste.")
@@ -21,7 +21,7 @@ logging.error("Teste.")
 # Permissões do bot:
 
 intents = discord.Intents.all()
-bot = commands.Bot(command_prefix="<?", intents=intents)
+bot = commands.Bot(command_prefix="?", intents=intents)
 
 # Quando o bot estiver ativo/online:
 
@@ -29,15 +29,15 @@ bot = commands.Bot(command_prefix="<?", intents=intents)
 async def on_ready():
     print(f"[LOG] Bot conectado como {bot.user.name} - {bot.user.id}")
 
-# Ignorar comandos não existentes:
+# Ignorar comandos não existentes
 
 @bot.event
 async def on_command_error(ctx, error):
+    # Ignorar comandos não existentes
     if isinstance(error, commands.CommandNotFound):
         print(f"[ERRO] Comando não encontrado: {ctx.message.content}")
-        return
     else:
-        raise error  # Outros erros continuam aparecendo
+        raise error # Outros erros aparecem
 
 # Carregar cogs
 
