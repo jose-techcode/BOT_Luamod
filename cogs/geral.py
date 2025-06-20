@@ -15,6 +15,7 @@ class Geral(commands.Cog):
 
     # Comando: ajuda
     
+    @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     async def ajuda(self, ctx):
         embed = discord.Embed(
@@ -63,6 +64,7 @@ class Geral(commands.Cog):
 
     # Comando: lua
 
+    @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     async def lua(self, ctx):
         try:
@@ -77,6 +79,7 @@ class Geral(commands.Cog):
 
     # Comando: ping
         
+    @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     async def ping(self, ctx):
         # latency é a variável que permite definir a latência do bot
@@ -92,6 +95,7 @@ class Geral(commands.Cog):
     
     # Comando: avatar
 
+    @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     async def avatar(self, ctx, member: discord.Member = None):
         # member é a variavel que trata do membro que acionou o comando ou que foi acionado por outra pessoa
@@ -120,6 +124,7 @@ class Geral(commands.Cog):
 
     # Comando: infouser
 
+    @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     async def infouser(self, ctx, member: discord.Member = None):
         # roles é uma variável referente aos cargos que o membro tem no servidor
@@ -155,6 +160,7 @@ class Geral(commands.Cog):
 
     # Comando: infoserver
 
+    @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     async def infoserver(self, ctx):
         # guild, embed, title e color são referentes ao servidor em que o bot foi acionado
@@ -192,6 +198,7 @@ class Geral(commands.Cog):
 
     # Comando: infobot
 
+    @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     async def infobot(self, ctx):
         # embed, title, description e color são uma introdução à informações do bot

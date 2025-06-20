@@ -23,6 +23,7 @@ class Dev(commands.Cog):
     
     # Comando: reiniciar
 
+    @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @is_dev()
     async def reiniciar(self, ctx):
@@ -41,6 +42,7 @@ class Dev(commands.Cog):
 
     # Comando: desligar
 
+    @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @is_dev()
     async def desligar(self, ctx):
@@ -57,6 +59,7 @@ class Dev(commands.Cog):
 
     # Comando: verlog
 
+    @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @is_dev()
     async def verlog(self, ctx, linhas: int = 10):
@@ -80,6 +83,7 @@ class Dev(commands.Cog):
 
     # Comando: limparlog (manual)
 
+    @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @is_dev()
     async def limparlog(self, ctx):

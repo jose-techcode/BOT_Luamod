@@ -58,6 +58,7 @@ class Admin(commands.Cog):
 
     # Comando: avisar
 
+    @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def avisar(self, ctx, member: commands.MemberConverter, *, motivo: str):
@@ -86,6 +87,7 @@ class Admin(commands.Cog):
 
     # Comando: desavisar
 
+    @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def desavisar(self, ctx, member: commands.MemberConverter):
@@ -117,6 +119,7 @@ class Admin(commands.Cog):
 
     # Comando: avisos
 
+    @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def avisos(self, ctx, member: commands.MemberConverter = None):
@@ -151,6 +154,7 @@ class Admin(commands.Cog):
 
     # Comando: listaavisos
 
+    @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def listaavisos(self, ctx):
@@ -188,6 +192,7 @@ class Admin(commands.Cog):
 
     # Comando: apagar
 
+    @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def apagar(self, ctx, quantidade_mensagens: int):
@@ -206,6 +211,7 @@ class Admin(commands.Cog):
 
     # Comando: lentear
 
+    @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @commands.has_permissions(manage_channels=True)
     async def lentear(self, ctx, tempo: int):
@@ -223,6 +229,7 @@ class Admin(commands.Cog):
 
     # Comando: trancar
 
+    @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @commands.has_permissions(manage_channels = True)
     async def trancar(self, ctx):
@@ -243,6 +250,7 @@ class Admin(commands.Cog):
 
     # Comando: destrancar
 
+    @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @commands.has_permissions(manage_channels = True)
     async def destrancar(self, ctx):
@@ -263,6 +271,7 @@ class Admin(commands.Cog):
 
     # Comando: silenciar (dessilenciar automático)
 
+    @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @commands.has_permissions(manage_roles=True)
     async def silenciar(self, ctx, member: discord.Member, tempo: int):
@@ -280,6 +289,7 @@ class Admin(commands.Cog):
 
     # Comando: dessilenciar (manual)
 
+    @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @commands.has_permissions(manage_roles=True)
     async def dessilenciar(self, ctx, member: discord.Member):
@@ -296,6 +306,7 @@ class Admin(commands.Cog):
 
     # Comando: expulsar
 
+    @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @commands.has_permissions(kick_members=True)
     async def expulsar(self, ctx, member: discord.Member, *, motivo="Não especificado"):
@@ -312,6 +323,7 @@ class Admin(commands.Cog):
 
     # Comando: banir
 
+    @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @commands.has_permissions(ban_members=True)
     async def banir(self, ctx, member: discord.Member, *, motivo="Não especificado"):
@@ -328,6 +340,7 @@ class Admin(commands.Cog):
 
     # Comando: desbanir
 
+    @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @commands.has_permissions(ban_members=True)
     async def desbanir(self, ctx, user_id: int):
