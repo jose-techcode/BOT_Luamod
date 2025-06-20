@@ -26,7 +26,7 @@ II. Moderadores
 
 - avisos (usuário) - Vê a quantidade e o(s) motivo(s) do(s) aviso(s) de um usuário.
 
-- avisados - Vê o(s) usuário(s) avisado(s) e a quantidade de aviso(s) que cada um tem.
+- listaavisos - Vê o(s) usuário(s) avisado(s) e a quantidade de aviso(s) que cada um tem.
 
 - apagar (quantidade) — Apaga mensagens do chat.
 
