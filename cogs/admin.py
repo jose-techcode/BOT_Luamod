@@ -101,8 +101,8 @@ class Admin(commands.Cog):
                 if not warns[guild_id]:
                     del warns[guild_id]
                     
-                    salvar_avisos(warns)
-                    await ctx.send(f"{member.mention} foi desavisado completamente!")
+                salvar_avisos(warns)
+                await ctx.send(f"{member.mention} foi desavisado completamente!")
             
             else:
                 await ctx.send(f"{member.mention} não tem avisos registrados neste servidor!")
@@ -136,8 +136,8 @@ class Admin(commands.Cog):
                 message = "**Avisos:**\n\n"
                 reasons = "\n".join(f"{i+1}. {m}" for i, m in enumerate(warns_usuario))
                 member = await self.bot.fetch_user(int(user_id))
-                mensagem += f"{member.mention} - {member} - {member.id} - {len(warns_usuario)} aviso(s):```{reasons}```"
-                await ctx.send(mensagem[:2000]) # Limite de caracteres
+                message += f"{member.mention} - {member} - {member.id} - {len(warns_usuario)} aviso(s):```{reasons}```"
+                await ctx.send(message[:2000]) # Limite de caracteres
             
             else:
                 await ctx.send(f"{member.mention} não tem nenhum aviso registrado.")
