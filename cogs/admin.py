@@ -2,6 +2,8 @@ import discord
 from discord.ext import commands
 import asyncio
 from datetime import timedelta
+from storage import DEV_ID
+import logging
 import re
 import json
 import os
@@ -28,11 +30,11 @@ class Admin(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.regex_links = [
-    re.compile(r"https?://\S+"),
-    re.compile(r"\[([^\]]+)\]\((https?://[^\s\)]+)\)"),
-    re.compile(r"(https?:\/\/)?(www\.)?(discord\.gg|discord\.com\/invite)\/[a-zA-Z0-9]+"),
-    re.compile(r"https?://(bit\.ly|tinyurl\.com|t\.co|is\.gd|goo\.gl)/\S+"),
-    re.compile(r"\b(?:www\.)?[a-zA-Z0-9\-]+\.[a-z]{2,}(?:\/\S*)?\b")
+    re.compile(r"https?://\S+"), # Regex de link genérico
+    re.compile(r"\[([^\]]+)\]\((https?://[^\s\)]+)\)"), # Regex de link mais específico
+    re.compile(r"(https?:\/\/)?(www\.)?(discord\.gg|discord\.com\/invite)\/[a-zA-Z0-9]+"), # Regex de link de discord
+    re.compile(r"https?://(bit\.ly|tinyurl\.com|t\.co|is\.gd|goo\.gl)/\S+"), # Regex de links variados
+    re.compile(r"\b(?:www\.)?[a-zA-Z0-9\-]+\.[a-z]{2,}(?:\/\S*)?\b") # Regex de falso positivo
 ]
 
     @commands.Cog.listener()
@@ -60,21 +62,27 @@ class Admin(commands.Cog):
     @commands.has_permissions(manage_messages=True)
     async def avisar(self, ctx, member: commands.MemberConverter, *, motivo: str):
         try:
-            avisos = carregar_avisos()
+            
+            warns = carregar_avisos()
             user_id = str(member.id)
             guild_id = str(ctx.guild.id)
             
-            if guild_id not in avisos:
-                avisos[guild_id] = {}
+            if guild_id not in warns:
+                warns[guild_id] = {}
             
-            if user_id not in avisos[guild_id]:
-                avisos[guild_id][user_id] = []
+            if user_id not in warns[guild_id]:
+                warns[guild_id][user_id] = []
 
-            avisos[guild_id][user_id].append(motivo)
-            salvar_avisos(avisos)
+            warns[guild_id][user_id].append(motivo)
+            salvar_avisos(warns)
             await ctx.send(f"{member.mention} foi avisado por: {motivo}")
+        
         except Exception as e:
-            await ctx.send(f"Erro ao avisar o usuário! Erro: {e}")
+            logging.exception(f"Erro no comando.")
+            if ctx.author.id == DEV_ID:
+                await ctx.send(f"Erro: {e}")
+            else:
+                await ctx.send("Algo deu errado...")
 
     # Comando: desavisar
 
@@ -82,23 +90,29 @@ class Admin(commands.Cog):
     @commands.has_permissions(manage_messages=True)
     async def desavisar(self, ctx, member: commands.MemberConverter):
         try:
-            avisos = carregar_avisos()
+            
+            warns = carregar_avisos()
             user_id = str(member.id)
             guild_id = str(ctx.guild.id)
             
-            if guild_id in avisos and user_id in avisos[guild_id]:
-                del avisos[guild_id][user_id]
+            if guild_id in warns and user_id in warns[guild_id]:
+                del warns[guild_id][user_id]
                 
-                if not avisos[guild_id]:
-                    del avisos[guild_id]
+                if not warns[guild_id]:
+                    del warns[guild_id]
                     
-                    salvar_avisos(avisos)
+                    salvar_avisos(warns)
                     await ctx.send(f"{member.mention} foi desavisado completamente!")
             
             else:
                 await ctx.send(f"{member.mention} não tem avisos registrados neste servidor!")
+        
         except Exception as e:
-            await ctx.send(f"Erro ao desavisar o usuário! Erro: {e}")
+            logging.exception(f"Erro no comando.")
+            if ctx.author.id == DEV_ID:
+                await ctx.send(f"Erro: {e}")
+            else:
+                await ctx.send("Algo deu errado...")
 
 
     # Comando: avisos
@@ -109,25 +123,31 @@ class Admin(commands.Cog):
         # self.bot.fetch_user serve para buscar o ID do usuário pela API do discord
         # motivos é uma variável que enumera os motivos dos avisos em determinado usuário
         try:
-            membro = member or ctx.author
-            user_id = str(membro.id)
+            
+            member = member or ctx.author
+            user_id = str(member.id)
             guild_id = str(ctx.guild.id)
             
-            avisos = carregar_avisos()
-            avisos_guild = avisos.get(guild_id, {})
-            avisos_usuario = avisos_guild.get(user_id, [])
+            warns = carregar_avisos()
+            warns_guild = warns.get(guild_id, {})
+            warns_usuario = warns_guild.get(user_id, [])
             
-            if avisos_usuario:
-                mensagem = "**Avisos:**\n\n"
-                motivos = "\n".join(f"{i+1}. {m}" for i, m in enumerate(avisos_usuario))
-                membro = await self.bot.fetch_user(int(user_id))
-                mensagem += f"{membro.mention} - {membro} - {membro.id} - {len(avisos_usuario)} aviso(s):```{motivos}```"
+            if warns_usuario:
+                message = "**Avisos:**\n\n"
+                reasons = "\n".join(f"{i+1}. {m}" for i, m in enumerate(warns_usuario))
+                member = await self.bot.fetch_user(int(user_id))
+                mensagem += f"{member.mention} - {member} - {member.id} - {len(warns_usuario)} aviso(s):```{reasons}```"
                 await ctx.send(mensagem[:2000]) # Limite de caracteres
             
             else:
-                await ctx.send(f"{membro.mention} não tem nenhum aviso registrado.")
+                await ctx.send(f"{member.mention} não tem nenhum aviso registrado.")
+        
         except Exception as e:
-            await ctx.send(f"Erro ao ver os avisos! Erro: {e}")
+            logging.exception(f"Erro no comando.")
+            if ctx.author.id == DEV_ID:
+                await ctx.send(f"Erro: {e}")
+            else:
+                await ctx.send("Algo deu errado...")
 
     # Comando: avisados
 
@@ -135,17 +155,18 @@ class Admin(commands.Cog):
     @commands.has_permissions(manage_messages=True)
     async def avisados(self, ctx):
         try:
-            guild_id = str(ctx.guild.id)
-            avisos = carregar_avisos()
-            avisos_guild = avisos.get(guild_id, {})
             
-            if not avisos_guild:
+            guild_id = str(ctx.guild.id)
+            warns = carregar_avisos()
+            warns_guild = warns.get(guild_id, {})
+            
+            if not warns_guild:
                 await ctx.send("Nenhum usuário foi avisado neste servidor.")
                 return
             
             mensagem = "**Lista de usuários avisados neste servidor:**\n\n"
             
-            for user_id, lista in avisos_guild.items():
+            for user_id, lista in warns_guild.items():
                 if not lista:
                     continue  # Ignora se a lista estiver vazia
                 
@@ -157,8 +178,13 @@ class Admin(commands.Cog):
             
             else:
                 await ctx.send(mensagem[:2000])
+        
         except Exception as e:
-            await ctx.send(f"Erro ao ver a lista de avisos! Erro: {e}")
+            logging.exception(f"Erro no comando.")
+            if ctx.author.id == DEV_ID:
+                await ctx.send(f"Erro: {e}")
+            else:
+                await ctx.send("Algo deu errado...")
 
     # Comando: apagar
 
@@ -172,7 +198,11 @@ class Admin(commands.Cog):
             await ctx.channel.purge(limit=quantidade_mensagens)
             await ctx.send(f"Foram apagadas {quantidade_mensagens} mensagens.", delete_after=5)
         except Exception as e:
-            await ctx.send(f"Não foi possível apagar as mensagens! Erro: {e}")
+            logging.exception(f"Erro no comando.")
+            if ctx.author.id == DEV_ID:
+                await ctx.send(f"Erro: {e}")
+            else:
+                await ctx.send("Algo deu errado...")
 
     # Comando: lentear
 
@@ -185,7 +215,11 @@ class Admin(commands.Cog):
             await ctx.channel.edit(slowmode_delay=tempo)
             await ctx.send(f"O modo lento foi definido para {tempo} segundos")
         except Exception as e:
-            await ctx.send(f"Não foi possível definir um tempo de lentidão no canal! Erro: {e}")
+            logging.exception(f"Erro no comando.")
+            if ctx.author.id == DEV_ID:
+                await ctx.send(f"Erro: {e}")
+            else:
+                await ctx.send("Algo deu errado...")
 
     # Comando: trancar
 
@@ -201,7 +235,11 @@ class Admin(commands.Cog):
             await ctx.channel.set_permissions(ctx.guild.default_role, overwrite=overwrite)
             await ctx.send("Canal trancado!")
         except Exception as e:
-            await ctx.send(f"Não foi possível trancar o canal! Erro: {e}")
+            logging.exception(f"Erro no comando.")
+            if ctx.author.id == DEV_ID:
+                await ctx.send(f"Erro: {e}")
+            else:
+                await ctx.send("Algo deu errado...")
 
     # Comando: destrancar
 
@@ -217,7 +255,11 @@ class Admin(commands.Cog):
             await ctx.channel.set_permissions(ctx.guild.default_role, overwrite=overwrite)
             await ctx.send("Canal destrancado!")
         except Exception as e:
-            await ctx.send(f"Não foi possível destrancar o canal! Erro: {e}")
+            logging.exception(f"Erro no comando.")
+            if ctx.author.id == DEV_ID:
+                await ctx.send(f"Erro: {e}")
+            else:
+                await ctx.send("Algo deu errado...")
 
     # Comando: silenciar (dessilenciar automático)
 
@@ -230,7 +272,11 @@ class Admin(commands.Cog):
             reason="Motivo não especificado")
             await ctx.send(f"{member.mention} foi silenciado por {tempo} minuto(s).")
         except Exception as e:
-            await ctx.send(f"Não foi possível silenciar o usuário! Erro: {e}")
+            logging.exception(f"Erro no comando.")
+            if ctx.author.id == DEV_ID:
+                await ctx.send(f"Erro: {e}")
+            else:
+                await ctx.send("Algo deu errado...")
 
     # Comando: dessilenciar (manual)
 
@@ -242,7 +288,11 @@ class Admin(commands.Cog):
             await member.timeout(None, reason="Dessilenciado manualmente com sucesso!")
             await ctx.send(f"{member.mention} foi dessilenciado manualmente ou automaticamente!")
         except Exception as e:
-            await ctx.send(f"Não foi possível dessilenciar o membro! Erro: {e}")
+            logging.exception(f"Erro no comando.")
+            if ctx.author.id == DEV_ID:
+                await ctx.send(f"Erro: {e}")
+            else:
+                await ctx.send("Algo deu errado...")
 
     # Comando: expulsar
 
@@ -254,7 +304,11 @@ class Admin(commands.Cog):
             await member.kick(reason=motivo)
             await ctx.send(f"{member.mention} foi expulso do servidor! Motivo: {motivo}")
         except Exception as e:
-            await ctx.send(f"Não foi possível expulsar determinado membro! Erro: {e}")
+            logging.exception(f"Erro no comando.")
+            if ctx.author.id == DEV_ID:
+                await ctx.send(f"Erro: {e}")
+            else:
+                await ctx.send("Algo deu errado...")
 
     # Comando: banir
 
@@ -266,7 +320,11 @@ class Admin(commands.Cog):
             await member.ban(reason=motivo)
             await ctx.send(f"{member.mention} foi banido do servidor! Motivo: {motivo}")
         except Exception as e:
-            await ctx.send(f"Não foi possível banir determinado membro! Erro: {e}")
+            logging.exception(f"Erro no comando.")
+            if ctx.author.id == DEV_ID:
+                await ctx.send(f"Erro: {e}")
+            else:
+                await ctx.send("Algo deu errado...")
 
     # Comando: desbanir
 
@@ -280,7 +338,12 @@ class Admin(commands.Cog):
             await ctx.guild.unban(user)
             await ctx.send(f"O usuário {user.mention} foi desbanido com sucesso!")
         except Exception as e:
-            await ctx.send(f"Não foi possível desbanir o usuário com ID {user_id}. Erro: {e}")
+            logging.exception(f"Erro no comando.")
+            if ctx.author.id == DEV_ID:
+                await ctx.send(f"Erro: {e}")
+            else:
+                await ctx.send("Algo deu errado...")
+
 
 # Registro de cog
 

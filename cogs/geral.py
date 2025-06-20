@@ -2,6 +2,8 @@ import discord
 from discord.ext import commands
 import asyncio
 from datetime import timedelta
+import logging
+from storage import DEV_ID
 
 # --Comandos gerais: help, lua, ping, avatar, info, infoserver
 
@@ -21,7 +23,11 @@ class Geral(commands.Cog):
             await ctx.send("Olá, me chamo Lua! Sou um bot inspirado na linguagem de programação Lua! Mas meus comandos são escritos em Python!")
             await ctx.send("https://pt.wikipedia.org/wiki/Lua_%28linguagem_de_programa%C3%A7%C3%A3o%29")
         except Exception as e:
-            await ctx.send(f"Erro: {e}")
+            logging.exception(f"Erro no comando.")
+            if ctx.author.id == DEV_ID:
+                await ctx.send(f"Erro: {e}")
+            else:
+                await ctx.send("Algo deu errado...")
 
     # Comando: ping
         
@@ -32,7 +38,11 @@ class Geral(commands.Cog):
             latency = round(self.bot.latency * 1000)
             await ctx.send(f"A latência é: {latency}ms")
         except Exception as e:
-            await ctx.send(f"Erro ao executar o comando !ping: {e}")
+            logging.exception(f"Erro no comando.")
+            if ctx.author.id == DEV_ID:
+                await ctx.send(f"Erro: {e}")
+            else:
+                await ctx.send("Algo deu errado...")
     
     # Comando: avatar
 
@@ -56,7 +66,11 @@ class Geral(commands.Cog):
                      icon_url=ctx.author.avatar.url if ctx.author.avatar else None)
             await ctx.send(embed=embed)
         except Exception as e:
-            await ctx.send(f"Erro ao ver o avatar: {e}")
+            logging.exception(f"Erro no comando.")
+            if ctx.author.id == DEV_ID:
+                await ctx.send(f"Erro: {e}")
+            else:
+                await ctx.send("Algo deu errado...")
 
     # Comando: infouser
 
@@ -87,7 +101,11 @@ class Geral(commands.Cog):
             embed.add_field(name="Cargos", value=", ".join(roles) if roles else "Nenhum", inline=False) # join(roles)
             await ctx.send(embed=embed)
         except Exception as e:
-            await ctx.send(f"Erro ao obter informações! Erro: {e}")
+            logging.exception(f"Erro no comando.")
+            if ctx.author.id == DEV_ID:
+                await ctx.send(f"Erro: {e}")
+            else:
+                await ctx.send("Algo deu errado...")
 
     # Comando: infoserver
 
@@ -120,7 +138,11 @@ class Geral(commands.Cog):
             guild.voice_channels), inline=True) # guild.voice_channels
             await ctx.send(embed=embed)
         except Exception as e:
-            await ctx.send(f"Erro ao executar o comando de informações do servidor: {e}")
+            logging.exception(f"Erro no comando.")
+            if ctx.author.id == DEV_ID:
+                await ctx.send(f"Erro: {e}")
+            else:
+                await ctx.send("Algo deu errado...")
 
     # Comando: infobot
 
@@ -152,7 +174,11 @@ class Geral(commands.Cog):
             embed.set_footer(text="Desenvolvido no estilo php por Joseph.")
             await ctx.send(embed=embed)
         except Exception as e:
-            await ctx.send(f"Erro ao executar o comando de informações do bot: {e}")
+            logging.exception(f"Erro no comando.")
+            if ctx.author.id == DEV_ID:
+                await ctx.send(f"Erro: {e}")
+            else:
+                await ctx.send("Algo deu errado...")
 
 # Registro de cog
 
