@@ -149,11 +149,11 @@ class Admin(commands.Cog):
             else:
                 await ctx.send("Algo deu errado...")
 
-    # Comando: avisados
+    # Comando: listaavisos
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def avisados(self, ctx):
+    async def listaavisos(self, ctx):
         try:
             
             guild_id = str(ctx.guild.id)
