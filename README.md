@@ -6,7 +6,7 @@ O "Bot Lua" é um bot de discord em que a sua atribuição principal é moderar 
 
 I. Membros comuns
 
-- help — Mostra a lista de comandos.
+- ajuda — Mostra a lista de comandos.
 
 - lua — Mostra um easter egg do bot.
 
