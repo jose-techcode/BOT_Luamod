@@ -10,41 +10,41 @@ I. Membros comuns
 
 - lua — Mostra um easter egg do bot.
 
-- avatar (pessoa) — Exibe o avatar de um membro.
+- avatar <pessoa> — Exibe o avatar de um membro.
 
-- infobot — Mostra informações do seu perfil.
-
-- infouser (pessoa) - Mostra as informações do usuário.
+- infouser <pessoa> - Mostra as informações do usuário.
 
 - infoserver — Exibe informações do servidor.
 
+- infobot — Mostra informações do perfil do bot.
+
 II. Moderadores
 
-- avisar (usuário) (motivo) - Avisa um usuário.
+- avisar <usuário> <motivo> - Avisa um usuário.
 
-- desavisar (usuário) - Retira todos os avisos do usuário.
+- desavisar <usuário> - Retira todos os avisos do usuário.
 
-- avisos (usuário) - Vê a quantidade e o(s) motivo(s) do(s) aviso(s) de um usuário.
+- avisos <usuário> - Vê a quantidade e o(s) motivo(s) do(s) aviso(s) de um usuário.
 
 - listaavisos - Vê o(s) usuário(s) avisado(s) e a quantidade de aviso(s) que cada um tem.
 
-- apagar (quantidade) — Apaga mensagens do chat.
+- apagar <quantidade> — Apaga mensagens do chat.
 
-- lentear (segundos) — Ativa o modo lento no canal.
+- lentear <segundos> — Ativa o modo lento no canal.
 
 - trancar - Tranca um canal.
 
 - destrancar - Destranca um canal que estava trancado.
 
-- silenciar (membro) (minutos) — Silencia um membro temporariamente.
+- silenciar <membro> <minutos> — Silencia um membro temporariamente.
 
-- dessilenciar (membro) — Remove o silêncio de um membro.
+- dessilenciar <membro> — Remove o silêncio de um membro.
 
-- expulsar (membro) — Expulsa um membro do servidor.
+- expulsar <membro> — Expulsa um membro do servidor.
 
-- banir (membro) — Bane um membro do servidor.
+- banir <membro> — Bane um membro do servidor.
 
-- desbanir (ID) — Remove o banimento de um usuário pelo ID.
+- desbanir <ID> — Remove o banimento de um usuário pelo ID.
 
 III. Desenvolvedores
 
@@ -70,7 +70,7 @@ III. Desenvolvedores
 - Bash
 
 Clone o repositório
-git clone https://github.com/jose-techcode/projeto_lua
+git clone https://github.com/jose-techcode/Bot_Lua
 
 # 5. Pasta do Projeto
 
