@@ -27,17 +27,17 @@ class Geral(commands.Cog):
         embed.add_field(name="I. Membros comuns", value="""
 `?ajuda` — Mostra a lista de comandos.
 `?lua` — Mostra um easter egg do bot.
-`?avatar <pessoa>` — Exibe o avatar de um membro.
-`?infouser <pessoa> — Mostra as informações do usuário.
+`?avatar <membro>` — Exibe o avatar de um membro.
+`?infouser <membro> — Mostra as informações do usuário.
 `?infoserver` — Exibe informações do servidor.
 `?infobot` — Mostra informações do seu perfil.                        
 """, inline=False)
 
         # II. Moderadores
         embed.add_field(name="II. Moderadores", value="""
-`?avisar <usuário> <motivo>` — Avisa um usuário.
-`?desavisar <usuário>` — Retira todos os avisos do usuário.
-`?avisos <usuário>` — Vê a quantidade e motivo dos avisos de um usuário.
+`?avisar <membro> <motivo>` — Avisa um usuário.
+`?desavisar <membro>` — Retira todos os avisos do usuário.
+`?avisos <membro>` — Vê a quantidade e motivo dos avisos de um usuário.
 `?listaavisos` — Vê usuários avisados e quantidade de avisos.
 `?apagar <quantidade>` — Apaga mensagens do chat.
 `?lentear <segundos>` — Ativa o modo lento no canal.
