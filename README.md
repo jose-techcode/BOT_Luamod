@@ -6,17 +6,17 @@ O "Bot Lua" é um bot de discord em que a sua atribuição principal é moderar 
 
 I. Membros comuns
 
-- ajuda — Mostra a lista de comandos.
+- ajuda - Mostra a lista de comandos.
 
-- lua — Mostra um easter egg do bot.
+- lua - Mostra um easter egg do bot.
 
-- avatar < membro > — Exibe o avatar de um membro.
+- avatar < membro > - Exibe o avatar de um membro.
 
 - infouser < membro > - Mostra as informações do usuário.
 
-- infoserver — Exibe informações do servidor.
+- infoserver - Exibe informações do servidor.
 
-- infobot — Mostra informações do perfil do bot.
+- infobot - Mostra informações do perfil do bot.
 
 II. Moderadores
 
@@ -28,23 +28,23 @@ II. Moderadores
 
 - listaavisos - Vê o(s) usuário(s) avisado(s) e a quantidade de aviso(s) que cada um tem.
 
-- apagar < quantidade > — Apaga mensagens do chat.
+- apagar < quantidade > - Apaga mensagens do chat.
 
-- lentear < segundos > — Ativa o modo lento no canal.
+- lentear < segundos > - Ativa o modo lento no canal.
 
 - trancar - Tranca um canal.
 
 - destrancar - Destranca um canal que estava trancado.
 
-- silenciar < membro > < minutos > — Silencia um membro temporariamente.
+- silenciar < membro > < minutos > - Silencia um membro temporariamente.
 
-- dessilenciar < membro > — Remove o silêncio de um membro.
+- dessilenciar < membro > - Remove o silêncio de um membro.
 
-- expulsar < membro > — Expulsa um membro do servidor.
+- expulsar < membro > - Expulsa um membro do servidor.
 
-- banir < membro > — Bane um membro do servidor.
+- banir < membro > - Bane um membro do servidor.
 
-- desbanir < ID > — Remove o banimento de um usuário pelo ID.
+- desbanir < ID > - Remove o banimento de um usuário pelo ID.
 
 III. Desenvolvedores
 
