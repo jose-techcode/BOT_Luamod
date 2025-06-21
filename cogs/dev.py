@@ -8,8 +8,6 @@ import sys
 from storage import DEV_ID
 from checks import is_dev
 
-# --Comandos de dev: !reiniciar, !desligar, !verlogs, !limparlogs
-
 # Estrutura cog (herança)
 
 class Dev(commands.Cog):

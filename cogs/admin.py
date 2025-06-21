@@ -8,8 +8,6 @@ import re
 import json
 import os
 
-# --Comandos de moderação: avisar, desavisar, avisos, avisados, apagar, lentear, trancar, destrancar, silenciar, dessilenciar, expulsar, banir, desbanir
-
 # JSON
 
 ARQUIVO_JSON = "warns.json"

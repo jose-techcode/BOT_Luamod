@@ -5,8 +5,6 @@ from datetime import timedelta
 import logging
 from storage import DEV_ID
 
-# --Comandos gerais: help, lua, ping, avatar, info, infoserver
-
 # Estrutura cog (herança)
 
 class Geral(commands.Cog):
