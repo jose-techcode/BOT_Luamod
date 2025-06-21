@@ -61,7 +61,7 @@ class Admin(commands.Cog):
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def avisar(self, ctx, member: commands.MemberConverter, *, motivo: str):
+    async def avisar(self, ctx, member: commands.MemberConverter, *, reason: str):
         try:
             
             warns = carregar_avisos()
@@ -74,9 +74,14 @@ class Admin(commands.Cog):
             if user_id not in warns[guild_id]:
                 warns[guild_id][user_id] = []
 
-            warns[guild_id][user_id].append(motivo)
+            # Dicionário/Dict
+            warns[guild_id][user_id].append({
+                "reason": reason,
+                "moderator_id": ctx.author.id
+            })
+            
             salvar_avisos(warns)
-            await ctx.send(f"{member.mention} foi avisado por: {motivo}")
+            await ctx.send(f"{ctx.author.mention} avisou {member.mention}! Motivo: {reason}.")
         
         except Exception as e:
             logging.exception(f"Erro no comando.")
@@ -104,7 +109,7 @@ class Admin(commands.Cog):
                     del warns[guild_id]
                     
                 salvar_avisos(warns)
-                await ctx.send(f"{member.mention} foi desavisado completamente!")
+                await ctx.send(f"{member.mention} foi desavisado! Por: {ctx.author.mention}.")
             
             else:
                 await ctx.send(f"{member.mention} não tem avisos registrados neste servidor!")
@@ -124,7 +129,6 @@ class Admin(commands.Cog):
     @commands.has_permissions(manage_messages=True)
     async def avisos(self, ctx, member: commands.MemberConverter = None):
         # self.bot.fetch_user serve para buscar o ID do usuário pela API do discord
-        # motivos é uma variável que enumera os motivos dos avisos em determinado usuário
         try:
             
             member = member or ctx.author
@@ -136,12 +140,28 @@ class Admin(commands.Cog):
             warns_usuario = warns_guild.get(user_id, [])
             
             if warns_usuario:
-                message = "**Avisos:**\n\n"
-                reasons = "\n".join(f"{i+1}. {m}" for i, m in enumerate(warns_usuario))
+                reasons = ""
+                for i, warn in enumerate(warns_usuario):
+                    
+                    if isinstance(warn, str):
+                        reason = warn
+                        moderator_mention = "Desconhecido"
+                    
+                    else:
+                        reason = warn.get("reason", "Sem motivo")
+                        moderator_id = warn.get("moderator_id")
+                        moderator_mention = f"<@{moderator_id}>" if moderator_id else "Desconhecido"
+
+                    reasons += f"{i+1}. {reason} — Por: {moderator_mention}\n"
+                    
                 member = await self.bot.fetch_user(int(user_id))
-                message += f"{member.mention} - {member} - {member.id} - {len(warns_usuario)} aviso(s):```{reasons}```"
+                message = (
+                    f"**Avisos:**\n\n"
+                    f"{member.mention} - {member.id} - {len(warns_usuario)} aviso(s):\n"
+                    f"```{reasons}```"
+                )
                 await ctx.send(message[:2000]) # Limite de caracteres
-            
+
             else:
                 await ctx.send(f"{member.mention} não tem nenhum aviso registrado.")
         
@@ -168,20 +188,20 @@ class Admin(commands.Cog):
                 await ctx.send("Nenhum usuário foi avisado neste servidor.")
                 return
             
-            mensagem = "**Lista de usuários avisados neste servidor:**\n\n"
+            message = "**Lista de usuários avisados neste servidor:**\n\n"
             
             for user_id, lista in warns_guild.items():
                 if not lista:
                     continue  # Ignora se a lista estiver vazia
                 
-                membro = await self.bot.fetch_user(int(user_id))
-                mensagem += f"```{membro.name} - {membro} — {membro.id} - aviso(s): {len(lista)}```\n"
+                member = await self.bot.fetch_user(int(user_id))
+                message += f"```{member.name} - {member.id} - aviso(s): {len(lista)}```\n"
             
-            if mensagem.strip() == "**Lista de usuários avisados neste servidor:**":
+            if message.strip() == "**Lista de usuários avisados neste servidor:**":
                 await ctx.send("Nenhum usuário tem avisos ativos neste servidor.")
             
             else:
-                await ctx.send(mensagem[:2000])
+                await ctx.send(message[:2000])
         
         except Exception as e:
             logging.exception(f"Erro no comando.")
@@ -274,12 +294,12 @@ class Admin(commands.Cog):
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @commands.has_permissions(manage_roles=True)
-    async def silenciar(self, ctx, member: discord.Member, tempo: int):
+    async def silenciar(self, ctx, member: discord.Member, time: int):
         # member.timeout define a variável do tempo em que o usuário será silenciado
         try:
-            await member.timeout(timedelta(minutes=tempo),
+            await member.timeout(timedelta(minutes=time),
             reason="Motivo não especificado")
-            await ctx.send(f"{member.mention} foi silenciado por {tempo} minuto(s).")
+            await ctx.send(f"{member.mention} foi silenciado por {time} minuto(s).")
         except Exception as e:
             logging.exception(f"Erro no comando.")
             if ctx.author.id == DEV_ID:
@@ -309,11 +329,11 @@ class Admin(commands.Cog):
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @commands.has_permissions(kick_members=True)
-    async def expulsar(self, ctx, member: discord.Member, *, motivo="Não especificado"):
+    async def expulsar(self, ctx, member: discord.Member, *, reason="Não especificado"):
         # member.kick é um comando específico para expulsão
         try:
-            await member.kick(reason=motivo)
-            await ctx.send(f"{member.mention} foi expulso do servidor! Motivo: {motivo}")
+            await member.kick(reason=reason)
+            await ctx.send(f"{member.mention} foi expulso do servidor! Motivo: {reason}")
         except Exception as e:
             logging.exception(f"Erro no comando.")
             if ctx.author.id == DEV_ID:
@@ -326,11 +346,11 @@ class Admin(commands.Cog):
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @commands.has_permissions(ban_members=True)
-    async def banir(self, ctx, member: discord.Member, *, motivo="Não especificado"):
+    async def banir(self, ctx, member: discord.Member, *, reason="Não especificado"):
         # member.ban é um comando específico para banimento
         try:
-            await member.ban(reason=motivo)
-            await ctx.send(f"{member.mention} foi banido do servidor! Motivo: {motivo}")
+            await member.ban(reason=reason)
+            await ctx.send(f"{member.mention} foi banido do servidor! Motivo: {reason}")
         except Exception as e:
             logging.exception(f"Erro no comando.")
             if ctx.author.id == DEV_ID:
