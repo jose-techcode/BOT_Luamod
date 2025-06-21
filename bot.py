@@ -28,6 +28,8 @@ bot = commands.Bot(command_prefix="?", intents=intents)
 @bot.event
 async def on_ready():
     print(f"[LOG] Bot conectado como {bot.user.name} - {bot.user.id}")
+    activity = discord.Game(name="Lua")
+    await bot.change_presence(status=discord.Status.online, activity=activity)
 
 # Tratamento de erros globais
 
