@@ -28,7 +28,7 @@ class Geral(commands.Cog):
 `?ajuda` — Mostra a lista de comandos.
 `?lua` — Mostra um easter egg do bot.
 `?avatar <membro>` — Exibe o avatar de um membro.
-`?infouser <membro> — Mostra as informações do usuário.
+`?infouser <membro>` — Mostra as informações do usuário.
 `?infoserver` — Exibe informações do servidor.
 `?infobot` — Mostra informações do seu perfil.                        
 """, inline=False)
