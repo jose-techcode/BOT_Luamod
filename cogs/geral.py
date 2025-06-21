@@ -27,27 +27,27 @@ class Geral(commands.Cog):
         embed.add_field(name="I. Membros comuns", value="""
 `?ajuda` — Mostra a lista de comandos.
 `?lua` — Mostra um easter egg do bot.
-`?avatar (pessoa)` — Exibe o avatar de um membro.
+`?avatar <pessoa>` — Exibe o avatar de um membro.
 `?infobot` — Mostra informações do seu perfil.
-`?infouser (pessoa)` — Mostra as informações do usuário.
+`?infouser` — Mostra as informações do usuário.
 `?infoserver` — Exibe informações do servidor.
 """, inline=False)
 
         # II. Moderadores
         embed.add_field(name="II. Moderadores", value="""
-`?avisar (usuário) (motivo)` — Avisa um usuário.
-`?desavisar (usuário)` — Retira todos os avisos do usuário.
-`?avisos (usuário)` — Vê a quantidade e motivo dos avisos de um usuário.
+`?avisar <usuário> <motivo>` — Avisa um usuário.
+`?desavisar <usuário>` — Retira todos os avisos do usuário.
+`?avisos <usuário>` — Vê a quantidade e motivo dos avisos de um usuário.
 `?listaavisos` — Vê usuários avisados e quantidade de avisos.
-`?apagar (quantidade)` — Apaga mensagens do chat.
-`?lentear (segundos)` — Ativa o modo lento no canal.
+`?apagar <quantidade>` — Apaga mensagens do chat.
+`?lentear <segundos>` — Ativa o modo lento no canal.
 `?trancar` — Tranca um canal.
 `?destrancar` — Destranca um canal trancado.
-`?silenciar (membro) (minutos)` — Silencia um membro temporariamente.
-`?dessilenciar (membro)` — Remove o silêncio de um membro.
-`?expulsar (membro)` — Expulsa um membro do servidor.
-`?banir (membro)` — Bane um membro do servidor.
-`?desbanir (ID)` — Remove o banimento de um usuário pelo ID.
+`?silenciar <membro> <minutos>` — Silencia um membro temporariamente.
+`?dessilenciar <membro>` — Remove o silêncio de um membro.
+`?expulsar <membro>` — Expulsa um membro do servidor.
+`?banir <membro>` — Bane um membro do servidor.
+`?desbanir <ID>` — Remove o banimento de um usuário pelo ID.
 """, inline=False)
 
         # III. Desenvolvedores — só para DEV_ID
