@@ -143,7 +143,6 @@ class Geral(commands.Cog):
             )
             embed.set_thumbnail(url=member.display_avatar.url) # member.display_avat.url
             embed.add_field(name="Nome", value=member.name, inline=True) # member.name
-            embed.add_field(name="Tag", value=f"{member}", inline=True) # {member}
             embed.add_field(name="ID", value=member.id, inline=True) # member.id
             embed.add_field(name="Conta criada em", value=member.created_at.strftime("%d/%m/%Y %H:%M"), inline=False) # member.created.at.strftime
             embed.add_field(name="Entrou no servidor", value=member.joined_at.strftime("%d/%m/%Y %H:%M"), inline=False) # member.joined_at.strftime
