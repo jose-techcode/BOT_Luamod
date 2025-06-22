@@ -60,18 +60,18 @@ class Dev(commands.Cog):
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @is_dev()
-    async def verlog(self, ctx, linhas: int = 10):
+    async def verlog(self, ctx, lines: int = 10):
         # content é a variável que exibe as últimas linhas 
         try:
             with open("bot.log", "r", encoding="utf-8") as f:
-                todas = f.readlines()
-                ultimas = todas[-linhas:] if len(todas) >= linhas else todas
+                all = f.readlines()
+                lasts = all[-lines:] if len(all) >= lines else all
 
-            content = ''.join(ultimas)
+            content = ''.join(lasts)
             if len(content) > 1900:
                 content = content[-1900:]  # Evita ultrapassar limite do Discord
 
-            await ctx.send(f"Últimas {linhas} linhas do log:\n```{content}```")
+            await ctx.send(f"Últimas {lines} linhas do log:\n```{content}```")
         except Exception as e:
             logging.exception(f"Erro no comando.")
             if ctx.author.id == DEV_ID:
