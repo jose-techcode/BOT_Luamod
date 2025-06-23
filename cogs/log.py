@@ -26,10 +26,13 @@ class Log(commands.Cog):
         
         if not log_channel:
             return
+        
+        time = message_before.created_at.strftime('%d/%m/%Y %H:%M:%S')
 
         await log_channel.send(
         f"Mensagem editada em {message_before.channel.mention}\n"
         f"Autor: {message_before.author.mention}\n"
+        f"Horário: {time}\n"
         f"Antes: {message_before.content}\n"
         f"Depois: {message_after.content}"
         )
@@ -48,13 +51,41 @@ class Log(commands.Cog):
         
         author = message.author.mention if message.author else "Autor desconhecido"
         content = message.content or "*Sem conteúdo textual (pode ter sido um anexo, embed ou imagem)*"
-
+        time = message.created_at.strftime('%d/%m/%Y %H:%M:%S') 
+ 
         await log_channel.send(
         f"Mensagem deletada em {message.channel.mention}\n"
         f"Autor: {author}\n"
-        f"Conteúdo: {content}"
+        f"Conteúdo: {content}\n"
+        f"Horário: {time}"
         )
+
+    # Bulk_message_delete
+
+    @commands.Cog.listener()
+    async def on_bulk_message_delete(self, messages):
+
+        guild = messages[0].guild
+        log_channel = discord.utils.get(guild.text_channels, name='log')
+
+        if not log_channel:
+            return
+        
+        messages = sorted(messages, key=lambda m: m.created_at) # Ordem de horário de envio
+
+        content_log = ""
+        for msg in messages:
+            author = msg.author if msg.author else "Autor desconhecido"
+            content = msg.content or "[Sem conteúdo]"
+            content_log += f"`{msg.created_at.strftime('%H:%M:%S')}` {author.mention}: {content}\n"
             
+        if len(content_log) > 1900:
+            content_log = content_log[:1900] + "\n... (log cortado)" # Limite de caracteres do discord: 2000
+
+        await log_channel.send(
+        f"{len(messages)} Mensagens deletadas em massa em {messages[0].channel.mention}:\n{content_log}"
+        )
+
     # 2. Membros
 
     # Member_join
