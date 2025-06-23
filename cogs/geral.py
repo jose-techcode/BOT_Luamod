@@ -11,6 +11,36 @@ class Geral(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    # Comando: lua
+
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    @commands.command()
+    async def lua(self, ctx):
+        try:
+            await ctx.send("Olá, me chamo Lua! Sou um bot inspirado na linguagem de programação Lua! Mas meus comandos são escritos em Python!")
+            await ctx.send("https://pt.wikipedia.org/wiki/Lua_%28linguagem_de_programa%C3%A7%C3%A3o%29")
+        except Exception as e:
+            logging.exception(f"Erro no comando.")
+            if ctx.author.id == DEV_ID:
+                await ctx.send(f"Erro: {e}")
+            else:
+                await ctx.send("Algo deu errado...")
+
+    # Comando: ping
+        
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    @commands.command()
+    async def ping(self, ctx):
+        try:
+            latency = round(self.bot.latency * 1000)
+            await ctx.send(f"A latência é: {latency}ms")
+        except Exception as e:
+            logging.exception(f"Erro no comando.")
+            if ctx.author.id == DEV_ID:
+                await ctx.send(f"Erro: {e}")
+            else:
+                await ctx.send("Algo deu errado...")
+    
     # Comando: ajuda
     
     @commands.cooldown(1, 5, commands.BucketType.user)
@@ -23,12 +53,13 @@ class Geral(commands.Cog):
         )
         # I. Membros comuns
         embed.add_field(name="I. Membros comuns", value="""
-`?ajuda` — Mostra a lista de comandos.
 `?lua` — Mostra um easter egg do bot.
-`?avatar <membro>` — Exibe o avatar de um membro.
+`?ping` - Mostra a latência do bot.
+`?ajuda` — Mostra a lista de comandos.
+`?avatar <membro>` — Mostra o avatar de um membro.
 `?infouser <membro>` — Mostra as informações do usuário.
-`?infoserver` — Exibe informações do servidor.
-`?infobot` — Mostra informações do seu perfil.                        
+`?infoserver` — Mostra informações do servidor.
+`?infobot` — Mostra informações do bot.                        
 """, inline=False)
 
         # II. Moderadores
@@ -60,36 +91,6 @@ class Geral(commands.Cog):
         embed.set_footer(text="Bot de Moderação")
         await ctx.send(embed=embed)
 
-    # Comando: lua
-
-    @commands.cooldown(1, 5, commands.BucketType.user)
-    @commands.command()
-    async def lua(self, ctx):
-        try:
-            await ctx.send("Olá, me chamo Lua! Sou um bot inspirado na linguagem de programação Lua! Mas meus comandos são escritos em Python!")
-            await ctx.send("https://pt.wikipedia.org/wiki/Lua_%28linguagem_de_programa%C3%A7%C3%A3o%29")
-        except Exception as e:
-            logging.exception(f"Erro no comando.")
-            if ctx.author.id == DEV_ID:
-                await ctx.send(f"Erro: {e}")
-            else:
-                await ctx.send("Algo deu errado...")
-
-    # Comando: ping
-        
-    @commands.cooldown(1, 5, commands.BucketType.user)
-    @commands.command()
-    async def ping(self, ctx):
-        try:
-            latency = round(self.bot.latency * 1000)
-            await ctx.send(f"A latência é: {latency}ms")
-        except Exception as e:
-            logging.exception(f"Erro no comando.")
-            if ctx.author.id == DEV_ID:
-                await ctx.send(f"Erro: {e}")
-            else:
-                await ctx.send("Algo deu errado...")
-    
     # Comando: avatar
 
     @commands.cooldown(1, 5, commands.BucketType.user)
@@ -220,7 +221,7 @@ class Geral(commands.Cog):
                     value=f"{len(set(self.bot.get_all_members()))}", inline=True) # {len(set(commands.get_all_member()))}
             embed.add_field(name="Latência",
                     value=f"{round(self.bot.latency * 1000)}ms", inline=True) # {round(commands.latency * 1000)}   
-            embed.set_footer(text="Desenvolvido no estilo php por Joseph.")
+            embed.set_footer(text="Desenvolvido por Joseph.")
             await ctx.send(embed=embed)
         except Exception as e:
             logging.exception(f"Erro no comando.")
