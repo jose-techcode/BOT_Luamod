@@ -79,7 +79,7 @@ class Admin(commands.Cog):
             })
             
             salvar_avisos(warns)
-            await ctx.send(f"{ctx.author.mention} avisou {member.mention}! Motivo: {reason}.")
+            await ctx.send(f"{ctx.author.mention} Avisou {member.mention}! Motivo: {reason}.")
         
         except Exception as e:
             logging.exception(f"Erro no comando.")
@@ -107,10 +107,10 @@ class Admin(commands.Cog):
                     del warns[guild_id]
                     
                 salvar_avisos(warns)
-                await ctx.send(f"{member.mention} foi desavisado! Por: {ctx.author.mention}.")
+                await ctx.send(f"{ctx.author.mention} Desavisou {member.mention}!")
             
             else:
-                await ctx.send(f"{member.mention} não tem avisos registrados neste servidor!")
+                await ctx.send(f"{member.mention} Não tem avisos registrados neste servidor!")
         
         except Exception as e:
             logging.exception(f"Erro no comando.")
@@ -150,18 +150,32 @@ class Admin(commands.Cog):
                         moderator_id = warn.get("moderator_id")
                         moderator_mention = f"<@{moderator_id}>" if moderator_id else "Desconhecido"
 
-                    reasons += f"{i+1}. {reason} — Por: {moderator_mention}\n"
+                    reasons += f"{i+1}. {reason} — Avisado por: {moderator_mention}\n"
                     
+                # Limitar tamanho do reasons para o embed
+                
+                max_len = 1000
+                if len(reasons) > max_len:
+                    reasons = reasons[:max_len] + "\n...(texto cortado)..."
+                
                 member = await self.bot.fetch_user(int(user_id))
-                message = (
-                    f"**Avisos:**\n\n"
-                    f"{member.mention} - {member.id} - {len(warns_usuario)} aviso(s):\n"
-                    f"```{reasons}```"
+                
+                embed = discord.Embed(
+                    title="Avisos",
+                    description=f"{member.mention} - `{member.id}`\n\nPossui **{len(warns_usuario)} aviso(s)**.",
+                    color=discord.Color.green()
                 )
-                await ctx.send(message[:2000]) # Limite de caracteres
+                
+                embed.add_field(
+                    name="Motivos:",
+                    value=f"{reasons}",
+                    inline=False
+                )
+
+                await ctx.send(embed=embed)
 
             else:
-                await ctx.send(f"{member.mention} não tem nenhum aviso registrado.")
+                await ctx.send(f"{member.mention} Não tem nenhum aviso registrado.")
         
         except Exception as e:
             logging.exception(f"Erro no comando.")
@@ -170,7 +184,7 @@ class Admin(commands.Cog):
             else:
                 await ctx.send("Algo deu errado...")
 
-    # Comando: listaavisos
+    # Comando: listaavisos (aplicar embed)
 
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
@@ -186,20 +200,42 @@ class Admin(commands.Cog):
                 await ctx.send("Nenhum usuário foi avisado neste servidor.")
                 return
             
-            message = "**Lista de usuários avisados neste servidor:**\n\n"
+            # Limitar tamanho do reasons para o embed
+                
+            max_len = 1000
+            if len(warns_guild) > max_len:
+                warns_guild = warns_guild[:max_len] + "\n...(texto cortado)..."
             
+            embed = discord.Embed(
+                title="Lista de Avisos",
+                color=discord.Color.green()
+            )
+            
+            warned = 0
+
             for user_id, lista in warns_guild.items():
                 if not lista:
                     continue  # Ignora se a lista estiver vazia
                 
-                member = await self.bot.fetch_user(int(user_id))
-                message += f"```{member.name} - {member.id} - aviso(s): {len(lista)}```\n"
+                try:
+                    member = await self.bot.fetch_user(int(user_id))
+                    warned += 1
+                    
+                    embed.add_field(
+                        name=f"{member} - {member.id} - {len(lista)} aviso(s)",
+                        value="",
+                        inline=False
+                    )
+                    warned += 1
+                except:
+                    continue
             
-            if message.strip() == "**Lista de usuários avisados neste servidor:**":
+            
+            if warned == 0:
                 await ctx.send("Nenhum usuário tem avisos ativos neste servidor.")
             
             else:
-                await ctx.send(message[:2000])
+                await ctx.send(embed=embed)
         
         except Exception as e:
             logging.exception(f"Erro no comando.")
