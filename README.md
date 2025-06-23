@@ -56,7 +56,7 @@ III. Desenvolvedores
 
 - limparlog - Limpa o histórico de logs do bot.
 
-- reloadcog < cog > - Recarrega uma cog específica.
+- carregarcog < cog > - Recarrega uma cog específica.
 
 - debug - Exibe informações gerais e técnicas do bot.
 
