@@ -11,21 +11,6 @@ class Geral(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    # Comando: lua
-
-    @commands.cooldown(1, 5, commands.BucketType.user)
-    @commands.command()
-    async def lua(self, ctx):
-        try:
-            await ctx.send("Olá, me chamo Lua! Sou um bot inspirado na linguagem de programação Lua! Mas meus comandos são escritos em Python!")
-            await ctx.send("https://pt.wikipedia.org/wiki/Lua_%28linguagem_de_programa%C3%A7%C3%A3o%29")
-        except Exception as e:
-            logging.exception(f"Erro no comando.")
-            if ctx.author.id == DEV_ID:
-                await ctx.send(f"Erro: {e}")
-            else:
-                await ctx.send("Algo deu errado...")
-
     # Comando: ping
         
     @commands.cooldown(1, 5, commands.BucketType.user)
