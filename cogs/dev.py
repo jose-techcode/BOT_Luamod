@@ -98,7 +98,7 @@ class Dev(commands.Cog):
 
     # Comando: limpar_log (automático)
 
-    @tasks.loop(minutes=10)
+    @tasks.loop(minutes=30)
     async def limpar_log(self):
         # open serve para abrir o log do bot e o close em seguida para fechar
         open("bot.log", "w").close()
