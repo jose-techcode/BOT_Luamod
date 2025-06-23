@@ -104,12 +104,12 @@ class Dev(commands.Cog):
             else:
                 await ctx.send("Algo deu errado...")
 
-    # Comando: reloadcog
+    # Comando: carregarcog
 
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @is_dev()
-    async def reloadcog(self, ctx, name: str):
+    async def carregarcog(self, ctx, name: str):
         try:
             await self.bot.reload_extension(f"cogs.{name}")
             await ctx.send(f"Cog `cogs.{name}` recarregada com sucesso!")
