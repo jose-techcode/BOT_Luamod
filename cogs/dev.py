@@ -2,9 +2,15 @@ import discord
 from discord.ext import commands, tasks
 import asyncio
 from datetime import timedelta
+import threading
+import psutil
+import platform
+import discord
+import datetime
 import logging
 import os
 import sys
+import time
 from storage import DEV_ID
 from checks import is_dev
 
@@ -13,6 +19,8 @@ from checks import is_dev
 class Dev(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.reiniciando = False
+        self.reiniciar_loop.start()
         self.log_bot = "bot.log"
         self.limpar_log.start() # Inicia a limpeza quando o bot for ligado
 
@@ -96,15 +104,108 @@ class Dev(commands.Cog):
             else:
                 await ctx.send("Algo deu errado...")
 
+    # Comando: reloadcog
+
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    @commands.command()
+    @is_dev()
+    async def reloadcog(self, ctx, name: str):
+        try:
+            await self.bot.reload_extension(f"cogs.{name}")
+            await ctx.send(f"Cog `cogs.{name}` recarregada com sucesso!")
+        except Exception as e:
+            logging.exception(f"Erro no comando.")
+            if ctx.author.id == DEV_ID:
+                await ctx.send(f"Erro: {e}")
+            else:
+                await ctx.send("Algo deu errado...")
+
+    # Comando: debug
+
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    @commands.command()
+    @is_dev()
+    async def debug(self, ctx):
+        try:
+            guilds = len(self.bot.guilds)
+            users = len(set(self.bot.get_all_members()))
+            
+            uptime_seconds = int(time.time() - self.bot.start_time) # CONSERTO
+            uptime_str = str(datetime.timedelta(seconds=uptime_seconds)) # CONSERTO
+            status = "Online" if self.bot.is_ready() else "Desconectado"
+
+            python_version = platform.python_version()
+
+            discord_version = discord.__version__
+
+            system = platform.system()
+
+            architecture = platform.machine()
+
+            process = psutil.Process()
+            
+            cpu = process.cpu_percent(interval=0.5)  # Porcentagem (0.5s de medição)
+            
+            memory = process.memory_info().rss / 1024**2  # MB
+
+            threads_actives = len(threading.enumerate())
+
+            tasks_actives = len(asyncio.all_tasks())
+
+            latency = round(self.bot.latency * 1000)
+            
+            cogs = list(self.bot.cogs.keys())
+            
+            commands = len(self.bot.commands)
+ 
+            await ctx.send(
+            f"Nome: {self.bot.user.name}\n"
+            f"ID: {self.bot.user.id}\n"
+            f"Quantidade de guilds: {guilds}\n"
+            f"Quantidade de usuários únicos: {users}\n"
+            f"Tempo de atividade: {uptime_str}\n"
+            f"Status de conexão: {status}\n"
+            f"Versão da linguagem de programação python: {python_version}\n"
+            f"Versão da biblioteca discord: {discord_version}\n"
+            f"Sistema operacional: {system}\n"
+            f"Arquitetura: {architecture}\n"
+            f"CPU: {cpu: .1f}%\n"
+            f"Memória: {memory:.2f}MB\n"
+            f"Threads ativas: {threads_actives}\n"
+            f"Atividades ativas: {tasks_actives}\n"
+            f"Latência: {latency}ms\n"
+            f"Quantidade de cogs carregadas: {len(cogs)}\n"
+            f"Cogs carregadas: {cogs}\n"
+            f"Quantidade de comandos registrados: {commands}"
+            )
+        except Exception as e:
+            logging.exception(f"Erro no comando.")
+            if ctx.author.id == DEV_ID:
+                await ctx.send(f"Erro: {e}")
+            else:
+                await ctx.send("Algo deu errado...")
+
+    # Comando: reiniciar (automático)
+
+    @tasks.loop(hours=2)
+    async def reiniciar_loop(self):
+        print("Reiniciando!")
+        await self.bot.close()
+        os.execl(sys.executable, sys.executable, *sys.argv)
+
+    @reiniciar_loop.before_loop
+    async def before_reiniciar(self):
+        await self.bot.wait_until_ready() # Certifica de que a reiniciação só funcione quando o bot estiver ligado
+        print("Reiniciação em 2 horas!")
+        await asyncio.sleep(60 * 120)
+
     # Comando: limpar_log (automático)
 
-    @tasks.loop(minutes=30)
+    @tasks.loop(hours=1)
     async def limpar_log(self):
         # open serve para abrir o log do bot e o close em seguida para fechar
         open("bot.log", "w").close()
         print("bot.log limpo com sucesso!")
-
-    # Comando: before_limpar_log (automático)
     
     @limpar_log.before_loop
     async def before_limpar_log(self):
