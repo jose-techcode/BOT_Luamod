@@ -62,13 +62,13 @@ async def on_command_error(ctx, error):
     # Tratamento de erros com argumentos inválidos
 
     if isinstance(error, commands.BadArgument):
-        await ctx.send("Argumento inválido. Verifique o comando em ajuda.")
+        await ctx.send("Argumento(s) inválido(s). Verifique o comando em ajuda.")
         return
 
     # Tratamento de erros sem argumentos
 
     if isinstance(error, commands.MissingRequiredArgument):
-        await ctx.send("Sem argumentos obrigatórios. Verifique o comando em ajuda.")
+        await ctx.send("Sem argumento(s) obrigatório(s). Verifique o comando em ajuda.")
         return
 
     # Tratamento de erros com as cogs
@@ -82,7 +82,8 @@ async def load_cogs():
     cogs = [
         "cogs.geral",
         "cogs.admin",
-        "cogs.dev"
+        "cogs.dev",
+        "cogs.log"
     ]
     for cog in cogs:
         await bot.load_extension(cog)
