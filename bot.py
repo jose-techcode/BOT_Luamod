@@ -10,7 +10,7 @@ from storage import DISCORD_TOKEN
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s", # asctime = data, levelname = nível do erro, message = conteúdo do erro
-    filename="bot.log",
+    filename="bot.log", # nome do arquivo que armazena o log de terminal do bot
     filemode="a",  # 'a' para adicionar ao final do arquivo
     encoding="utf-8" # código universal para aceitar todos os caracteres no bot.log
 )
@@ -27,7 +27,7 @@ bot = commands.Bot(command_prefix="?", intents=intents)
 
 @bot.event
 async def on_ready():
-    print(f"[LOG] Bot conectado como {bot.user.name} - {bot.user.id}")
+    print(f"Bot conectado como {bot.user.name} - {bot.user.id}")
     activity = discord.Game(name="Lua")
     await bot.change_presence(status=discord.Status.online, activity=activity)
 
@@ -38,7 +38,7 @@ async def on_command_error(ctx, error):
     
     # Tratamento de erros para ignorar comandos não existentes
     if isinstance(error, commands.CommandNotFound):
-        print(f"[ERRO] Comando não encontrado: {ctx.message.content}")
+        await ctx.send(f"Comando não encontrado: {ctx.message.content}")
         return
 
     # Tratamento de erros com flood de comandos
