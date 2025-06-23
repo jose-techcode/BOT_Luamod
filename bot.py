@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import asyncio
 import logging
+import time
 from datetime import timedelta
 from storage import DISCORD_TOKEN
 
@@ -22,6 +23,7 @@ logging.error("Teste.")
 
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="?", intents=intents)
+bot.start_time = time.time()
 
 # Quando o bot estiver ativo/online:
 
