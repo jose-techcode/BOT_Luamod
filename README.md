@@ -1,14 +1,14 @@
 # 1. Bot Lua
 
-O "Bot Lua" é um bot de discord em que a sua atribuição principal é moderar um servidor, bem como também ter algumas funcionalidades para membros comuns.
+O "Bot Lua" é um bot de discord em que a sua atribuição principal é moderar um servidor, bem como também ter algumas funcionalidades para membros comuns e desenvolvedores.
 
 # 2. Funcionalidades
 
 I. Membros comuns
 
-- ajuda - Mostra a lista de comandos.
+- ping - Mostra a latência do bot.
 
-- lua - Mostra um easter egg do bot.
+- ajuda - Mostra a lista de comandos.
 
 - avatar < membro > - Exibe o avatar de um membro.
 
@@ -102,7 +102,7 @@ I. Build da Imagem
 - docker build -t projeto_lua .
 
 II. Rodar o Container
-- docker run -it --name lua_bot projeto_lua
+- docker run -it --name bot_lua projeto_lua
 
 # 10. Contribuição
 
