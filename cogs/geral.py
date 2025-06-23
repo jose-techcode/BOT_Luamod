@@ -19,7 +19,7 @@ class Geral(commands.Cog):
         embed = discord.Embed(
             title="Central de Comandos",
             description="Veja os comandos disponíveis organizados por categoria. Considere criar um canal chamado exatamente 'log' para ter acesso ao sistema de logs.",
-            color=discord.Color.blurple()
+            color=discord.Color.blue()
         )
         # I. Membros comuns
         embed.add_field(name="I. Membros comuns", value="""
@@ -80,7 +80,6 @@ class Geral(commands.Cog):
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     async def ping(self, ctx):
-        # latency é a variável que permite definir a latência do bot
         try:
             latency = round(self.bot.latency * 1000)
             await ctx.send(f"A latência é: {latency}ms")
@@ -107,7 +106,7 @@ class Geral(commands.Cog):
             avatar_url = member.avatar.url if member.avatar else member.default_avatar.url
             embed = discord.Embed(
                 title=f"Avatar de {member.name}",
-                color=discord.Color.blurple()
+                color=discord.Color.blue()
                 )
             embed.set_image(url=avatar_url)
             embed.set_footer(text=f"Pedido por {ctx.author}",
@@ -139,7 +138,7 @@ class Geral(commands.Cog):
         try:
             embed = discord.Embed(
                 title=f"Informações de usuário",
-                color=discord.Color.blurple()
+                color=discord.Color.blue()
             )
             embed.set_thumbnail(url=member.display_avatar.url) # member.display_avat.url
             embed.add_field(name="Nome", value=member.name, inline=True) # member.name
@@ -173,7 +172,7 @@ class Geral(commands.Cog):
             guild = ctx.guild
             embed = discord.Embed(
                 title=f"Informações do servidor: {guild.name}",
-                color=discord.Color.blurple()
+                color=discord.Color.blue()
                 )
             embed.set_thumbnail(url=ctx.guild.icon.url if ctx.guild.icon else "") # ctx.guild.icon.url
             embed.add_field(name="ID", value=guild.id, inline=True) # guild.id
@@ -210,7 +209,7 @@ class Geral(commands.Cog):
         try:
             embed = discord.Embed(
             title="Informações do bot Lua",
-            color=discord.Color.blurple()
+            color=discord.Color.blue()
             )
             embed.set_thumbnail(url=ctx.me.display_avatar.url) # ctx.me.display_avatar.url
             embed.add_field(name="Nome", value=self.bot.user.name, inline=True) # user.name
