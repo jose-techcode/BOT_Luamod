@@ -38,39 +38,41 @@ class Geral(commands.Cog):
         )
         # I. Membros comuns
         embed.add_field(name="I. Membros comuns", value="""
-`?lua` — Mostra um easter egg do bot.
+`?lua` - Mostra um easter egg do bot.
 `?ping` - Mostra a latência do bot.
-`?ajuda` — Mostra a lista de comandos.
-`?avatar <membro>` — Mostra o avatar de um membro.
-`?infouser <membro>` — Mostra as informações do usuário.
-`?infoserver` — Mostra informações do servidor.
-`?infobot` — Mostra informações do bot.                        
+`?ajuda` - Mostra a lista de comandos.
+`?avatar <membro>` - Mostra o avatar de um membro.
+`?infouser <membro>` - Mostra as informações do usuário.
+`?infoserver` - Mostra informações do servidor.
+`?infobot` - Mostra informações do bot.                        
 """, inline=False)
 
         # II. Moderadores
         embed.add_field(name="II. Moderadores", value="""
-`?avisar <membro> <motivo>` — Avisa um usuário.
-`?desavisar <membro>` — Retira todos os avisos do usuário.
-`?avisos <membro>` — Vê a quantidade e motivo dos avisos de um usuário.
-`?listaavisos` — Vê usuários avisados e quantidade de avisos.
-`?apagar <quantidade>` — Apaga mensagens do chat.
-`?lentear <segundos>` — Ativa o modo lento no canal.
-`?trancar` — Tranca um canal.
-`?destrancar` — Destranca um canal trancado.
-`?silenciar <membro> <minutos>` — Silencia um membro temporariamente.
-`?dessilenciar <membro>` — Remove o silêncio de um membro.
-`?expulsar <membro>` — Expulsa um membro do servidor.
-`?banir <membro>` — Bane um membro do servidor.
-`?desbanir <ID>` — Remove o banimento de um usuário pelo ID.
+`?avisar <membro> <motivo>` - Avisa um usuário.
+`?desavisar <membro>` - Retira todos os avisos do usuário.
+`?avisos <membro>` - Vê a quantidade e motivo dos avisos de um usuário.
+`?listaavisos` - Vê usuários avisados e quantidade de avisos.
+`?apagar <quantidade>` - Apaga mensagens do chat.
+`?lentear <segundos>` - Ativa o modo lento no canal.
+`?trancar` - Tranca um canal.
+`?destrancar` - Destranca um canal trancado.
+`?silenciar <membro> <minutos>` - Silencia um membro temporariamente.
+`?dessilenciar <membro>` - Remove o silêncio de um membro.
+`?expulsar <membro>` - Expulsa um membro do servidor.
+`?banir <membro>` - Bane um membro do servidor.
+`?desbanir <ID>` - Remove o banimento de um usuário pelo ID.
 """, inline=False)
 
         # III. Desenvolvedores — só para DEV_ID
         if ctx.author.id == DEV_ID:
             embed.add_field(name="III. Desenvolvedores", value="""
-`?reiniciar` — Reinicia o bot.
-`?desligar` — Desliga o bot.
-`?verlog` — Vê o histórico de logs do bot.
-`?limparlog` — Limpa o histórico de logs do bot.
+`?reiniciar` - Reinicia o bot.
+`?desligar` - Desliga o bot.
+`?verlog` - Vê o histórico de logs do bot.
+`?limparlog` - Limpa o histórico de logs do bot.
+`?carregarcog` <cog> - Recarrega uma cog específica.
+`?debug` - Exibe informações gerais e técnicas do bot.                           
 """, inline=False)
 
         embed.set_footer(text="Bot de Moderação")
