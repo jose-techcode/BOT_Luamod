@@ -38,7 +38,6 @@ class Geral(commands.Cog):
         )
         # I. Membros comuns
         embed.add_field(name="I. Membros comuns", value="""
-`?lua` - Mostra um easter egg do bot.
 `?ping` - Mostra a latência do bot.
 `?ajuda` - Mostra a lista de comandos.
 `?avatar <membro>` - Mostra o avatar de um membro.
@@ -71,11 +70,11 @@ class Geral(commands.Cog):
 `?desligar` - Desliga o bot.
 `?verlog` - Vê o histórico de logs do bot.
 `?limparlog` - Limpa o histórico de logs do bot.
-`?carregarcog` <cog> - Recarrega uma cog específica.
+`?carregarcog <cog>` - Recarrega uma cog específica.
 `?debug` - Exibe informações gerais e técnicas do bot.                           
 """, inline=False)
 
-        embed.set_footer(text="Bot de Moderação")
+        embed.set_footer(text="Central de Ajuda")
         await ctx.send(embed=embed)
 
     # Comando: avatar
