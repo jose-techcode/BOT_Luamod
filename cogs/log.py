@@ -92,16 +92,20 @@ class Log(commands.Cog):
 
         content_log = ""
         for msg in messages:
-            author = msg.author if msg.author else "Autor desconhecido"
+            author = getattr(msg, 'author', None)
+            mention = author.mention if author else "Autor desconhecido"
             content = msg.content or "[Sem conteúdo]"
-            content_log += f"`{msg.created_at.strftime('%H:%M:%S')}` {author.mention}: {content}\n"
+            timestamp = msg.created_at.strftime('%H:%M:%S')
+            content_log += f"`{timestamp}` {mention}: {content}\n"
             
         if len(content_log) > 1900:
             content_log = content_log[:1900] + "\n... (log cortado)" # Limite de caracteres do discord: 2000
 
-        reference_author = messages[0].author
+        reference_author = getattr(messages[0], 'author', None)
+        reference_name = str(reference_author) if reference_author else "Autor desconhecido"
         icon_url = reference_author.avatar.url if reference_author and reference_author.avatar else None
-
+        reference_id = reference_author.id if reference_author else "Desconhecido"
+        
         embed = discord.Embed(
             title="Mensagens Deletadas",
             description=f"{len(messages)} Mensagens deletadas em {messages[0].channel.mention}",
@@ -109,9 +113,9 @@ class Log(commands.Cog):
             timestamp=discord.utils.utcnow()
         )
 
-        embed.set_author(name=str(reference_author), icon_url=icon_url)
+        embed.set_author(name=reference_name, icon_url=icon_url)
         embed.add_field(name="Conteúdo", value=content_log or "*Mensagem vazia*", inline=False)
-        embed.set_footer(text=f"ID de referência: {reference_author.id}")
+        embed.set_footer(text=f"ID de referência: {reference_id}")
        
         await log_channel.send(embed=embed)
 
