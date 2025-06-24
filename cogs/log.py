@@ -2,7 +2,6 @@ import discord
 from discord.ext import commands
 import asyncio
 from datetime import timedelta
-import typing
 
 # Estrutura cog (herança)
 
