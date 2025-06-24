@@ -163,7 +163,7 @@ class Admin(commands.Cog):
                 embed = discord.Embed(
                     title="Avisos",
                     description=f"{member.mention} - `{member.id}`\n\nPossui **{len(warns_usuario)} aviso(s)**.",
-                    color=discord.Color.green()
+                    color=discord.Color.yellow()
                 )
                 
                 embed.add_field(
@@ -184,7 +184,7 @@ class Admin(commands.Cog):
             else:
                 await ctx.send("Algo deu errado...")
 
-    # Comando: listaavisos (aplicar embed)
+    # Comando: listaavisos
 
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
@@ -205,10 +205,10 @@ class Admin(commands.Cog):
             max_len = 1000
             if len(warns_guild) > max_len:
                 warns_guild = warns_guild[:max_len] + "\n...(texto cortado)..."
-            
+
             embed = discord.Embed(
                 title="Lista de Avisos",
-                color=discord.Color.green()
+                color=discord.Color.yellow()
             )
             
             warned = 0
@@ -229,7 +229,6 @@ class Admin(commands.Cog):
                     warned += 1
                 except:
                     continue
-            
             
             if warned == 0:
                 await ctx.send("Nenhum usuário tem avisos ativos neste servidor.")
