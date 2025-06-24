@@ -12,51 +12,51 @@ I. Membros comuns
 
 - avatar < membro > - Exibe o avatar de um membro.
 
-- infouser < membro > - Mostra as informações do usuário.
+- userinfo < membro > - Mostra as informações do usuário.
 
-- infoserver - Exibe informações do servidor.
+- serverinfo - Exibe informações do servidor.
 
-- infobot - Mostra informações do perfil do bot.
+- botinfo - Mostra informações do perfil do bot.
 
 II. Moderadores
 
-- avisar < membro > < motivo > - Avisa um usuário.
+- warn < membro > < motivo > - Avisa um usuário.
 
-- desavisar < membro > - Retira todos os avisos do usuário.
+- unwarn < membro > - Retira todos os avisos do usuário.
 
-- avisos < membro > - Vê a quantidade e o(s) motivo(s) do(s) aviso(s) de um usuário.
+- warnings < membro > - Vê a quantidade e o(s) motivo(s) do(s) aviso(s) de um usuário.
 
-- listaavisos - Vê o(s) usuário(s) avisado(s) e a quantidade de aviso(s) que cada um tem.
+- warninglist - Vê o(s) usuário(s) avisado(s) e a quantidade de aviso(s) que cada um tem.
 
-- apagar < quantidade > - Apaga mensagens do chat.
+- clear < quantidade > - Apaga mensagens do chat.
 
-- lentear < segundos > - Ativa o modo lento no canal.
+- slow < segundos > - Ativa o modo lento no canal.
 
-- trancar - Tranca um canal.
+- lock - Tranca um canal.
 
-- destrancar - Destranca um canal que estava trancado.
+- unlock - Destranca um canal que estava trancado.
 
-- silenciar < membro > < minutos > - Silencia um membro temporariamente.
+- mute < membro > < minutos > - Silencia um membro temporariamente.
 
-- dessilenciar < membro > - Remove o silêncio de um membro.
+- unmute < membro > - Remove o silêncio de um membro.
 
-- expulsar < membro > - Expulsa um membro do servidor.
+- kick < membro > - Expulsa um membro do servidor.
 
-- banir < membro > - Bane um membro do servidor.
+- ban < membro > - Bane um membro do servidor.
 
-- desbanir < ID > - Remove o banimento de um usuário pelo ID.
+- unban < ID > - Remove o banimento de um usuário pelo ID.
 
 III. Desenvolvedores
 
-- reiniciar - Reinicia o bot.
+- restart - Reinicia o bot.
 
-- desligar - Desliga o bot.
+- toswitchoff - Desliga o bot.
 
-- verlog - Vê o histórico de logs do bot.
+- log - Vê o histórico de logs do bot.
 
-- limparlog - Limpa o histórico de logs do bot.
+- clearlog - Limpa o histórico de logs do bot.
 
-- carregarcog < cog > - Recarrega uma cog específica.
+- reloadcog < cog > - Recarrega uma cog específica.
 
 - debug - Exibe informações gerais e técnicas do bot.
 
