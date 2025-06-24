@@ -22,7 +22,7 @@ logging.error("Teste.")
 # Permissões do bot:
 
 intents = discord.Intents.all()
-bot = commands.Bot(command_prefix="?", intents=intents)
+bot = commands.Bot(command_prefix=".", intents=intents)
 bot.start_time = time.time()
 
 # Quando o bot estiver ativo/online:
