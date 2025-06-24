@@ -16,6 +16,7 @@ class Log(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message_edit(self, message_before, message_after):
+        
         if not message_before.guild:
             return
         
@@ -27,20 +28,28 @@ class Log(commands.Cog):
         if not log_channel:
             return
         
-        time = message_before.created_at.strftime('%d/%m/%Y %H:%M:%S')
+        author = message_before.author
+        icon_url = author.avatar.url if author and author.avatar else None
 
-        await log_channel.send(
-        f"Mensagem editada em {message_before.channel.mention}\n"
-        f"Autor: {message_before.author.mention}\n"
-        f"Horário: {time}\n"
-        f"Antes: {message_before.content}\n"
-        f"Depois: {message_after.content}"
+        embed = discord.Embed(
+            title="Mensagem Editada",
+            description=f"Mensagem editada em {message_before.channel.mention}",
+            color=discord.Color.yellow(),
+            timestamp=message_after.edited_at or discord.utils.utcnow()
         )
 
-    # Message_delete 
+        embed.set_author(name=str(message_before.author), icon_url=icon_url)
+        embed.add_field(name="Antes", value=message_before.content or "*Mensagem vazia*", inline=False)
+        embed.add_field(name="Depois", value=message_after.content or "*Mensagem vazia*", inline=False)
+        embed.set_footer(text=f"ID do membro: {message_before.author.id}")
+
+        await log_channel.send(embed=embed)
+
+    # Message_delete
 
     @commands.Cog.listener()
     async def on_message_delete(self, message):
+        
         if not message.guild:
             return
 
@@ -49,21 +58,29 @@ class Log(commands.Cog):
         if not log_channel:
             return
         
-        author = message.author.mention if message.author else "Autor desconhecido"
-        content = message.content or "*Sem conteúdo textual (pode ter sido um anexo, embed ou imagem)*"
-        time = message.created_at.strftime('%d/%m/%Y %H:%M:%S') 
- 
-        await log_channel.send(
-        f"Mensagem deletada em {message.channel.mention}\n"
-        f"Autor: {author}\n"
-        f"Conteúdo: {content}\n"
-        f"Horário: {time}"
+        author = message.author
+        icon_url = author.avatar.url if author and author.avatar else None
+
+        embed = discord.Embed(
+            title="Mensagem Deletada",
+            description=f"Mensagem deletada em {message.channel.mention}",
+            color=discord.Color.orange(),
+            timestamp=discord.utils.utcnow()
         )
+
+        embed.set_author(name=str(message.author), icon_url=icon_url)
+        embed.add_field(name="Conteúdo:", value=message.content or "*Mensagem vazia*", inline=False)
+        embed.set_footer(text=f"ID do membro: {message.author.id}")
+       
+        await log_channel.send(embed=embed)
 
     # Bulk_message_delete
 
     @commands.Cog.listener()
     async def on_bulk_message_delete(self, messages):
+
+        if not messages:
+            return
 
         guild = messages[0].guild
         log_channel = discord.utils.get(guild.text_channels, name='log')
@@ -82,9 +99,21 @@ class Log(commands.Cog):
         if len(content_log) > 1900:
             content_log = content_log[:1900] + "\n... (log cortado)" # Limite de caracteres do discord: 2000
 
-        await log_channel.send(
-        f"{len(messages)} Mensagens deletadas em massa em {messages[0].channel.mention}:\n{content_log}"
+        reference_author = messages[0].author
+        icon_url = reference_author.avatar.url if reference_author and reference_author.avatar else None
+
+        embed = discord.Embed(
+            title="Mensagens Deletadas",
+            description=f"{len(messages)} Mensagens deletadas em {messages[0].channel.mention}",
+            color=discord.Color.red(),
+            timestamp=discord.utils.utcnow()
         )
+
+        embed.set_author(name=str(reference_author), icon_url=icon_url)
+        embed.add_field(name="Conteúdo", value=content_log or "*Mensagem vazia*", inline=False)
+        embed.set_footer(text=f"ID de referência: {reference_author.id}")
+       
+        await log_channel.send(embed=embed)
 
     # 2. Membros
 
@@ -97,11 +126,20 @@ class Log(commands.Cog):
         
         if not log_channel:
             return
-
-        await log_channel.send(
-        f"{member.mention} Entrou no servidor!\n"
-        f"ID: `{member.id}`"
+        
+        icon_url = member.avatar.url if member and member.avatar else None
+        
+        embed = discord.Embed(
+            title="Membro Entrou",
+            description=f"Membro: {member.mention}",
+            color=discord.Color.blue(),
+            timestamp=discord.utils.utcnow()
         )
+
+        embed.set_author(name=str(member.mention), icon_url=icon_url)
+        embed.set_footer(text=f"ID do membro: {member.id}")
+       
+        await log_channel.send(embed=embed)
 
     # Member_remove
 
@@ -116,11 +154,20 @@ class Log(commands.Cog):
         async for entry in member.guild.audit_logs(limit=1, action=discord.AuditLogAction.ban):
             if entry.target.id == member.id:
                 continue  # Ignora
-            
-        await log_channel.send(
-        f"{member.mention} Saiu ou foi expulso do servidor!\n"
-        f"ID: `{member.id}`"
+
+        icon_url = member.avatar.url if member and member.avatar else None
+
+        embed = discord.Embed(
+            title="Membro Saiu",
+            description=f"Membro: {member.mention}",
+            color=discord.Color.orange(),
+            timestamp=discord.utils.utcnow()
         )
+
+        embed.set_author(name=str(member.mention), icon_url=icon_url)
+        embed.set_footer(text=f"ID do membro: {member.id}")
+       
+        await log_channel.send(embed=embed)
 
     # Member_ban
             
@@ -132,10 +179,19 @@ class Log(commands.Cog):
         if not log_channel:
             return
         
-        await log_channel.send(
-        f"{user.mention} Foi banido do servidor!\n"
-        f"ID: `{user.id}`"
+        icon_url = user.avatar.url if user and user.avatar else None
+        
+        embed = discord.Embed(
+            title="Membro Banido",
+            description=f"Membro: {user.mention}",
+            color=discord.Color.red(),
+            timestamp=discord.utils.utcnow()
         )
+
+        embed.set_author(name=str(user.mention), icon_url=icon_url)
+        embed.set_footer(text=f"ID do membro: {user.id}")
+       
+        await log_channel.send(embed=embed)
             
     # Member_unban
            
@@ -146,11 +202,20 @@ class Log(commands.Cog):
         
         if not log_channel:
             return
-            
-        await log_channel.send(
-        f"{user.mention} Foi desbanido do servidor!\n"
-        f"ID: `{user.id}`"
+        
+        icon_url = user.avatar.url if user and user.avatar else None
+        
+        embed = discord.Embed(
+            title="Membro Desbanido",
+            description=f"Membro: {user.mention}",
+            color=discord.Color.green(),
+            timestamp=discord.utils.utcnow()
         )
+
+        embed.set_author(name=str(user.mention), icon_url=icon_url)
+        embed.set_footer(text=f"ID do membro: {user.id}")
+       
+        await log_channel.send(embed=embed)
 
     # Member_update
 
@@ -165,30 +230,52 @@ class Log(commands.Cog):
         # Apelido
 
         if before.display_name != after.display_name:
-            await log_channel.send(
-            f"{before.mention} Mudou o nickname!\n"
-            f"De: `{before.display_name}`\n"
-            f"Para: `{after.display_name}`"
-            f"ID: `{after.id}`"
+
+            embed = discord.Embed(
+                title="Membro Alterado Localmente (Apelido)",
+                description=f"Membro: {before.mention}",
+                color=discord.Color.yellow(),
+                timestamp=discord.utils.utcnow()
             )
+            
+            embed.add_field(name="Antes", value=before.display_name, inline=False)
+            embed.add_field(name="Depois", value=after.display_name, inline=False)
+            embed.set_footer(text=f"ID do membro: {after.id}")
+            
+            await log_channel.send(embed=embed)
 
         # Cargo
 
         if before.roles != after.roles:
+            
             added_roles = [role for role in after.roles if role not in before.roles]
             removed_roles = [role for role in before.roles if role not in after.roles]
-            
-            changes = ""
-            if added_roles:
-                changes += f"Cargos adicionados: {', '.join(role.mention for role in added_roles)}\n"
-            if removed_roles:
-                changes += f"Cargos removidos: {', '.join(role.mention for role in removed_roles)}\n"
 
-            if changes:
-                await log_channel.send(
-                f"{before.mention} Teve alterações no cargo!\n{changes}"
-                f"ID: `{after.id}`"
+            if added_roles:
+                
+                embed = discord.Embed(
+                    title="Membro Alterado Localmente (Adição de Cargo)",
+                    description=f"Membro: {before.mention}",
+                    color=discord.Color.orange(),
+                    timestamp=discord.utils.utcnow()
                 )
+                
+                embed.add_field(name="Cargo", value=', '.join(role.mention for role in added_roles), inline=False)
+                embed.set_footer(text=f"ID do membro: {after.id}")
+                await log_channel.send(embed=embed)
+
+            if removed_roles:
+                
+                embed = discord.Embed(
+                    title="Membro Alterado Localmente (Remoção de Cargo)",
+                    description=f"Membro: {before.mention}",
+                    color=discord.Color.red(),
+                    timestamp=discord.utils.utcnow()
+                )
+                
+                embed.add_field(name="Cargo", value=', '.join(role.mention for role in removed_roles), inline=False)
+                embed.set_footer(text=f"ID do membro: {after.id}")
+                await log_channel.send(embed=embed)
             
     # 3. Cargos e permissões
 
@@ -196,6 +283,7 @@ class Log(commands.Cog):
 
     @commands.Cog.listener()
     async def on_user_update(self, before: discord.User, after: discord.User):
+        
         for guild in self.bot.guilds:
             
             member = guild.get_member(after.id)
@@ -210,18 +298,38 @@ class Log(commands.Cog):
             # Nome (global)
 
             if before.name != after.name:
-                await log_channel.send(
-                f"O membro `{before}` Alterou o nome de `{before.name}` para `{after.name}`!\n"
-                f"ID: `{after.id}`"
+
+                embed = discord.Embed(
+                    title="Membro Alterado Globalmente (Nome)",
+                    description=f"Membro: {before.mention}",
+                    color=discord.Color.yellow(),
+                    timestamp=discord.utils.utcnow()
                 )
+                
+                embed.add_field(name="Antes", value=before.name, inline=False)
+                embed.add_field(name="Depois", value=after.name, inline=False)
+                embed.set_footer(text=f"ID do membro: {after.id}")
+                
+                await log_channel.send(embed=embed)
 
             # Avatar (global)
 
             if before.avatar != after.avatar:
-                await log_channel.send(
-                f"O membro `{before}` alterou o avatar!\n"
-                f"ID: `{after.id}`"
+
+                embed = discord.Embed(
+                    title="Membro Alterado Globalmente (Avatar)",
+                    description=f"Membro: {before.mention}",
+                    color=discord.Color.orange(),
+                    timestamp=discord.utils.utcnow()
                 )
+                
+                if before.avatar:
+                    embed.set_thumbnail(url=before.avatar.url)
+                if after.avatar:
+                    embed.set_image(url=after.avatar.url)
+                embed.set_footer(text=f"ID do membro: {after.id}")
+            
+                await log_channel.send(embed=embed)
 
     # Role_create
 
@@ -233,10 +341,16 @@ class Log(commands.Cog):
         if not log_channel:
             return
         
-        await log_channel.send(
-        f"O cargo `{role.name}` foi criado!\n"
-        f"ID: `{role.id}`"
+        embed = discord.Embed(
+            title="Cargo Criado",
+            description=f"Cargo: {role.name}",
+            color=discord.Color.green(),
+            timestamp=discord.utils.utcnow()
         )
+
+        embed.set_footer(text=f"ID do cargo: {role.id}")
+       
+        await log_channel.send(embed=embed)
 
     # Role_delete 
 
@@ -248,45 +362,75 @@ class Log(commands.Cog):
         if not log_channel:
             return
         
-        await log_channel.send(
-        f"O cargo `{role.name}` foi deletado!\n"
-        f"ID: `{role.id}`"
+        embed = discord.Embed(
+            title="Cargo Deletado",
+            description=f"Cargo: {role.name}",
+            color=discord.Color.red(),
+            timestamp=discord.utils.utcnow()
         )
+
+        embed.set_footer(text=f"ID do cargo: {role.id}")
+       
+        await log_channel.send(embed=embed)
 
     # Role_update
 
     @commands.Cog.listener()
     async def on_guild_role_update(self, before: discord.Role, after: discord.Role):
+        
+        log_channel = discord.utils.get(before.guild.text_channels, name='log')
+            
+        if not log_channel:
+            return
+            
+        # Nome
+
         if before.name != after.name:
-            
-            log_channel = discord.utils.get(before.guild.text_channels, name='log')
-            
-            if not log_channel:
-                return
-            
-            changes = []
-            
-            # Nome
-
-            if before.name != after.name:
-                changes.append(f"De nome `{before.name}` para `{after.name}`")
-
-            # Cor
-
-            if before.color != after.color:
-                changes.append(f"De cor `{before.color}` para `{after.color}`")
                 
-            # Permissões
+            embed = discord.Embed(
+                title="Cargo Alterada",
+                description=f"Cargo: {before.name}",
+                color=discord.Color.yellow(),
+                timestamp=discord.utils.utcnow()
+            )
+            
+            embed.add_field(name="Antes", value=before.name, inline=False)
+            embed.add_field(name="Depois", value=after.name, inline=False)
+            embed.set_footer(text=f"ID do cargo: {after.id}")
+            
+            await log_channel.send(embed=embed)
 
-            if before.permissions != after.permissions:
-                changes.append(f"Permissões foram alteradas!")
+        # Cor
+
+        if before.color != after.color:
                 
-            if changes:
-                await log_channel.send(
-                f"O cargo `{before.name}` foi atualizado:\n" + 
-                "\n".join(changes) +
-                f"\nID: `{after.id}`"
-                )
+            embed = discord.Embed(
+                title="Cargo Alterada",
+                description=f"Cargo: {before.name}",
+                color=discord.Color.orange(),
+                timestamp=discord.utils.utcnow()
+            )
+                
+            embed.add_field(name="Antes", value=str(before.color), inline=False)
+            embed.add_field(name="Depois", value=str(after.color), inline=False)
+            embed.set_footer(text=f"ID do cargo: {after.id}")
+            
+            await log_channel.send(embed=embed)
+                
+        # Permissões
+
+        if before.permissions != after.permissions:
+                
+            embed = discord.Embed(
+                title="Cargo Alterado (Permissões)",
+                description=f"Cargo: {before.name}",
+                color=discord.Color.red(),
+                timestamp=discord.utils.utcnow()
+            )
+            
+            embed.set_footer(text=f"ID do cargo: {after.id}")
+            
+            await log_channel.send(embed=embed)
     
     # 4. Canais
 
@@ -300,10 +444,16 @@ class Log(commands.Cog):
         if not log_channel:
             return
         
-        await log_channel.send(
-        f"O canal `{channel.name}` foi criado!\n"
-        f"ID: `{channel.id}`"
+        embed = discord.Embed(
+            title="Canal Criado",
+            description=f"Canal: {channel.name}",
+            color=discord.Color.green(),
+            timestamp=discord.utils.utcnow()
         )
+
+        embed.set_footer(text=f"ID do canal: {channel.id}")
+       
+        await log_channel.send(embed=embed)
 
     # Channel_delete
 
@@ -314,11 +464,17 @@ class Log(commands.Cog):
         
         if not log_channel:
             return
-
-        await log_channel.send(
-        f"O canal `{channel.name}` foi deletado!\n"
-        f"ID: `{channel.id}`"
+        
+        embed = discord.Embed(
+            title="Canal Deletado",
+            description=f"Canal: {channel.name}",
+            color=discord.Color.red(),
+            timestamp=discord.utils.utcnow()
         )
+
+        embed.set_footer(text=f"ID do canal: {channel.id}")
+       
+        await log_channel.send(embed=embed)
 
     # Channel_update
     
@@ -329,41 +485,78 @@ class Log(commands.Cog):
         
         if not log_channel:
             return
+
+        if before.name != after.name:
+
+            embed = discord.Embed(
+                title="Canal Alterado",
+                description=f"Canal: {before.mention}",
+                color=discord.Color.yellow(),
+                timestamp=discord.utils.utcnow()
+            )
             
-        await log_channel.send(
-        f"O nome do canal `{before.name}` foi atualizado para `{after.name}`!\n"
-        f"ID: `{after.id}`"
-        )
+            embed.add_field(name="Antes", value=before.name, inline=False)
+            embed.add_field(name="Depois", value=after.name, inline=False)
+            embed.set_footer(text=f"ID do canal: {after.id}")
+            
+            await log_channel.send(embed=embed)
 
     # 5. Voz
 
     @commands.Cog.listener()
     async def on_voice_state_update(self, member, before, after):
+        
         log_channel = discord.utils.get(member.guild.text_channels, name='log')
         
         if not log_channel:
             return
         
-        # Entrou em um canal
+        # Entrou em um canal de voz
 
         if before.channel is None and after.channel is not None:
-            await log_channel.send(
-            f"{member.mention} entrou no canal de voz `{after.channel.name}`"
+
+            embed = discord.Embed(
+                title="Membro Entrou (Canal de Voz)",
+                description=f"{member.mention} Entrou no canal de voz {after.channel.mention}",
+                color=discord.Color.green(),
+                timestamp=discord.utils.utcnow()
             )
 
-        # Saiu de um canal
+            embed.set_footer(text=f"ID do membro: {member.id}")
+            
+            await log_channel.send(embed=embed)
+
+        # Saiu de um canal de voz
 
         elif before.channel is not None and after.channel is None:
-            await log_channel.send(
-            f"{member.mention} saiu do canal de voz `{before.channel.name}`"
-        )
+
+            embed = discord.Embed(
+                title="Membro Saiu (Canal de Voz)",
+                description=f"{member.mention} Saiu do canal de voz {before.channel.mention}",
+                color=discord.Color.yellow(),
+                timestamp=discord.utils.utcnow()
+            )
+
+            embed.set_footer(text=f"ID do membro: {member.id}")
             
-        # Mudou de canal
+            await log_channel.send(embed=embed)
+            
+        # Mudou de canal de voz
         
         elif before.channel != after.channel:
-            await log_channel.send(
-            f"{member.mention} mudou do canal de voz `{before.channel.name}` para `{after.channel.name}`"
+
+            embed = discord.Embed(
+                title="Membro Mudou (Canal de Voz)",
+                description=f"{member.mention} Mudou do canal de voz",
+                color=discord.Color.orange(),
+                timestamp=discord.utils.utcnow()
             )
+            
+            embed.add_field(name="Antes", value=before.channel.mention, inline=False)
+            embed.add_field(name="Depois", value=after.channel.mention, inline=False)
+            embed.set_footer(text=f"ID do membro: {member.id}")
+            
+            await log_channel.send(embed=embed)
 
     # 6. Guild
 
@@ -377,12 +570,39 @@ class Log(commands.Cog):
         if not log_channel:
             return
         
-        await log_channel.send(
-        f"O nome do servidor foi alterado!\n"
-        f"De: `{before.name}`\n"
-        f"Para: `{after.name}`\n"
-        f"ID: `{after.id}`"
-        )
+        # Nome
+
+        if before.name != after.name:
+            
+            embed = discord.Embed(
+                title="Guild Alterada",
+                description=f"Guild: {before.mention}",
+                color=discord.Color.yellow(),
+                timestamp=discord.utils.utcnow()
+            )
+            
+            embed.add_field(name="Antes", value=before.name, inline=False)
+            embed.add_field(name="Depois", value=after.name, inline=False)
+            embed.set_footer(text=f"ID da guild: {after.id}")
+            
+            await log_channel.send(embed=embed)
+
+        # Ícone
+
+        if before.icon != after.icon:
+            
+            embed = discord.Embed(
+                title="Guild Alterada",
+                description=f"Guild: {before.name}",
+                color=discord.Color.orange(),
+                timestamp=discord.utils.utcnow()
+            )
+            
+            embed.set_image(url=after.icon.url if after.icon else discord.Embed.Empty)
+            embed.set_thumbnail(url=before.icon.url if before.icon else discord.Embed.Empty)
+            embed.set_footer(text=f"ID da guild: {after.id}")
+            
+            await log_channel.send(embed=embed)
 
     # Guild_join
 
@@ -394,11 +614,16 @@ class Log(commands.Cog):
         if not log_channel:
             return
         
-        await log_channel.send(
-        f"O bot {self.bot.user.name} entrou no servidor!\n"
-        f"Nome: {guild.name}\n"
-        f"ID: {guild.id}"
+        embed = discord.Embed(
+            title="Bot Lua Entrou",
+            description=f"Guild: {guild.name}",
+            color=discord.Color.blue(),
+            timestamp=discord.utils.utcnow()
         )
+
+        embed.set_footer(text=f"ID da guild: {guild.id}")
+
+        await log_channel.send(embed=embed)
             
     # Guild_remove
     
@@ -407,13 +632,19 @@ class Log(commands.Cog):
         
         log_channel = self.bot.get_channel(1386112547148529695) # ID de um canal de logs do servidor central
         
-        if log_channel:
-            
-            await log_channel.send(
-            f"O bot {self.bot.user.name} foi removido!\n"
-            f"Nome: {guild.name}\n"
-            f"ID: {guild.id}"
-            )
+        if not log_channel:
+            return
+        
+        embed = discord.Embed(
+            title="Bot Lua Saiu",
+            description=f"Guild: {guild.name}",
+            color=discord.Color.red(),
+            timestamp=discord.utils.utcnow()
+        )
+
+        embed.set_footer(text=f"ID da guild: {guild.id}")
+
+        await log_channel.send(embed=embed)
 
 # Registro de cog
 
