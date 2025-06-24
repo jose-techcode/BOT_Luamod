@@ -54,12 +54,12 @@ class Admin(commands.Cog):
                 await after.delete()
                 break
 
-    # Comando: avisar
+    # Comando: warn
 
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def avisar(self, ctx, member: commands.MemberConverter, *, reason: str):
+    async def warn(self, ctx, member: commands.MemberConverter, *, reason: str):
         try:
             
             warns = carregar_avisos()
@@ -88,12 +88,12 @@ class Admin(commands.Cog):
             else:
                 await ctx.send("Algo deu errado...")
 
-    # Comando: desavisar
+    # Comando: unwarn
 
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def desavisar(self, ctx, member: commands.MemberConverter):
+    async def unwarn(self, ctx, member: commands.MemberConverter):
         try:
             
             warns = carregar_avisos()
@@ -120,12 +120,12 @@ class Admin(commands.Cog):
                 await ctx.send("Algo deu errado...")
 
 
-    # Comando: avisos
+    # Comando: warnings
 
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def avisos(self, ctx, member: commands.MemberConverter = None):
+    async def warnings(self, ctx, member: commands.MemberConverter = None):
         # self.bot.fetch_user serve para buscar o ID do usuário pela API do discord
         try:
             
@@ -184,12 +184,12 @@ class Admin(commands.Cog):
             else:
                 await ctx.send("Algo deu errado...")
 
-    # Comando: listaavisos
+    # Comando: warninglist
 
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def listaavisos(self, ctx):
+    async def warninglist(self, ctx):
         try:
             
             guild_id = str(ctx.guild.id)
@@ -243,12 +243,12 @@ class Admin(commands.Cog):
             else:
                 await ctx.send("Algo deu errado...")
 
-    # Comando: apagar
+    # Comando: clear
 
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def apagar(self, ctx, quantidade_mensagens: int):
+    async def clear(self, ctx, quantidade_mensagens: int):
         # ctx.channel.purge serve para poder apagar a quantidade de mensagens definidas no canal
         # limit serve para definir um limite de mensagens apagadas
         # delete_after=5 é a quantidade de segundos que o bot levará para apagar as mensagens
@@ -262,12 +262,12 @@ class Admin(commands.Cog):
             else:
                 await ctx.send("Algo deu errado...")
 
-    # Comando: lentear
+    # Comando: slow
 
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @commands.has_permissions(manage_channels=True)
-    async def lentear(self, ctx, tempo: int):
+    async def slow(self, ctx, tempo: int):
         # ctx.channel.edit serve editar as configurações do canal
         # slowmode_delay é para especificar o tipo de edição que será realizado no servidor
         try:
@@ -280,12 +280,12 @@ class Admin(commands.Cog):
             else:
                 await ctx.send("Algo deu errado...")
 
-    # Comando: trancar
+    # Comando: lock
 
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @commands.has_permissions(manage_channels = True)
-    async def trancar(self, ctx):
+    async def lock(self, ctx):
         # overwirte é a variável que permite sobrescrever as permissões do canal de um servidor
         # overwirte.send_messages é referente a poder ou a não poder mandar mensagens em determinado canal
         # ctx.channel.set_permissions é para definir as permissões do canal
@@ -301,12 +301,12 @@ class Admin(commands.Cog):
             else:
                 await ctx.send("Algo deu errado...")
 
-    # Comando: destrancar
+    # Comando: unlock
 
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @commands.has_permissions(manage_channels = True)
-    async def destrancar(self, ctx):
+    async def unlock(self, ctx):
         # owerwirte é a variável que permite sobrescrever as permissões do canal de um servidor
         # overwirte.send_messages é referente a poder ou a não poder mandar mensagens em um canal
         # ctx.channel.set_permissions é para definir as permissões do canal
@@ -322,12 +322,12 @@ class Admin(commands.Cog):
             else:
                 await ctx.send("Algo deu errado...")
 
-    # Comando: silenciar (dessilenciar automático)
+    # Comando: mute
 
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @commands.has_permissions(manage_roles=True)
-    async def silenciar(self, ctx, member: discord.Member, time: int):
+    async def mute(self, ctx, member: discord.Member, time: int):
         # member.timeout define a variável do tempo em que o usuário será silenciado
         try:
             await member.timeout(timedelta(minutes=time),
@@ -340,12 +340,12 @@ class Admin(commands.Cog):
             else:
                 await ctx.send("Algo deu errado...")
 
-    # Comando: dessilenciar (manual)
+    # Comando: unmute
 
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @commands.has_permissions(manage_roles=True)
-    async def dessilenciar(self, ctx, member: discord.Member):
+    async def unmute(self, ctx, member: discord.Member):
         # member.timeout é o tipo de comando para silenciar ou dessilenciar o usuário
         try:
             await member.timeout(None, reason="Dessilenciado manualmente com sucesso!")
@@ -357,12 +357,12 @@ class Admin(commands.Cog):
             else:
                 await ctx.send("Algo deu errado...")
 
-    # Comando: expulsar
+    # Comando: kick
 
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @commands.has_permissions(kick_members=True)
-    async def expulsar(self, ctx, member: discord.Member, *, reason="Não especificado"):
+    async def kick(self, ctx, member: discord.Member, *, reason="Não especificado"):
         # member.kick é um comando específico para expulsão
         try:
             await member.kick(reason=reason)
@@ -374,12 +374,12 @@ class Admin(commands.Cog):
             else:
                 await ctx.send("Algo deu errado...")
 
-    # Comando: banir
+    # Comando: ban
 
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @commands.has_permissions(ban_members=True)
-    async def banir(self, ctx, member: discord.Member, *, reason="Não especificado"):
+    async def ban(self, ctx, member: discord.Member, *, reason="Não especificado"):
         # member.ban é um comando específico para banimento
         try:
             await member.ban(reason=reason)
@@ -391,12 +391,12 @@ class Admin(commands.Cog):
             else:
                 await ctx.send("Algo deu errado...")
 
-    # Comando: desbanir
+    # Comando: unban
 
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @commands.has_permissions(ban_members=True)
-    async def desbanir(self, ctx, user_id: int):
+    async def unban(self, ctx, user_id: int):
         # user serve para definir que o banimento deve ser realizado por id de usuário
         # ctx.guild.unban(user) serve para desbanir determinado usuário por id
         try:

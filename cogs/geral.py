@@ -34,44 +34,44 @@ class Geral(commands.Cog):
         embed = discord.Embed(
             title="Central de Comandos",
             description="Veja os comandos disponíveis organizados por categoria. Considere criar um canal chamado exatamente 'log' para ter acesso ao sistema de logs.",
-            color=discord.Color.blue()
+            color=discord.Color.blurple()
         )
         # I. Membros comuns
         embed.add_field(name="I. Membros comuns", value="""
-`?ping` - Mostra a latência do bot.
-`?ajuda` - Mostra a lista de comandos.
-`?avatar <membro>` - Mostra o avatar de um membro.
-`?infouser <membro>` - Mostra as informações do usuário.
-`?infoserver` - Mostra informações do servidor.
-`?infobot` - Mostra informações do bot.                        
+`.ping` - Mostra a latência do bot.
+`.ajuda` - Mostra a lista de comandos.
+`.avatar <membro>` - Mostra o avatar de um membro.
+`.userinfo <membro>` - Mostra as informações do usuário.
+`.serverinfo` - Mostra informações do servidor.
+`.botinfo` - Mostra informações do bot.                        
 """, inline=False)
 
         # II. Moderadores
         embed.add_field(name="II. Moderadores", value="""
-`?avisar <membro> <motivo>` - Avisa um usuário.
-`?desavisar <membro>` - Retira todos os avisos do usuário.
-`?avisos <membro>` - Vê a quantidade e motivo dos avisos de um usuário.
-`?listaavisos` - Vê usuários avisados e quantidade de avisos.
-`?apagar <quantidade>` - Apaga mensagens do chat.
-`?lentear <segundos>` - Ativa o modo lento no canal.
-`?trancar` - Tranca um canal.
-`?destrancar` - Destranca um canal trancado.
-`?silenciar <membro> <minutos>` - Silencia um membro temporariamente.
-`?dessilenciar <membro>` - Remove o silêncio de um membro.
-`?expulsar <membro>` - Expulsa um membro do servidor.
-`?banir <membro>` - Bane um membro do servidor.
-`?desbanir <ID>` - Remove o banimento de um usuário pelo ID.
+`.warn <membro> <motivo>` - Avisa um usuário.
+`.unwarn <membro>` - Retira todos os avisos do usuário.
+`.warnings <membro>` - Vê a quantidade e motivo dos avisos de um usuário.
+`.warninglist` - Vê usuários avisados e quantidade de avisos.
+`.clear <quantidade>` - Apaga mensagens do chat.
+`.slow <segundos>` - Ativa o modo lento no canal.
+`.lock` - Tranca um canal.
+`.unlock` - Destranca um canal trancado.
+`.mute <membro> <minutos>` - Silencia um membro temporariamente.
+`.unmute <membro>` - Remove o silêncio de um membro.
+`.kick <membro>` - Expulsa um membro do servidor.
+`.ban <membro>` - Bane um membro do servidor.
+`.unban <ID>` - Remove o banimento de um usuário pelo ID.
 """, inline=False)
 
         # III. Desenvolvedores — só para DEV_ID
         if ctx.author.id == DEV_ID:
             embed.add_field(name="III. Desenvolvedores", value="""
-`?reiniciar` - Reinicia o bot.
-`?desligar` - Desliga o bot.
-`?verlog` - Vê o histórico de logs do bot.
-`?limparlog` - Limpa o histórico de logs do bot.
-`?carregarcog <cog>` - Recarrega uma cog específica.
-`?debug` - Exibe informações gerais e técnicas do bot.                           
+`.restart` - Reinicia o bot.
+`.toswitchoff` - Desliga o bot.
+`.log` - Vê o histórico de logs do bot.
+`.clearlog` - Limpa o histórico de logs do bot.
+`.reloadcog <cog>` - Recarrega uma cog específica.
+`.debug` - Exibe informações gerais e técnicas do bot.                           
 """, inline=False)
 
         embed.set_footer(text="Central de Ajuda")
@@ -106,11 +106,11 @@ class Geral(commands.Cog):
             else:
                 await ctx.send("Algo deu errado...")
 
-    # Comando: infouser
+    # Comando: userinfo
 
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
-    async def infouser(self, ctx, member: discord.Member = None):
+    async def userinfo(self, ctx, member: discord.Member = None):
         # roles é uma variável referente aos cargos que o membro tem no servidor
         # todos os embed.add_field são uma informação separada sobre o membro
         # member.display_avat.url é para mostrar a imagem do membro
@@ -141,11 +141,11 @@ class Geral(commands.Cog):
             else:
                 await ctx.send("Algo deu errado...")
 
-    # Comando: infoserver
+    # Comando: serverinfo
 
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
-    async def infoserver(self, ctx):
+    async def serverinfo(self, ctx):
         # guild, embed, title e color são referentes ao servidor em que o bot foi acionado
         # ctx.guild.icon.url é a imagem do servidor
         # todos os embed.add_field são uma informação separada do servidor
@@ -179,11 +179,11 @@ class Geral(commands.Cog):
             else:
                 await ctx.send("Algo deu errado...")
 
-    # Comando: infobot
+    # Comando: botinfo
 
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
-    async def infobot(self, ctx):
+    async def botinfo(self, ctx):
         # embed, title, description e color são uma introdução à informações do bot
         # todos os embed.add_field são uma informação separada sobre o bot
         # ctx.me.display_avatar.url é a imagem do bot

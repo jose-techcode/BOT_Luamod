@@ -19,20 +19,20 @@ from checks import is_dev
 class Dev(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.reiniciando = False
-        self.reiniciar_loop.start()
+        self.restarting = False
+        self.restart_loop.start()
         self.log_bot = "bot.log"
-        self.limpar_log.start() # Inicia a limpeza quando o bot for ligado
+        self.clean_log.start() # Inicia a limpeza quando o bot for ligado
 
     def cog_unload(self):
-        self.limpar_log.cancel() # Para a task quando o bot for desligado
+        self.clean_log.cancel() # Para a task quando o bot for desligado
     
-    # Comando: reiniciar
+    # Comando: restart
 
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @is_dev()
-    async def reiniciar(self, ctx):
+    async def restart(self, ctx):
         # self.bot.close() fecha o bot primeiramente
         # os.execl(sus.executable, sys.executable, *sys.argv) é a parte que reinicia o bot
         try:
@@ -46,12 +46,12 @@ class Dev(commands.Cog):
             else:
                 await ctx.send("Algo deu errado...")
 
-    # Comando: desligar
+    # Comando: toswitchoff
 
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @is_dev()
-    async def desligar(self, ctx):
+    async def toswitchoff(self, ctx):
         # self.bot.close() fecha o bot
         try:
             await ctx.send("Desligando...")
@@ -63,12 +63,12 @@ class Dev(commands.Cog):
             else:
                 await ctx.send("Algo deu errado...")
 
-    # Comando: verlog
+    # Comando: log
 
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @is_dev()
-    async def verlog(self, ctx, lines: int = 10):
+    async def log(self, ctx, lines: int = 10):
         # content é a variável que exibe as últimas linhas 
         try:
             with open("bot.log", "r", encoding="utf-8") as f:
@@ -87,12 +87,12 @@ class Dev(commands.Cog):
             else:
                 await ctx.send("Algo deu errado...")
 
-    # Comando: limparlog (manual)
+    # Comando: clearlog
 
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @is_dev()
-    async def limparlog(self, ctx):
+    async def clearlog(self, ctx):
         # open serve para abrir o log do bot e o close em seguida para fechar
         try:
             open("bot.log", "w").close()
@@ -104,12 +104,13 @@ class Dev(commands.Cog):
             else:
                 await ctx.send("Algo deu errado...")
 
-    # Comando: carregarcog
+    # Comando: reloadcog
 
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @is_dev()
-    async def carregarcog(self, ctx, name: str):
+    async def reloadcog(self, ctx, name: str):
+        # self.bot.reload_extension serve para recarregar a cog selecionada
         try:
             await self.bot.reload_extension(f"cogs.{name}")
             await ctx.send(f"Cog `cogs.{name}` recarregada com sucesso!")
@@ -185,30 +186,30 @@ class Dev(commands.Cog):
             else:
                 await ctx.send("Algo deu errado...")
 
-    # Comando: reiniciar (automático)
+    # Comando: restart (automático)
 
     @tasks.loop(hours=2)
-    async def reiniciar_loop(self):
+    async def restart_loop(self):
         print("Reiniciando!")
         await self.bot.close()
         os.execl(sys.executable, sys.executable, *sys.argv)
 
-    @reiniciar_loop.before_loop
+    @restart_loop.before_loop
     async def before_reiniciar(self):
         await self.bot.wait_until_ready() # Certifica de que a reiniciação só funcione quando o bot estiver ligado
         print("Reiniciação em 2 horas!")
         await asyncio.sleep(60 * 120)
 
-    # Comando: limpar_log (automático)
+    # Comando: clean_log (automático)
 
     @tasks.loop(hours=1)
-    async def limpar_log(self):
+    async def clean_log(self):
         # open serve para abrir o log do bot e o close em seguida para fechar
         open("bot.log", "w").close()
         print("bot.log limpo com sucesso!")
     
-    @limpar_log.before_loop
-    async def before_limpar_log(self):
+    @clean_log.before_loop
+    async def before_clean_log(self):
         await self.bot.wait_until_ready() # Certifica de que a limpeza só funcione quando o bot ligar
 
 async def setup(bot):
