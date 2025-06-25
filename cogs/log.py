@@ -235,7 +235,7 @@ class Log(commands.Cog):
         if before.display_name != after.display_name:
 
             embed = discord.Embed(
-                title="Membro Alterado Localmente (Apelido)",
+                title="Membro (Apelido)",
                 description=f"Membro: {before.mention}",
                 color=discord.Color.yellow(),
                 timestamp=discord.utils.utcnow()
@@ -257,7 +257,7 @@ class Log(commands.Cog):
             if added_roles:
                 
                 embed = discord.Embed(
-                    title="Membro Alterado Localmente (Adição de Cargo)",
+                    title="Membro (Adição de Cargo)",
                     description=f"Membro: {before.mention}",
                     color=discord.Color.orange(),
                     timestamp=discord.utils.utcnow()
@@ -270,7 +270,7 @@ class Log(commands.Cog):
             if removed_roles:
                 
                 embed = discord.Embed(
-                    title="Membro Alterado Localmente (Remoção de Cargo)",
+                    title="Membro (Remoção de Cargo)",
                     description=f"Membro: {before.mention}",
                     color=discord.Color.red(),
                     timestamp=discord.utils.utcnow()
@@ -303,7 +303,7 @@ class Log(commands.Cog):
             if before.name != after.name:
 
                 embed = discord.Embed(
-                    title="Membro Alterado Globalmente (Nome)",
+                    title="Membro (Nome)",
                     description=f"Membro: {before.mention}",
                     color=discord.Color.yellow(),
                     timestamp=discord.utils.utcnow()
@@ -320,18 +320,18 @@ class Log(commands.Cog):
             if before.avatar != after.avatar:
 
                 embed = discord.Embed(
-                    title="Membro Alterado Globalmente (Avatar)",
-                    description=f"Membro: {before.mention}",
-                    color=discord.Color.orange(),
+                    title="Membro (Avatar)",
+                    description=(
+                        f"Membro: {before.mention}\n\n"
+                        f"[Avatar Anterior]({before.avatar.url})\n"
+                        f"[Avatar Atual]({after.avatar.url})"
+                    ),
+                    color=discord.Color.yellow(),
                     timestamp=discord.utils.utcnow()
                 )
                 
-                if before.avatar:
-                    embed.set_thumbnail(url=before.avatar.url)
-                if after.avatar:
-                    embed.set_image(url=after.avatar.url)
                 embed.set_footer(text=f"ID do membro: {after.id}")
-            
+               
                 await log_channel.send(embed=embed)
 
     # Role_create
@@ -393,7 +393,7 @@ class Log(commands.Cog):
             embed = discord.Embed(
                 title="Cargo Alterada",
                 description=f"Cargo: {before.name}",
-                color=discord.Color.yellow(),
+                color=discord.Color.orange(),
                 timestamp=discord.utils.utcnow()
             )
             
@@ -410,7 +410,7 @@ class Log(commands.Cog):
             embed = discord.Embed(
                 title="Cargo Alterada",
                 description=f"Cargo: {before.name}",
-                color=discord.Color.orange(),
+                color=discord.Color.yellow(),
                 timestamp=discord.utils.utcnow()
             )
                 
@@ -488,13 +488,15 @@ class Log(commands.Cog):
         
         if not log_channel:
             return
+        
+        # Nome
 
         if before.name != after.name:
 
             embed = discord.Embed(
                 title="Canal Alterado",
                 description=f"Canal: {before.mention}",
-                color=discord.Color.yellow(),
+                color=discord.Color.orange(),
                 timestamp=discord.utils.utcnow()
             )
             
@@ -536,7 +538,7 @@ class Log(commands.Cog):
             embed = discord.Embed(
                 title="Membro Saiu (Canal de Voz)",
                 description=f"{member.mention} Saiu do canal de voz {before.channel.mention}",
-                color=discord.Color.yellow(),
+                color=discord.Color.orange(),
                 timestamp=discord.utils.utcnow()
             )
 
@@ -551,7 +553,7 @@ class Log(commands.Cog):
             embed = discord.Embed(
                 title="Membro Mudou (Canal de Voz)",
                 description=f"{member.mention} Mudou do canal de voz",
-                color=discord.Color.orange(),
+                color=discord.Color.yellow(),
                 timestamp=discord.utils.utcnow()
             )
             
@@ -597,7 +599,7 @@ class Log(commands.Cog):
             embed = discord.Embed(
                 title="Guild Alterada",
                 description=f"Guild: {before.name}",
-                color=discord.Color.orange(),
+                color=discord.Color.yellow(),
                 timestamp=discord.utils.utcnow()
             )
             
@@ -620,7 +622,7 @@ class Log(commands.Cog):
         embed = discord.Embed(
             title="Bot Lua Entrou",
             description=f"Guild: {guild.name}",
-            color=discord.Color.blue(),
+            color=discord.Color.green(),
             timestamp=discord.utils.utcnow()
         )
 
