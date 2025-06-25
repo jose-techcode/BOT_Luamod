@@ -332,7 +332,7 @@ class Admin(commands.Cog):
         try:
             await member.timeout(timedelta(minutes=time),
             reason="Motivo não especificado")
-            await ctx.send(f"{member.mention} foi silenciado por {time} minuto(s).")
+            await ctx.send(f"O membro {member.mention} foi silenciado por {time} minuto(s).")
         except Exception as e:
             logging.exception(f"Erro no comando.")
             if ctx.author.id == DEV_ID:
@@ -349,7 +349,7 @@ class Admin(commands.Cog):
         # member.timeout é o tipo de comando para silenciar ou dessilenciar o usuário
         try:
             await member.timeout(None, reason="Dessilenciado manualmente com sucesso!")
-            await ctx.send(f"{member.mention} foi dessilenciado manualmente ou automaticamente!")
+            await ctx.send(f"O membro {member.mention} foi dessilenciado manualmente ou automaticamente!")
         except Exception as e:
             logging.exception(f"Erro no comando.")
             if ctx.author.id == DEV_ID:
@@ -366,7 +366,7 @@ class Admin(commands.Cog):
         # member.kick é um comando específico para expulsão
         try:
             await member.kick(reason=reason)
-            await ctx.send(f"{member.mention} foi expulso do servidor! Motivo: {reason}")
+            await ctx.send(f"O membro {member.mention} foi expulso do servidor! Motivo: {reason}")
         except Exception as e:
             logging.exception(f"Erro no comando.")
             if ctx.author.id == DEV_ID:
@@ -383,7 +383,7 @@ class Admin(commands.Cog):
         # member.ban é um comando específico para banimento
         try:
             await member.ban(reason=reason)
-            await ctx.send(f"{member.mention} foi banido do servidor! Motivo: {reason}")
+            await ctx.send(f"O membro {member.mention} foi banido do servidor! Motivo: {reason}")
         except Exception as e:
             logging.exception(f"Erro no comando.")
             if ctx.author.id == DEV_ID:
