@@ -25,6 +25,9 @@ logging.error("Teste.")
 
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix=".", intents=intents)
+
+# Uptime do bot
+
 bot.start_time = time.time()
 
 # Armazenar log_channels na memória
