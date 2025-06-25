@@ -33,7 +33,7 @@ class Geral(commands.Cog):
     async def ajuda(self, ctx):
         embed = discord.Embed(
             title="Central de Comandos",
-            description="Veja os comandos disponíveis organizados por categoria. Considere criar um canal chamado exatamente 'log' para ter acesso ao sistema de logs.",
+            description="Veja os comandos disponíveis organizados por categoria. Considere criar um canal e usar .setlog <channel> para ter acesso ao sistema de logs do bot.",
             color=discord.Color.blurple()
         )
         # I. Membros comuns
