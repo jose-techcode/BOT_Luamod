@@ -65,7 +65,7 @@ III. Desenvolvedores
 - Linguagem: Python
 - Biblioteca: Discord.py
 - Ambiente: Linux
-- Banco De Dados: Json
+- Banco de dados: Json
 - Versionamento de código: Git
 - Containerização: Docker
 
