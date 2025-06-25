@@ -3,6 +3,8 @@ from discord.ext import commands
 import asyncio
 import logging
 import time
+import json
+import os
 from datetime import timedelta
 from storage import DISCORD_TOKEN
 
@@ -24,6 +26,25 @@ logging.error("Teste.")
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix=".", intents=intents)
 bot.start_time = time.time()
+
+# Armazenar log_channels na memória
+
+FILE_LOG = 'log_channels.json'
+
+def salvar_log_channels(dados):
+    with open(FILE_LOG, 'w') as j:
+        json.dump(dados, j, indent=4)
+
+def carregar_log_channels():
+    if os.path.exists(FILE_LOG):
+        with open(FILE_LOG, 'r') as j:
+            informations = json.load(j)
+            return {int(k): v for k, v in informations.items()}
+    return {}
+
+# Carregar log_channels
+
+bot.log_channels = carregar_log_channels()
 
 # Quando o bot estiver ativo/online:
 
@@ -99,4 +120,5 @@ async def main():
 
 # Executar o bot
 
-asyncio.run(main())
+if __name__ == "__main__":
+    asyncio.run(main())

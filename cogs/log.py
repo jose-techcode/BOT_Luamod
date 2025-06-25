@@ -22,7 +22,13 @@ class Log(commands.Cog):
         if message_before.content == message_after.content:
             return  # ignora edição nula
         
-        log_channel = discord.utils.get(message_before.guild.text_channels, name='log')
+        guild = message_before.guild
+        channel_id = self.bot.log_channels.get(guild.id)
+        
+        if channel_id:
+            log_channel = guild.get_channel(channel_id)
+        else:
+            log_channel = None
         
         if not log_channel:
             return
@@ -52,7 +58,13 @@ class Log(commands.Cog):
         if not message.guild:
             return
 
-        log_channel = discord.utils.get(message.guild.text_channels, name='log')
+        guild = message.guild
+        channel_id = self.bot.log_channels.get(guild.id)
+        
+        if channel_id:
+            log_channel = guild.get_channel(channel_id)
+        else:
+            log_channel = None
         
         if not log_channel:
             return
@@ -82,7 +94,12 @@ class Log(commands.Cog):
             return
 
         guild = messages[0].guild
-        log_channel = discord.utils.get(guild.text_channels, name='log')
+        channel_id = self.bot.log_channels.get(guild.id)
+        
+        if channel_id:
+            log_channel = guild.get_channel(channel_id)
+        else:
+            log_channel = None
 
         if not log_channel:
             return
@@ -124,8 +141,17 @@ class Log(commands.Cog):
 
     @commands.Cog.listener()
     async def on_member_join(self, member: discord.Member):
+
+        guild = member.guild
+        if not guild:
+            return
         
-        log_channel = discord.utils.get(member.guild.text_channels, name='log')
+        channel_id = self.bot.log_channels.get(guild.id)
+            
+        if channel_id:
+            log_channel = guild.get_channel(channel_id)
+        else:
+            log_channel = None
         
         if not log_channel:
             return
@@ -148,8 +174,17 @@ class Log(commands.Cog):
 
     @commands.Cog.listener()
     async def on_member_remove(self, member: discord.Member):
+
+        guild = member.guild
+        if not guild:
+            return
         
-        log_channel = discord.utils.get(member.guild.text_channels, name='log')
+        channel_id = self.bot.log_channels.get(guild.id)
+            
+        if channel_id:
+            log_channel = guild.get_channel(channel_id)
+        else:
+            log_channel = None
         
         if not log_channel:
             return
@@ -177,7 +212,12 @@ class Log(commands.Cog):
     @commands.Cog.listener()
     async def on_member_ban(self, guild: discord.Guild, user: discord.User):
         
-        log_channel = discord.utils.get(guild.text_channels, name='log')
+        channel_id = self.bot.log_channels.get(guild.id)
+            
+        if channel_id:
+            log_channel = guild.get_channel(channel_id)
+        else:
+            log_channel = None
         
         if not log_channel:
             return
@@ -200,8 +240,13 @@ class Log(commands.Cog):
            
     @commands.Cog.listener()
     async def on_member_unban(self, guild: discord.Guild, user: discord.User):
-        
-        log_channel = discord.utils.get(guild.text_channels, name='log')
+     
+        channel_id = self.bot.log_channels.get(guild.id)
+            
+        if channel_id:
+            log_channel = guild.get_channel(channel_id)
+        else:
+            log_channel = None
         
         if not log_channel:
             return
@@ -224,8 +269,13 @@ class Log(commands.Cog):
 
     @commands.Cog.listener()
     async def on_member_update(self, before: discord.Member, after: discord.Member):
-        
-        log_channel = discord.utils.get(after.guild.text_channels, name='log')
+                
+        channel_id = self.bot.log_channels.get(after.guild.id)
+            
+        if channel_id:
+            log_channel = after.guild.get_channel(channel_id)
+        else:
+            log_channel = None
         
         if not log_channel:
             return
@@ -292,8 +342,13 @@ class Log(commands.Cog):
             member = guild.get_member(after.id)
             if not member:
                 continue # Ignora
+                
+            channel_id = self.bot.log_channels.get(guild.id)
             
-            log_channel = discord.utils.get(guild.text_channels, name='log')
+            if channel_id:
+                log_channel = guild.get_channel(channel_id)
+            else:
+                log_channel = None
             
             if not log_channel:
                 continue
@@ -339,7 +394,16 @@ class Log(commands.Cog):
     @commands.Cog.listener()
     async def on_guild_role_create(self, role):
         
-        log_channel = discord.utils.get(role.guild.text_channels, name='log')
+        guild = role.guild
+        if not guild:
+            return
+        
+        channel_id = self.bot.log_channels.get(guild.id)
+        
+        if channel_id:
+            log_channel = guild.get_channel(channel_id)
+        else:
+            log_channel = None
         
         if not log_channel:
             return
@@ -359,8 +423,17 @@ class Log(commands.Cog):
 
     @commands.Cog.listener()
     async def on_guild_role_delete(self, role):
+
+        guild = role.guild
+        if not guild:
+            return
         
-        log_channel = discord.utils.get(role.guild.text_channels, name='log')
+        channel_id = self.bot.log_channels.get(guild.id)
+        
+        if channel_id:
+            log_channel = guild.get_channel(channel_id)
+        else:
+            log_channel = None
         
         if not log_channel:
             return
@@ -381,8 +454,17 @@ class Log(commands.Cog):
     @commands.Cog.listener()
     async def on_guild_role_update(self, before: discord.Role, after: discord.Role):
         
-        log_channel = discord.utils.get(before.guild.text_channels, name='log')
-            
+        guild = after.guild
+        if not guild:
+            return
+
+        channel_id = self.bot.log_channels.get(guild.id)
+        
+        if channel_id:
+            log_channel = guild.get_channel(channel_id)
+        else:
+            log_channel = None
+
         if not log_channel:
             return
             
@@ -442,7 +524,16 @@ class Log(commands.Cog):
     @commands.Cog.listener()
     async def on_guild_channel_create(self, channel):
         
-        log_channel = discord.utils.get(channel.guild.text_channels, name='log')
+        guild = channel.guild
+        if not guild:
+            return
+        
+        channel_id = self.bot.log_channels.get(guild.id)
+        
+        if channel_id:
+            log_channel = guild.get_channel(channel_id)
+        else:
+            log_channel = None
         
         if not log_channel:
             return
@@ -462,8 +553,17 @@ class Log(commands.Cog):
 
     @commands.Cog.listener()
     async def on_guild_channel_delete(self, channel):
+
+        guild = channel.guild
+        if not guild:
+            return
         
-        log_channel = discord.utils.get(channel.guild.text_channels, name='log')
+        channel_id = self.bot.log_channels.get(guild.id)
+        
+        if channel_id:
+            log_channel = guild.get_channel(channel_id)
+        else:
+            log_channel = None
         
         if not log_channel:
             return
@@ -484,7 +584,16 @@ class Log(commands.Cog):
     @commands.Cog.listener()
     async def on_guild_channel_update(self, before: discord.abc.GuildChannel, after: discord.abc.GuildChannel):
         
-        log_channel = discord.utils.get(before.guild.text_channels, name='log')
+        guild = after.guild
+        if not guild:
+            return
+
+        channel_id = self.bot.log_channels.get(guild.id)
+        
+        if channel_id:
+            log_channel = guild.get_channel(channel_id)
+        else:
+            log_channel = None
         
         if not log_channel:
             return
@@ -511,7 +620,16 @@ class Log(commands.Cog):
     @commands.Cog.listener()
     async def on_voice_state_update(self, member, before, after):
         
-        log_channel = discord.utils.get(member.guild.text_channels, name='log')
+        guild = member.guild
+        if not guild:
+            return
+
+        channel_id = self.bot.log_channels.get(guild.id)
+        
+        if channel_id:
+            log_channel = guild.get_channel(channel_id)
+        else:
+            log_channel = None
         
         if not log_channel:
             return
@@ -569,8 +687,15 @@ class Log(commands.Cog):
 
     @commands.Cog.listener()
     async def on_guild_update(self, before: discord.Guild, after: discord.Guild):
+
+        guild = after
         
-        log_channel = discord.utils.get(after.text_channels, name='log')
+        channel_id = self.bot.log_channels.get(guild.id)
+        
+        if channel_id:
+            log_channel = guild.get_channel(channel_id)
+        else:
+            log_channel = None
         
         if not log_channel:
             return
@@ -614,7 +739,14 @@ class Log(commands.Cog):
     @commands.Cog.listener()
     async def on_guild_join(self, guild):
         
-        log_channel = self.bot.get_channel(1386112547148529695) # ID de um canal de logs do servidor central
+        guild_id = 1380981509808459850
+        channel_id = 1387483949323915364
+
+        central_guild = self.bot.get_guild(guild_id)
+        if not central_guild:
+            return
+
+        log_channel = central_guild.get_channel(channel_id)
         
         if not log_channel:
             return
@@ -635,8 +767,15 @@ class Log(commands.Cog):
     @commands.Cog.listener()
     async def on_guild_remove(self, guild):
         
-        log_channel = self.bot.get_channel(1386112547148529695) # ID de um canal de logs do servidor central
-        
+        guild_id = 1380981509808459850
+        channel_id = 1387483949323915364
+
+        central_guild = self.bot.get_guild(guild_id)
+        if not central_guild:
+            return
+
+        log_channel = central_guild.get_channel(channel_id)
+
         if not log_channel:
             return
         

@@ -3,6 +3,7 @@ from discord.ext import commands
 import asyncio
 from datetime import timedelta
 from storage import DEV_ID
+from bot import salvar_log_channels
 import logging
 import re
 import json
@@ -10,17 +11,17 @@ import os
 
 # JSON
 
-ARQUIVO_JSON = "warns.json"
+FILE_JSON = "warns.json"
 
 def carregar_avisos():
-        if not os.path.exists(ARQUIVO_JSON):
+        if not os.path.exists(FILE_JSON):
             return {}
-        with open(ARQUIVO_JSON, "r") as j:
+        with open(FILE_JSON, "r") as j:
             return json.load(j)
     
-def salvar_avisos(dados):
-        with open(ARQUIVO_JSON, "w") as j:
-            json.dump(dados, j, indent=4)
+def salvar_avisos(informations):
+        with open(FILE_JSON, "w") as j:
+            json.dump(informations, j, indent=4)
 
 # Estrutura cog (herança)
 
@@ -410,6 +411,22 @@ class Admin(commands.Cog):
             else:
                 await ctx.send("Algo deu errado...")
 
+    # Comando: setlog
+
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    @commands.command()
+    @commands.has_permissions(manage_channels = True)
+    async def setlog(self, ctx, channel: discord.TextChannel):
+        try:
+            self.bot.log_channels[ctx.guild.id] = channel.id
+            salvar_log_channels(self.bot.log_channels)
+            await ctx.send(f"Canal de logs configurado: {channel.mention}")
+        except Exception as e:
+            logging.exception(f"Erro no comando.")
+            if ctx.author.id == DEV_ID:
+                await ctx.send(f"Erro: {e}")
+            else:
+                await ctx.send("Algo deu errado...")
 
 # Registro de cog
 

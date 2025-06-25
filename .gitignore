@@ -33,9 +33,10 @@ Thumbs.db
 *.db
 *.sock
 
-# Banco de Dados/Json
+# Json
 
 warns.json
+log_channels.json
 
 # Outras boas práticas
 
