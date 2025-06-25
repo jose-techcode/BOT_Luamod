@@ -61,6 +61,7 @@ class Geral(commands.Cog):
 `.kick <membro>` - Expulsa um membro do servidor.
 `.ban <membro>` - Bane um membro do servidor.
 `.unban <ID>` - Remove o banimento de um usuário pelo ID.
+`.setlog <channel>` - Define um canal para receber logs de ações do servidor.
 """, inline=False)
 
         # III. Desenvolvedores — só para DEV_ID
