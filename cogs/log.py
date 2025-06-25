@@ -391,7 +391,7 @@ class Log(commands.Cog):
         if before.name != after.name:
                 
             embed = discord.Embed(
-                title="Cargo Alterada",
+                title="Cargo Alterado (Nome)",
                 description=f"Cargo: {before.name}",
                 color=discord.Color.orange(),
                 timestamp=discord.utils.utcnow()
@@ -408,7 +408,7 @@ class Log(commands.Cog):
         if before.color != after.color:
                 
             embed = discord.Embed(
-                title="Cargo Alterada",
+                title="Cargo Alterado (Cor)",
                 description=f"Cargo: {before.name}",
                 color=discord.Color.yellow(),
                 timestamp=discord.utils.utcnow()
