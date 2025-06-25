@@ -103,10 +103,10 @@ python bot.py
 # 9. Rodar em Docker
 
 I. Build da Imagem
-- docker build -t projeto_lua .
+docker build -t projeto_lua .
 
 II. Rodar o Container
-- docker run -it --name bot_lua projeto_lua
+docker run -it --name bot_lua projeto_lua
 
 # 10. Contribuição
 
