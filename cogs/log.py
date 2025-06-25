@@ -581,7 +581,7 @@ class Log(commands.Cog):
             
             embed = discord.Embed(
                 title="Guild Alterada",
-                description=f"Guild: {before.mention}",
+                description=f"Guild: {before.name}",
                 color=discord.Color.yellow(),
                 timestamp=discord.utils.utcnow()
             )
