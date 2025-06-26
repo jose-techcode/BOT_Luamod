@@ -40,10 +40,10 @@ class Ia(commands.Cog):
             try:
                 completion = self.client.chat.completions.create(
                     extra_headers={
-                        "HTTP-Referer": "https://github.com/jose-techcode/Bot_Lua",
-                        "X-Title": "Lua",
+                        "HTTP-Referer": "SITE_URL", # Substitua SITE_URL pela URL da aplicação
+                        "X-Title": "SITE_NAME", # Substitua SITE_NAME pelo nome da aplicação
                     },
-                    model="MODEL", # Substitua "MODEL" pelo modelo da IA
+                    model="MODEL", # Substitua MODEL pelo nome do modelo
                     messages=[
                         {"role": "user", "content": content}
                     ]
