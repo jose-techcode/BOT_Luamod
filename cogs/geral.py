@@ -74,8 +74,15 @@ class Geral(commands.Cog):
 `.reloadcog <cog>` - Recarrega uma cog específica.
 `.debug` - Exibe informações gerais e técnicas do bot.                           
 """, inline=False)
+            
+        # IV. IA
+        if ctx.author.id == DEV_ID:
+            embed.add_field(name="III. Desenvolvedores", value="""
+`.on` - Liga o chat da IA.
+`.off` - Desliga o chat da IA.
+""", inline=False)
 
-        embed.set_footer(text="Central de Ajuda")
+        embed.set_footer(text="Bot Lua")
         await ctx.send(embed=embed)
 
     # Comando: avatar
