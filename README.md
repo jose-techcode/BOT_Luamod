@@ -4,7 +4,7 @@ O "Bot Lua" é um bot de discord em que a sua atribuição principal é moderar 
 
 # 2. Funcionalidades
 
-I. Membros comuns
+I. Gerais
 
 - ping - Mostra a latência do bot.
 
@@ -61,6 +61,12 @@ III. Desenvolvedores
 - reloadcog < cog > - Recarrega uma cog específica.
 
 - debug - Exibe informações gerais e técnicas do bot.
+
+IV. IA
+
+- on - Liga o chat da IA.
+
+- off - Desliga o chat da IA.
 
 # 3. Tecnologias
 
