@@ -38,7 +38,7 @@ Thumbs.db
 warns.json
 log_channels.json
 
-# Outras boas práticas
+# Outros
 
 *.bak
 *.tmp
