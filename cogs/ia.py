@@ -43,7 +43,7 @@ class Ia(commands.Cog):
                         "HTTP-Referer": "https://github.com/jose-techcode/Bot_Lua",
                         "X-Title": "Lua",
                     },
-                    model="mistralai/mistral-7b-instruct:free",
+                    model="MODEL", # Substitua "MODEL" pelo modelo da IA
                     messages=[
                         {"role": "user", "content": content}
                     ]
