@@ -37,29 +37,29 @@ class Geral(commands.Cog):
             color=discord.Color.blurple()
         )
         # I. Membros comuns
-        embed.add_field(name="I. Membros comuns", value="""
+        embed.add_field(name="I. Gerais", value="""
 `.ping` - Mostra a latência do bot.
 `.ajuda` - Mostra a lista de comandos.
-`.avatar <membro>` - Mostra o avatar de um membro.
-`.userinfo <membro>` - Mostra as informações do usuário.
+`.avatar <member>` - Mostra o avatar de um membro.
+`.userinfo <member>` - Mostra as informações do usuário.
 `.serverinfo` - Mostra informações do servidor.
 `.botinfo` - Mostra informações do bot.                        
 """, inline=False)
 
         # II. Moderadores
         embed.add_field(name="II. Moderadores", value="""
-`.warn <membro> <motivo>` - Avisa um usuário.
-`.unwarn <membro>` - Retira todos os avisos do usuário.
-`.warnings <membro>` - Vê a quantidade e motivo dos avisos de um usuário.
+`.warn <member> <reason>` - Avisa um usuário.
+`.unwarn <member>` - Retira todos os avisos do usuário.
+`.warnings <member>` - Vê a quantidade e motivo dos avisos de um usuário.
 `.warninglist` - Vê usuários avisados e quantidade de avisos.
-`.clear <quantidade>` - Apaga mensagens do chat.
-`.slow <segundos>` - Ativa o modo lento no canal.
+`.clear <quantity>` - Apaga mensagens do chat.
+`.slow <seconds>` - Ativa o modo lento no canal.
 `.lock` - Tranca um canal.
 `.unlock` - Destranca um canal trancado.
-`.mute <membro> <minutos>` - Silencia um membro temporariamente.
-`.unmute <membro>` - Remove o silêncio de um membro.
-`.kick <membro>` - Expulsa um membro do servidor.
-`.ban <membro>` - Bane um membro do servidor.
+`.mute <member> <minutes>` - Silencia um membro temporariamente.
+`.unmute <member>` - Remove o silêncio de um membro.
+`.kick <member>` - Expulsa um membro do servidor.
+`.ban <member>` - Bane um membro do servidor.
 `.unban <ID>` - Remove o banimento de um usuário pelo ID.
 `.setlog <channel>` - Define um canal para receber logs de ações do servidor.
 """, inline=False)
