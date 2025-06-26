@@ -10,9 +10,9 @@ I. Gerais
 
 - ajuda - Mostra a lista de comandos.
 
-- avatar < membro > - Exibe o avatar de um membro.
+- avatar < member > - Exibe o avatar de um membro.
 
-- userinfo < membro > - Mostra as informações do usuário.
+- userinfo < member > - Mostra as informações do usuário.
 
 - serverinfo - Exibe informações do servidor.
 
@@ -20,29 +20,29 @@ I. Gerais
 
 II. Moderadores
 
-- warn < membro > < motivo > - Avisa um usuário.
+- warn < member > < reason > - Avisa um usuário.
 
-- unwarn < membro > - Retira todos os avisos do usuário.
+- unwarn < member > - Retira todos os avisos do usuário.
 
-- warnings < membro > - Vê a quantidade e o(s) motivo(s) do(s) aviso(s) de um usuário.
+- warnings < member > - Vê a quantidade e o(s) motivo(s) do(s) aviso(s) de um usuário.
 
 - warninglist - Vê o(s) usuário(s) avisado(s) e a quantidade de aviso(s) que cada um tem.
 
-- clear < quantidade > - Apaga mensagens do chat.
+- clear < quantity > - Apaga mensagens do chat.
 
-- slow < segundos > - Ativa o modo lento no canal.
+- slow < seconds > - Ativa o modo lento no canal.
 
 - lock - Tranca um canal.
 
 - unlock - Destranca um canal que estava trancado.
 
-- mute < membro > < minutos > - Silencia um membro temporariamente.
+- mute < member > < minutos > - Silencia um membro temporariamente.
 
-- unmute < membro > - Remove o silêncio de um membro.
+- unmute < member > - Remove o silêncio de um membro.
 
-- kick < membro > - Expulsa um membro do servidor.
+- kick < member > - Expulsa um membro do servidor.
 
-- ban < membro > - Bane um membro do servidor.
+- ban < member > - Bane um membro do servidor.
 
 - unban < ID > - Remove o banimento de um usuário pelo ID.
 
@@ -82,6 +82,7 @@ IV. IA
 - Bash
 
 Clone o repositório
+
 git clone https://github.com/jose-techcode/Bot_Lua
 
 # 5. Pasta do Projeto
