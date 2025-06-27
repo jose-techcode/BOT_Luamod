@@ -131,8 +131,8 @@ class Dev(commands.Cog):
             guilds = len(self.bot.guilds)
             users = len(set(self.bot.get_all_members()))
             
-            uptime_seconds = int(time.time() - self.bot.start_time) # CONSERTO
-            uptime_str = str(datetime.timedelta(seconds=uptime_seconds)) # CONSERTO
+            uptime_seconds = int(time.time() - self.bot.start_time)
+            uptime_str = str(datetime.timedelta(seconds=uptime_seconds))
             status = "Online" if self.bot.is_ready() else "Desconectado"
 
             python_version = platform.python_version()
