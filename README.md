@@ -68,16 +68,21 @@ IV. IA
 
 - off - Desliga o chat da IA.
 
-# 3. Tecnologias
+# 3. API
+
+API simples feita com FastAPI para ver o status geral do bot.
+
+# 4. Tecnologias
 
 - Linguagem: Python
+- Framework: FastAPI
 - Biblioteca: Discord.py
 - Ambiente: Linux
 - Banco de dados/formato de arquivo: Json
 - Versionamento de código: Git
 - Containerização: Docker
 
-# 4. Clone do Repositório
+# 5. Clone do Repositório
 
 - Bash
 
@@ -85,15 +90,15 @@ Clone o repositório
 
 git clone https://github.com/jose-techcode/Bot_Lua
 
-# 5. Pasta do Projeto
+# 6. Pasta do Projeto
 
 cd projeto_lua
 
-# 6. Instalação de Dependências
+# 7. Instalação de Dependências
 
 pip install -r requirements.txt
 
-# 7. Configuração de Variáveis de Ambiente
+# 8. Configuração de Variáveis de Ambiente
 
 Crie um arquivo chamado .env na raiz do projeto e adicione seu token do bot:
 
@@ -103,13 +108,17 @@ No mesmo arquivo .env, se for criar comandos específicos para somente o desenvo
 
 DEV_ID=seu_id
 
+Também, no mesmo arquivo .env, se for criar comandos específicos para usar a IA do bot, adicione:
+
+API_KEY_OPEN_ROUTER=sua_api_key
+
 Esses arquivos não devem ser enviados para o Github, pois contém informações sensíveis. Então, devem ser incluídos no .gitignore.
 
-# 8. Execução do Projeto
+# 9. Execução do Projeto
 
 python bot.py
 
-# 9. Rodar em Docker
+# 10. Rodar em Docker
 
 I. Build da Imagem
 
@@ -119,10 +128,10 @@ II. Rodar o Container
 
 docker run -it --name lua_bot projeto_lua
 
-# 10. Contribuição
+# 11. Contribuição
 
 Sinta-se livre para abrir Issues, sugerir melhorias ou enviar Pull Requests.
 
-# 11. Licença
+# 12. Licença
 
 Este projeto está licenciado sob a licença AGPL.
