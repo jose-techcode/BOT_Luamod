@@ -73,7 +73,7 @@ IV. IA
 - Linguagem: Python
 - Biblioteca: Discord.py
 - Ambiente: Linux
-- Banco de dados: Json
+- Banco de dados/formato de arquivo: Json
 - Versionamento de código: Git
 - Containerização: Docker
 
