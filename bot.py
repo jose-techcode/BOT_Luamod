@@ -5,8 +5,10 @@ import logging
 import time
 import json
 import os
+import uvicorn
 from datetime import timedelta
 from storage import DISCORD_TOKEN
+from api import application
 
 # Configuração simples de log com arquivo
 
@@ -49,7 +51,7 @@ def carregar_log_channels():
 
 bot.log_channels = carregar_log_channels()
 
-# Quando o bot estiver ativo/online:
+# Quando o bot estiver ativo/online
 
 @bot.event
 async def on_ready():
@@ -117,12 +119,28 @@ async def load_cogs():
 
 # Execução dos cogs:
 
-async def main():
+async def start_bot():
     async with bot:
         await load_cogs()
         await bot.start(DISCORD_TOKEN)
 
+# API de status
+
+async def start_api():
+
+    application.state.bot = bot
+    
+    bot_task = asyncio.create_task(start_bot())
+    
+    api_task = asyncio.create_task(
+        uvicorn.Server(
+            uvicorn.Config(application, host="127.0.0.1", port=8000, log_level="info")
+        ).serve()
+    )
+
+    await asyncio.gather(bot_task, api_task) 
+
 # Executar o bot
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    asyncio.run(start_api())
