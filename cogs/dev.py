@@ -1,7 +1,6 @@
 import discord
 from discord.ext import commands, tasks
 import asyncio
-from datetime import timedelta
 import threading
 import psutil
 import platform
@@ -11,6 +10,7 @@ import logging
 import os
 import sys
 import time
+from datetime import timedelta
 from storage import DEV_ID
 from checks import is_dev
 
