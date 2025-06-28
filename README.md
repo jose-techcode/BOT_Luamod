@@ -92,7 +92,7 @@ git clone https://github.com/jose-techcode/Bot_Lua
 
 # 6. Pasta do Projeto
 
-cd projeto_lua
+cd Bot_Lua
 
 # 7. Instalação de Dependências
 
@@ -122,11 +122,11 @@ python bot.py
 
 I. Build da Imagem
 
-docker build -t projeto_lua .
+docker build -t Bot_Lua .
 
 II. Rodar o Container
 
-docker run -it --name lua_bot projeto_lua
+docker run -it --name lua_bot Bot_Lua
 
 # 11. Contribuição
 
