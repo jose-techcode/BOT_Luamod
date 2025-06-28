@@ -61,6 +61,11 @@ class Admin(commands.Cog):
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def warn(self, ctx, member: commands.MemberConverter, *, reason: str):
+        
+        if ctx.author.id == member.id:
+            await ctx.send("Ação reflexiva não permitida!")
+            return
+        
         try:
             
             warns = carregar_avisos()
@@ -95,6 +100,11 @@ class Admin(commands.Cog):
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def unwarn(self, ctx, member: commands.MemberConverter):
+        
+        if ctx.author.id == member.id:
+            await ctx.send("Ação reflexiva não permitida!")
+            return
+
         try:
             
             warns = carregar_avisos()
@@ -128,6 +138,11 @@ class Admin(commands.Cog):
     @commands.has_permissions(manage_messages=True)
     async def warnings(self, ctx, member: commands.MemberConverter = None):
         # self.bot.fetch_user serve para buscar o ID do usuário pela API do discord
+        
+        if ctx.author.id == member.id:
+            await ctx.send("Ação reflexiva não permitida!")
+            return
+
         try:
             
             member = member or ctx.author
@@ -152,12 +167,6 @@ class Admin(commands.Cog):
                         moderator_mention = f"<@{moderator_id}>" if moderator_id else "Desconhecido"
 
                     reasons += f"{i+1}. {reason} — Avisado por: {moderator_mention}\n"
-                    
-                # Limitar tamanho do reasons para o embed
-                
-                max_len = 1000
-                if len(reasons) > max_len:
-                    reasons = reasons[:max_len] + "\n...(texto cortado)..."
                 
                 member = await self.bot.fetch_user(int(user_id))
                 
@@ -191,6 +200,11 @@ class Admin(commands.Cog):
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def warninglist(self, ctx):
+        
+        if ctx.author.id == member.id:
+            await ctx.send("Ação reflexiva não permitida!")
+            return
+        
         try:
             
             guild_id = str(ctx.guild.id)
@@ -330,6 +344,9 @@ class Admin(commands.Cog):
     @commands.has_permissions(manage_roles=True)
     async def mute(self, ctx, member: discord.Member, time: int):
         # member.timeout define a variável do tempo em que o usuário será silenciado
+        if ctx.author.id == member.id:
+            await ctx.send("Ação reflexiva não permitida!")
+            return
         try:
             await member.timeout(timedelta(minutes=time),
             reason="Motivo não especificado")
@@ -365,6 +382,9 @@ class Admin(commands.Cog):
     @commands.has_permissions(kick_members=True)
     async def kick(self, ctx, member: discord.Member, *, reason="Não especificado"):
         # member.kick é um comando específico para expulsão
+        if ctx.author.id == member.id:
+            await ctx.send("Ação reflexiva não permitida!")
+            return
         try:
             await member.kick(reason=reason)
             await ctx.send(f"O membro {member.mention} foi expulso do servidor! Motivo: {reason}")
@@ -382,6 +402,9 @@ class Admin(commands.Cog):
     @commands.has_permissions(ban_members=True)
     async def ban(self, ctx, member: discord.Member, *, reason="Não especificado"):
         # member.ban é um comando específico para banimento
+        if ctx.author.id == member.id:
+            await ctx.send("Ação reflexiva não permitida!")
+            return
         try:
             await member.ban(reason=reason)
             await ctx.send(f"O membro {member.mention} foi banido do servidor! Motivo: {reason}")
