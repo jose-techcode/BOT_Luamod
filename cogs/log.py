@@ -603,7 +603,7 @@ class Log(commands.Cog):
         if before.name != after.name:
 
             embed = discord.Embed(
-                title="Canal Alterado",
+                title="Canal Alterado (Nome)",
                 description=f"Canal: {before.mention}",
                 color=discord.Color.orange(),
                 timestamp=discord.utils.utcnow()
