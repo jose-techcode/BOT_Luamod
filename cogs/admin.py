@@ -201,10 +201,6 @@ class Admin(commands.Cog):
     @commands.has_permissions(manage_messages=True)
     async def warninglist(self, ctx):
         
-        if ctx.author.id == member.id:
-            await ctx.send("Ação reflexiva não permitida!")
-            return
-        
         try:
             
             guild_id = str(ctx.guild.id)
@@ -234,7 +230,6 @@ class Admin(commands.Cog):
                 
                 try:
                     member = await self.bot.fetch_user(int(user_id))
-                    warned += 1
                     
                     embed.add_field(
                         name=f"{member} - {member.id} - {len(lista)} aviso(s)",
