@@ -78,7 +78,7 @@ API simples feita com FastAPI para ver o status geral do bot. API REST.
 - Framework: FastAPI
 - Biblioteca: Discord.py
 - Ambiente: Linux
-- Banco de dados/formato de arquivo: Json
+- Formato de arquivo: Json
 - Versionamento de código: Git
 - Containerização: Docker
 
