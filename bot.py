@@ -124,7 +124,7 @@ async def start_bot():
         await load_cogs()
         await bot.start(DISCORD_TOKEN)
 
-# API de status
+# API de status e API REST
 
 async def start_api():
 
