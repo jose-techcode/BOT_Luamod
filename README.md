@@ -70,7 +70,7 @@ IV. IA
 
 # 3. API
 
-API simples feita com FastAPI para ver o status geral do bot.
+API simples feita com FastAPI para ver o status geral do bot. API REST.
 
 # 4. Tecnologias
 
