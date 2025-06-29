@@ -68,7 +68,7 @@ IV. IA
 
 - off - Desliga o chat da IA.
 
-# 3. API
+# 3. API simples / API REST
 
 API simples feita com FastAPI para ver o status geral do bot. API REST.
 
