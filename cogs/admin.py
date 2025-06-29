@@ -138,10 +138,6 @@ class Admin(commands.Cog):
     @commands.has_permissions(manage_messages=True)
     async def warnings(self, ctx, member: commands.MemberConverter = None):
         # self.bot.fetch_user serve para buscar o ID do usuário pela API do discord
-        
-        if ctx.author.id == member.id:
-            await ctx.send("Ação reflexiva não permitida!")
-            return
 
         try:
             
