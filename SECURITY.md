@@ -4,17 +4,20 @@ Obrigado por se preocupar com a segurança deste projeto! Para reportar uma vuln
 
 # 2. Como reportar
   
-- Abra um ticket privado no GitHub (se disponível).
+- Reporte no email do responsável pelo repositório.
 
 # 3. O que evitar
 
 - Não divulgue vulnerabilidades publicamente antes de termos a chance de resolver.
+
 - Não envie exploits públicos sem autorização.
 
 # 4. Nosso compromisso
 
 - Confirmaremos o recebimento do relatório em até 48 horas.
+
 - Trabalharemos para corrigir a vulnerabilidade o mais rápido possível.
+
 - Agradecemos sua contribuição para manter este projeto seguro!
 
 ---
