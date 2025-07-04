@@ -5,6 +5,7 @@ import logging
 from datetime import timedelta
 from storage import DEV_ID
 from storage import API_KEY_OPEN_ROUTER
+from checks import is_dev
 from openai import OpenAI
 
 class Ia(commands.Cog):
@@ -16,17 +17,33 @@ class Ia(commands.Cog):
         )
         self.mention_mode = False
 
+    @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
-    @commands.is_owner()
+    @is_dev()
     async def on(self, ctx):
-        self.mention_mode = True
-        await ctx.send("Modo chat ativado! Modelo de conversa: @Lua <text>")
+        try:
+            self.mention_mode = True
+            await ctx.send("Modo chat ativado! Modelo de conversa: @Lua <text>")
+        except Exception as e:
+            logging.exception(f"Erro no comando.")
+            if ctx.author.id == DEV_ID:
+                await ctx.send(f"Erro: {e}")
+            else:
+                await ctx.send("Algo deu errado...")
 
+    @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
-    @commands.is_owner()
+    @is_dev()
     async def off(self, ctx):
-        self.mention_mode = False
-        await ctx.send("Modo chat desativado!")
+        try:
+            self.mention_mode = False
+            await ctx.send("Modo chat desativado!")
+        except Exception as e:
+            logging.exception(f"Erro no comando.")
+            if ctx.author.id == DEV_ID:
+                await ctx.send(f"Erro: {e}")
+            else:
+                await ctx.send("Algo deu errado...")
 
     @commands.Cog.listener()
     async def on_message(self, message):
