@@ -77,7 +77,7 @@ class Geral(commands.Cog):
             
         # IV. IA
         if ctx.author.id == DEV_ID:
-            embed.add_field(name="III. Desenvolvedores", value="""
+            embed.add_field(name="IV. IA", value="""
 `.on` - Liga o chat da IA.
 `.off` - Desliga o chat da IA.
 """, inline=False)
