@@ -70,9 +70,18 @@ IV. IA
 
 - off - Desliga o chat da IA.
 
-# 3. API simples / API REST
+# 3. API simples
 
-API simples feita com FastAPI para ver o status geral do bot. API REST.
+API simples feita com FastAPI para ver o status geral do bot. 
+
+# 3.5. API REST
+
+API REST educativa e didática separada da API simples e feita com FastAPI também.
+
+GET - Ver informações.
+POST - Criar informações.
+PUT - Atualizar informações.
+DELETE - Deletar informações.
 
 # 4. Tecnologias
 
