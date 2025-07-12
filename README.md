@@ -144,3 +144,7 @@ Sinta-se livre para abrir Issues, sugerir melhorias ou enviar Pull Requests.
 # 12. Licença
 
 Este projeto está licenciado sob a licença AGPL.
+
+# 13. Observações
+
+O sistema de warns do Bot Lua pode ser descontinuado.
