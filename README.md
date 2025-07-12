@@ -1,6 +1,6 @@
-# 1. Bot Lua
+# 1. Bot Luamod
 
-O "Bot Lua" é um bot de discord em que a sua atribuição principal é moderar um servidor, bem como ter um sistema de logs para monitoramento, além de suas funcionalidades para membros comuns e desenvolvedores. Ao clonar o repositório, você pode entrar no "modo desenvolvedor", controlar a IA e ter acesso a uma API REST local, desde que configure essas partes corretamente.
+O "Bot Luamod" é um bot de discord em que a sua atribuição principal é moderar um servidor, bem como ter um sistema de logs para monitoramento, além de suas funcionalidades para membros comuns e desenvolvedores. Ao clonar o repositório, você pode entrar no "modo desenvolvedor", controlar a IA e ter acesso a uma API REST local, desde que configure essas partes corretamente.
 
 # 2. Funcionalidades
 
