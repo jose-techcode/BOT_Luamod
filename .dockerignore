@@ -1,0 +1,39 @@
+# Ambientes virtuais
+.venv/
+venv/
+
+# Cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Logs e temporários
+*.log
+*.tmp
+*.bak
+
+# Configs de IDEs
+.vscode/
+.idea/
+*.swp
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+
+# Sockets e bancos locais
+*.sock
+*.db
+
+# Arquivos JSON 
+warns.json
+log_channels.json
+
+# Git
+.git/
+.gitignore
+
+# Arquivos Docker
+Dockerfile
+.dockerignore
