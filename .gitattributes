@@ -1,4 +1,5 @@
 # Ignorar arquivos de documentação e dados
+
 *.md linguist-documentation
 *.json linguist-generated
 *.yml linguist-generated
