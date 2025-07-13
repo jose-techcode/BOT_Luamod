@@ -1,0 +1,7 @@
+# Ignorar arquivos de documentação e dados
+*.md linguist-documentation
+*.json linguist-generated
+*.yml linguist-generated
+*.txt linguist-generated
+*.png linguist-generated
+*.jpg linguist-generated
