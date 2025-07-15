@@ -95,11 +95,11 @@ DELETE - Deletar informações.
 
 - Bash
 
-Clone o repositório
-
 git clone https://github.com/jose-techcode/Bot_Lua
 
 # 6. Pasta do Projeto
+
+- Bash
 
 cd Bot_Luamod
 
