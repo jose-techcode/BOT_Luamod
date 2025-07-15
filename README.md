@@ -139,7 +139,7 @@ docker run -it --name container_bot_luamod Bot_Luamod
 
 # 11. Contribuição
 
-Sinta-se livre para abrir Issues, sugerir melhorias ou enviar Pull Requests.
+Sinta-se livre para abrir Issues ou enviar Pull Requests.
 
 # 12. Licença
 
