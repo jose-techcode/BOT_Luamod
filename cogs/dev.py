@@ -188,7 +188,7 @@ class Dev(commands.Cog):
 
     # Comando: restart (automático)
 
-    @tasks.loop(hours=2)
+    @tasks.loop(hours=1)
     async def restart_loop(self):
         print("Reiniciando!")
         await self.bot.close()
@@ -197,12 +197,12 @@ class Dev(commands.Cog):
     @restart_loop.before_loop
     async def before_reiniciar(self):
         await self.bot.wait_until_ready() # Certifica de que a reiniciação só funcione quando o bot estiver ligado
-        print("Reiniciação em 2 horas!")
-        await asyncio.sleep(60 * 120)
+        print("Reiniciação em 1 hora!")
+        await asyncio.sleep(60 * 60)
 
     # Comando: clean_log (automático)
 
-    @tasks.loop(hours=1)
+    @tasks.loop(minutes=30)
     async def clean_log(self):
         # open serve para abrir o log do bot e o close em seguida para fechar
         open("bot.log", "w").close()
