@@ -79,6 +79,7 @@ class Admin(commands.Cog):
                 warns[guild_id][user_id] = []
 
             # Dicionário/Dict
+
             warns[guild_id][user_id].append({
                 "reason": reason,
                 "moderator_id": ctx.author.id
@@ -254,13 +255,39 @@ class Admin(commands.Cog):
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def clear(self, ctx, quantidade_mensagens: int):
+    async def clear(self, ctx, quantity_messages: int):
         # ctx.channel.purge serve para poder apagar a quantidade de mensagens definidas no canal
         # limit serve para definir um limite de mensagens apagadas
         # delete_after=5 é a quantidade de segundos que o bot levará para apagar as mensagens
         try:
-            await ctx.channel.purge(limit=quantidade_mensagens)
-            await ctx.send(f"Foram apagadas {quantidade_mensagens} mensagens.", delete_after=5)
+            await ctx.channel.purge(limit=quantity_messages)
+            await ctx.send(f"Foram apagadas {quantity_messages} mensagens.", delete_after=5)
+        except Exception as e:
+            logging.exception(f"Erro no comando.")
+            if ctx.author.id == DEV_ID:
+                await ctx.send(f"Erro: {e}")
+            else:
+                await ctx.send("Algo deu errado...")
+
+    # Comando: purge
+
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    @commands.command()
+    @commands.has_permissions(manage_messages=True)
+    async def purge(self, ctx, member: discord.Member, quantity_messages: int):
+        # ctx.channel.purge serve para poder apagar a quantidade de mensagens definidas no canal
+        # limit serve para definir um limite de mensagens apagadas
+        # delete_after=5 é a quantidade de segundos que o bot levará para apagar as mensagens
+        try:
+            deleted = await ctx.channel.purge(
+                limit=999, # 999 mensagens
+                check=lambda msg: msg.author == member,
+                before=ctx.message  # Ignora o próprio comando
+            )
+            
+            deleted = deleted[:quantity_messages]
+
+            await ctx.send(f"Foram apagadas {len(deleted)} mensagens de {member.mention}.", delete_after=5)
         except Exception as e:
             logging.exception(f"Erro no comando.")
             if ctx.author.id == DEV_ID:
@@ -290,7 +317,7 @@ class Admin(commands.Cog):
 
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
-    @commands.has_permissions(manage_channels = True)
+    @commands.has_permissions(manage_channels=True)
     async def lock(self, ctx):
         # overwirte é a variável que permite sobrescrever as permissões do canal de um servidor
         # overwirte.send_messages é referente a poder ou a não poder mandar mensagens em determinado canal
@@ -311,7 +338,7 @@ class Admin(commands.Cog):
 
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
-    @commands.has_permissions(manage_channels = True)
+    @commands.has_permissions(manage_channels=True)
     async def unlock(self, ctx):
         # owerwirte é a variável que permite sobrescrever as permissões do canal de um servidor
         # overwirte.send_messages é referente a poder ou a não poder mandar mensagens em um canal
@@ -321,6 +348,60 @@ class Admin(commands.Cog):
             overwrite.send_messages = True
             await ctx.channel.set_permissions(ctx.guild.default_role, overwrite=overwrite)
             await ctx.send("Canal destrancado!")
+        except Exception as e:
+            logging.exception(f"Erro no comando.")
+            if ctx.author.id == DEV_ID:
+                await ctx.send(f"Erro: {e}")
+            else:
+                await ctx.send("Algo deu errado...")
+
+    # Comando: lockdown
+
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    @commands.command()
+    @commands.has_permissions(administrator=True)
+    async def lockdown(self, ctx):
+        # overwrite é a variável que permite sobrescrever as permissões do canal de um servidor
+        # overwrite.send_messages é referente a poder ou a não poder mandar mensagens em determinado canal
+        # ctx.channel.set_permissions é para definir as permissões do canal
+        try:
+            locked_channels = 0
+
+            for channel in ctx.guild.text_channels:
+                overwrite = channel.overwrites_for(ctx.guild.default_role)
+                if overwrite.send_messages is not False:
+                    overwrite.send_messages = False
+                    await channel.set_permissions(ctx.guild.default_role, overwrite=overwrite)
+                    locked_channels += 1
+
+            await ctx.send(f"Lockdown ativado!")
+        except Exception as e:
+            logging.exception(f"Erro no comando.")
+            if ctx.author.id == DEV_ID:
+                await ctx.send(f"Erro: {e}")
+            else:
+                await ctx.send("Algo deu errado...")
+
+    # Comando: unlockdown
+
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    @commands.command()
+    @commands.has_permissions(administrator=True)
+    async def unlockdown(self, ctx):
+        # overwrite é a variável que permite sobrescrever as permissões do canal de um servidor
+        # overwrite.send_messages é referente a poder ou a não poder mandar mensagens em determinado canal
+        # ctx.channel.set_permissions é para definir as permissões do canal
+        try:
+            locked_channels = 0
+
+            for channel in ctx.guild.text_channels:
+                overwrite = channel.overwrites_for(ctx.guild.default_role)
+                if overwrite.send_messages is not True:
+                    overwrite.send_messages = True
+                    await channel.set_permissions(ctx.guild.default_role, overwrite=overwrite)
+                    locked_channels += 1
+
+            await ctx.send(f"Lockdown desativado!")
         except Exception as e:
             logging.exception(f"Erro no comando.")
             if ctx.author.id == DEV_ID:
@@ -398,7 +479,7 @@ class Admin(commands.Cog):
             return
         try:
             await member.ban(reason=reason)
-            await ctx.send(f"O membro {member.mention} foi banido do servidor! Motivo: {reason}")
+            await ctx.send(f"O membro {member.mention} foi banido do servidor! Motivo: {reason}.")
         except Exception as e:
             logging.exception(f"Erro no comando.")
             if ctx.author.id == DEV_ID:
@@ -425,6 +506,62 @@ class Admin(commands.Cog):
             else:
                 await ctx.send("Algo deu errado...")
 
+    # Comando: tempban
+
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    @commands.command()
+    @commands.has_permissions(ban_members=True)
+    async def tempban(self, ctx, member: discord.Member, duration: int, *, reason="Não especificado"):
+        if ctx.author.id == member.id:
+            await ctx.send("Ação reflexiva não permitida!")
+            return
+        try:
+            await member.ban(reason=reason)
+            await ctx.send(f"{member.mention} Foi banido por {duration} minuto(s). Motivo: {reason}.")
+
+            # Tempo
+
+            await asyncio.sleep(duration * 60)
+
+            # Desbanimento automático
+
+            await ctx.guild.unban(discord.Object(id=member.id))
+            await ctx.send(f"{member.mention} Foi desbanido automaticamente após {duration} minuto(s)!")
+        except Exception as e:
+            logging.exception(f"Erro no comando.")
+            if ctx.author.id == DEV_ID:
+                await ctx.send(f"Erro: {e}")
+            else:
+                await ctx.send("Algo deu errado...")
+
+    # Comando: softban
+
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    @commands.command()
+    @commands.has_permissions(ban_members=True)
+    async def softban(self, ctx, member: discord.Member, reason="Não especificado"):
+        if ctx.author.id == member.id:
+            await ctx.send("Ação reflexiva não permitida!")
+            return
+        try:
+            await member.ban(reason=reason)
+            await ctx.send(f"{member.mention} Foi banido para limpeza de mensagens. Motivo: {reason}.")
+
+            # Tempo
+
+            await asyncio.sleep(1)
+
+            # Desbanimento automático
+
+            await ctx.guild.unban(discord.Object(id=member.id))
+            await ctx.send(f"{member.mention} Foi desbanido automaticamente após 1 segundo!")
+        except Exception as e:
+            logging.exception(f"Erro no comando.")
+            if ctx.author.id == DEV_ID:
+                await ctx.send(f"Erro: {e}")
+            else:
+                await ctx.send("Algo deu errado...")
+
     # Comando: setlog
 
     @commands.cooldown(1, 5, commands.BucketType.user)
@@ -434,7 +571,7 @@ class Admin(commands.Cog):
         try:
             self.bot.log_channels[ctx.guild.id] = channel.id
             salvar_log_channels(self.bot.log_channels)
-            await ctx.send(f"Canal de logs configurado: {channel.mention}")
+            await ctx.send(f"Canal de logs configurado: {channel.mention}.")
         except Exception as e:
             logging.exception(f"Erro no comando.")
             if ctx.author.id == DEV_ID:
