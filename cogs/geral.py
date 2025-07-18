@@ -82,7 +82,7 @@ class Geral(commands.Cog):
 `.off` - Desliga o chat da IA.
 """, inline=False)
 
-        embed.set_footer(text="Bot Lua")
+        embed.set_footer(text="Bot Luamod")
         await ctx.send(embed=embed)
 
     # Comando: avatar
