@@ -53,13 +53,18 @@ class Geral(commands.Cog):
 `.warnings <member>` - Vê a quantidade e motivo dos avisos de um usuário.
 `.warninglist` - Vê usuários avisados e quantidade de avisos.
 `.clear <quantity>` - Apaga mensagens do chat.
+`.purge <member> <quantity>` - Vê usuários avisados e quantidade de avisos.
 `.slow <seconds>` - Ativa o modo lento no canal.
 `.lock` - Tranca um canal.
 `.unlock` - Destranca um canal trancado.
+`.lockdown` - Tranca todos os canais.
+`.unlockdown` - Destranca todos os canais.
 `.mute <member> <minutes>` - Silencia um membro temporariamente.
 `.unmute <member>` - Remove o silêncio de um membro.
 `.kick <member>` - Expulsa um membro do servidor.
 `.ban <member>` - Bane um membro do servidor.
+`.tempban <member> <quantity>` - Bane um membro do servidor por um tempo.
+`.softban <member>` - Bane um membro do servidor por um segundo para limpar as mensagens.
 `.unban <ID>` - Remove o banimento de um usuário pelo ID.
 `.setlog <channel>` - Define um canal para receber logs de ações do servidor.
 """, inline=False)
