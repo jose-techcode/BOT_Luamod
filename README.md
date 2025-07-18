@@ -30,11 +30,17 @@ II. Moderadores
 
 - clear < quantity > - Apaga mensagens do chat.
 
+- purge < member > < quantity > - Apaga mensagens de um membro do chat.
+
 - slow < seconds > - Ativa o modo lento no canal.
 
 - lock - Tranca um canal.
 
 - unlock - Destranca um canal que estava trancado.
+
+- lockdown - Tranca todos os canais.
+
+- unlockdown - Destranca todos os canais.
 
 - mute < member > < minutos > - Silencia um membro temporariamente.
 
@@ -45,6 +51,10 @@ II. Moderadores
 - ban < member > - Bane um membro do servidor.
 
 - unban < ID > - Remove o banimento de um usuário pelo ID.
+
+- tempban < member > < quantity > - Bane um membro do servidor por um tempo.
+
+- softban < member > - Bane um membro do servidor por um segundo para limpar as mensagens.
 
 - setlog < channel > - Define um canal para receber logs de ações do servidor.
 
