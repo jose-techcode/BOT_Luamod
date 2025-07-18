@@ -70,11 +70,11 @@ IV. IA
 
 # 3. API simples
 
-API simples feita com FastAPI para ver o status geral do bot. 
+API simples feita com FastAPI para ver o status geral do bot. Localhost.
 
 # 3.5. API REST
 
-API REST educativa e didática separada da API simples e feita com FastAPI também.
+API REST educativa e didática separada da API simples e feita com FastAPI também. Localhost.
 
 - GET - Ver informações.
 - POST - Criar informações.
