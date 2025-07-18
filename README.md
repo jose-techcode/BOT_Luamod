@@ -76,10 +76,10 @@ API simples feita com FastAPI para ver o status geral do bot.
 
 API REST educativa e didática separada da API simples e feita com FastAPI também.
 
-GET - Ver informações.
-POST - Criar informações.
-PUT - Atualizar informações.
-DELETE - Deletar informações.
+- GET - Ver informações.
+- POST - Criar informações.
+- PUT - Atualizar informações.
+- DELETE - Deletar informações.
 
 # 4. Tecnologias
 
@@ -95,7 +95,7 @@ DELETE - Deletar informações.
 
 - Bash
 
-git clone https://github.com/jose-techcode/Bot_Lua
+git clone https://github.com/jose-techcode/Bot_Luamod
 
 # 6. Pasta do Projeto
 
@@ -147,4 +147,4 @@ Este projeto está licenciado sob a licença AGPL.
 
 # 13. Observações
 
-O sistema de warns do Bot Lua pode ser descontinuado.
+O sistema de warns do Bot Luamod pode ser descontinuado.
