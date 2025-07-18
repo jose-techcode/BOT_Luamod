@@ -63,9 +63,9 @@ class Geral(commands.Cog):
 `.unmute <member>` - Remove o silêncio de um membro.
 `.kick <member>` - Expulsa um membro do servidor.
 `.ban <member>` - Bane um membro do servidor.
+`.unban <ID>` - Remove o banimento de um usuário pelo ID.
 `.tempban <member> <quantity>` - Bane um membro do servidor por um tempo.
 `.softban <member>` - Bane um membro do servidor por um segundo para limpar as mensagens.
-`.unban <ID>` - Remove o banimento de um usuário pelo ID.
 `.setlog <channel>` - Define um canal para receber logs de ações do servidor.
 """, inline=False)
 
