@@ -1,4 +1,4 @@
-# Ignorar arquivos de documentação e dados
+# Ignore documentation and data files
 
 *.md linguist-documentation
 *.json linguist-generated

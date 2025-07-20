@@ -1,12 +1,12 @@
-# Ambiente virtual
+# Virtual environment
 
 .venv/
 
-# Ambiente
+# Environment
 
 .env
 
-# Cache do Python
+# Cache of Python
 
 __pycache__/
 *.pyc
@@ -17,28 +17,28 @@ __pycache__/
 
 *.log
 
-# Configurações de IDE/editor
+# IDE/Editor Settings
 
 .vscode/
 .idea/
 *.swp
 
-# Arquivos de sistema
+# Files System
 
 .DS_Store
 Thumbs.db
 
-# Docker
+# Sockets and local banks
 
 *.db
 *.sock
 
-# Json
+# Files JSON
 
 warns.json
 log_channels.json
 
-# Outros
+# Others
 
 *.bak
 *.tmp
