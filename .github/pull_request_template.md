@@ -1,24 +1,24 @@
-# 1. Descrição
-Descreva as mudanças realizadas no pull request.
+# 1. Description
+Describe the changes made in the pull request.
 
-# 2. Tipo de mudança
-- [ ] Bug fix (correção de um problema);
-- [ ] Nova funcionalidade;
-- [ ] Alteração de funcionalidade existente;
-- [ ] Documentação.
-- [ ] Outro (especifique):
+# 2. Type of Change
+- [ ] Bug fix (fix for a problem);
+- [ ] New functionality;
+- [ ] Change to existing functionality;
+- [ ] Documentation.
+- [ ] Other (specific):
 
 # 3. Checklist
-- [ ] Meu código segue as regras desse projeto;
-- [ ] Eu revisei meu código antes de enviar;
-- [ ] Meu código foi testado;
-- [ ] Eu atualizei a documentação, se necessário.
+- [ ] My code follows the rules of this project;
+- [ ] I reviewed my code before submitting;
+- [ ] My code was tested;
+- [ ] I updated the documentation, if necessary.
 
-# 4. Issues relacionadas
-Closes #(Número da issue relacionada que foi resolvida)
+# 4. Related Issues
+Closes #(Related issue number that was resolved)
 
-# 5. Screenshots (se aplicável)
-Adicione aqui imagens que ajudam a entender as mudanças.
+# 5. Screenshots (if applicable)
+Add images here that help understand the changes.
 
-# 6. Observações
-Deixe comentários adicionais, se necessário.
+# 6. Notes
+Leave additional comments, if necessary.

@@ -1,25 +1,24 @@
-# 1. Política de Segurança
+# 1. Security Policy
 
-Obrigado por se preocupar com a segurança deste projeto! Para reportar uma vulnerabilidade de segurança, por favor, siga as orientações abaixo:
+Thank you for caring about the security of this project! To report a security vulnerability, please follow the guidelines below:
 
-# 2. Como reportar
-  
-- Reporte no email do responsável pelo repositório.
+# 2. How to Report
 
-# 3. O que evitar
+- Report to the repository's owner's email address.
 
-- Não divulgue vulnerabilidades publicamente antes de termos a chance de resolver.
+# 3. What to Avoid
 
-- Não envie exploits públicos sem autorização.
+- Do not publicly disclose vulnerabilities before we have a chance to resolve them.
 
-# 4. Nosso compromisso
+- Do not submit public exploits without authorization.
 
-- Confirmaremos o recebimento do relatório em até 48 horas.
+# 4. Our Commitment
 
-- Trabalharemos para corrigir a vulnerabilidade o mais rápido possível.
+- We will confirm receipt of the report within 48 hours.
 
-- Agradecemos sua contribuição para manter este projeto seguro!
+- We will work to fix the vulnerability as quickly as possible.
 
----
+- We appreciate your contribution to keeping this project secure!
 
-Obrigado por ajudar a manter este projeto seguro!
+--
+Thank you for helping keep this project secure!
