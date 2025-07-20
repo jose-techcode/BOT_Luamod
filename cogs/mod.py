@@ -25,7 +25,7 @@ def save_warns(informations):
 
 # Cog structure (inheritance)
 
-class Admin(commands.Cog):
+class Mod(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.regex_links = [
@@ -582,4 +582,4 @@ class Admin(commands.Cog):
 # Cog registration
 
 async def setup(bot):
-    await bot.add_cog(Admin(bot))
+    await bot.add_cog(Mod(bot))

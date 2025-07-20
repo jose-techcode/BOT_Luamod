@@ -10,7 +10,7 @@ from openai import OpenAI
 
 # Cog structure (inheritance)
 
-class Ia(commands.Cog):
+class Chatbot(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.client = OpenAI(
@@ -80,4 +80,4 @@ class Ia(commands.Cog):
 # Cog registration
 
 async def setup(bot):
-    await bot.add_cog(Ia(bot))
+    await bot.add_cog(Chatbot(bot))
