@@ -1,160 +1,162 @@
 # 1. Bot Luamod
 
-O "Bot Luamod" é um bot de discord em que a sua atribuição principal é moderar um servidor, bem como ter um sistema de logs para monitoramento, além de suas funcionalidades para membros comuns e desenvolvedores. Ao clonar o repositório, você pode entrar no "modo desenvolvedor", controlar a IA e ter acesso a uma API REST local, desde que configure essas partes corretamente.
+The "Bot Luamod" is a Discord bot whose main function is to moderate a server, provide a logging system for monitoring, and offer features for members and developers, including AI commands (chatbot). By cloning the repository, you can enter "developer mode," control the AI, and access a local REST API, provided you configure these elements correctly.
 
 # 2. Funcionalidades
 
-I. Gerais
+# 2. Features
 
-- ping - Mostra a latência do bot.
+I. General
 
-- ajuda - Mostra a lista de comandos.
+- ping - Displays the bot's latency.
 
-- avatar < member > - Exibe o avatar de um membro.
+- help - Displays the list of commands.
 
-- userinfo < member > - Mostra as informações do usuário.
+- avatar < member > - Displays a member's avatar.
 
-- serverinfo - Exibe informações do servidor.
+- userinfo < member > - Displays user information.
 
-- botinfo - Mostra informações do perfil do bot.
+- serverinfo - Displays server information.
 
-II. Moderadores
+- botinfo - Displays bot profile information.
 
-- warn < member > < reason > - Avisa um usuário.
+II. Moderators
 
-- unwarn < member > - Retira todos os avisos do usuário.
+- warn < member > < reason > - Warns a user.
 
-- warnings < member > - Vê a quantidade e o(s) motivo(s) do(s) aviso(s) de um usuário.
+- unwarn < member > - Removes all warnings from the user.
 
-- warninglist - Vê o(s) usuário(s) avisado(s) e a quantidade de aviso(s) que cada um tem.
+- warnings < member > - Views the number and reason(s) of warnings for a user.
 
-- clear < quantity > - Apaga mensagens do chat.
+- warninglist - Views the user(s) warned and the number of warnings each has.
 
-- purge < member > < quantity > - Apaga mensagens de um membro do chat.
+- clear < quantity > - Deletes chat messages.
 
-- slow < seconds > - Ativa o modo lento no canal.
+- purge < member > < quantity > - Deletes a member's chat messages.
 
-- lock - Tranca um canal.
+- slow < seconds > - Activates slow mode in the channel.
 
-- unlock - Destranca um canal que estava trancado.
+- lock - Locks a channel.
 
-- lockdown - Tranca todos os canais.
+- unlock - Unlocks a locked channel.
 
-- unlockdown - Destranca todos os canais.
+- lockdown - Locks all channels.
 
-- mute < member > < minutos > - Silencia um membro temporariamente.
+- unlockdown - Unlocks all channels.
 
-- unmute < member > - Remove o silêncio de um membro.
+- mute < member > < minutes > - Temporarily mutes a member.
 
-- kick < member > - Expulsa um membro do servidor.
+- unmute < member > - Removes a member's mute.
 
-- ban < member > - Bane um membro do servidor.
+- kick < member > - Kicks a member from the server.
 
-- unban < ID > - Remove o banimento de um usuário pelo ID.
+- ban < member > - Bans a member from the server.
 
-- tempban < member > < quantity > - Bane um membro do servidor por um tempo.
+- unban < ID > - Removes a ban from a user by ID.
 
-- softban < member > - Bane um membro do servidor por um segundo para limpar as mensagens.
+- tempban < member > < quantity > - Bans a member from the server for a period of time.
 
-- setlog < channel > - Define um canal para receber logs de ações do servidor.
+- softban < member > - Bans a member from the server for one second to clear messages.
 
-III. Desenvolvedores
+- setlog < channel > - Sets a channel to receive server action logs.
 
-- restart - Reinicia o bot.
+III. Developers
 
-- toswitchoff - Desliga o bot.
+- restart - Restarts the bot.
 
-- log - Vê o histórico de logs do bot.
+- toswitchoff - Turns off the bot.
 
-- clearlog - Limpa o histórico de logs do bot.
+- log - Views the bot's log history.
 
-- reloadcog < cog > - Recarrega uma cog específica.
+- clearlog - Clears the bot's log history.
 
-- debug - Exibe informações gerais e técnicas do bot.
+- reloadcog < cog > - Reloads a specific cog.
 
-IV. IA
+- debug - Displays general and technical information about the bot.
 
-- on - Liga o chat da IA.
+IV. AI
 
-- off - Desliga o chat da IA.
+- on - Turns on AI chat.
 
-# 3. API simples
+- off - Turns off AI chat.
 
-API simples feita com FastAPI para ver o status geral do bot. Localhost.
+# 3. Simple API
 
-# 3.5. API REST
+Simple API built with FastAPI to view the bot's overall status. Localhost.
 
-API REST educativa e didática separada da API simples e feita com FastAPI também. Localhost.
+# 3.5. REST API
 
-- GET - Ver informações.
-- POST - Criar informações.
-- PUT - Atualizar informações.
-- DELETE - Deletar informações.
+Educational and didactic REST API separate from the simple API and also built with FastAPI. Localhost.
 
-# 4. Tecnologias
+- GET - View information.
+- POST - Create information.
+- PUT - Update information.
+- DELETE - Delete information.
 
-- Linguagem: Python
+# 4. Technologies
+
+- Language: Python
 - Framework: FastAPI
-- Biblioteca: Discord.py
-- Ambiente: Linux
-- Formato de arquivo: Json
-- Versionamento de código: Git
-- Containerização: Docker
+- Library: Discord.py
+- Environment: Linux
+- File Format: Json
+- Code Versioning: Git
+- Containerization: Docker
 
-# 5. Clone do Repositório
+# 5. Clone the Repository
 
 - Bash
 
 git clone https://github.com/jose-techcode/Bot_Luamod
 
-# 6. Pasta do Projeto
+# 6. Project Folder
 
 - Bash
 
 cd Bot_Luamod
 
-# 7. Instalação de Dependências
+# 7. Install Dependencies
 
 pip install -r requirements.txt
 
-# 8. Configuração de Variáveis de Ambiente
+# 8. Setting Environment Variables
 
-Crie um arquivo chamado .env na raiz do projeto e adicione seu token do bot:
+Create a file called .env in the project root and add your bot token:
 
-DISCORD_TOKEN=seu_token
+DISCORD_TOKEN=your_token
 
-No mesmo arquivo .env, se for criar comandos específicos para somente o desenvolvedor do bot usar, adicione:
+In the same .env file, if you're creating specific commands for only the bot developer to use, add:
 
-DEV_ID=seu_id
+DEV_ID=your_id
 
-Também, no mesmo arquivo .env, se for criar comandos específicos para usar a IA do bot, adicione:
+Also, in the same .env file, if you're creating specific commands for using the bot's AI, add:
 
-API_KEY_OPEN_ROUTER=sua_api_key
+API_KEY_OPEN_ROUTER=your_api_key
 
-Esses arquivos não devem ser enviados para o Github, pois contém informações sensíveis. Então, devem ser incluídos no .gitignore.
+These files should not be uploaded to Github, as they contain sensitive information. Therefore, they should be included in .gitignore.
 
-# 9. Execução do Projeto
+# 9. Running the Project
 
 python bot.py
 
-# 10. Rodar em Docker
+# 10. Running in Docker
 
-I. Build da Imagem
+I. Building the Image
 
 docker build -t Bot_Luamod .
 
-II. Rodar o Container
+II. Running the Container
 
 docker run -it --name container_bot_luamod Bot_Luamod
 
-# 11. Contribuição
+# 11. Contribution
 
-Sinta-se livre para abrir Issues ou enviar Pull Requests.
+Feel free to open Issues or submit Pull Requests.
 
-# 12. Licença
+# 12. License
 
-Este projeto está licenciado sob a licença AGPL.
+This project is licensed under the AGPL license.
 
-# 13. Observações
+# 13. Notes
 
-O sistema de warns do Bot Luamod pode ser descontinuado.
+In the future, a SQL or MongoDB database may be added.
