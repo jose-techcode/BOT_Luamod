@@ -80,7 +80,7 @@ class Geral(commands.Cog):
 `.debug` - Exibe informações gerais e técnicas do bot.                           
 """, inline=False)
             
-        # IV. IA
+        # IV. AI
         if ctx.author.id == DEV_ID:
             embed.add_field(name="IV. IA", value="""
 `.on` - Liga o chat da IA.
