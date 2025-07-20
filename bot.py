@@ -111,10 +111,10 @@ async def on_command_error(ctx, error):
 async def load_cogs():
     cogs = [
         "cogs.geral",
-        "cogs.admin",
+        "cogs.mod",
         "cogs.dev",
         "cogs.log",
-        "cogs.ia"
+        "cogs.chatbot"
     ]
     for cog in cogs:
         await bot.load_extension(cog)
