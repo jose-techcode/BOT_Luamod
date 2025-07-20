@@ -49,23 +49,23 @@ class Geral(commands.Cog):
         # II. Moderators
         embed.add_field(name="II. Moderadores", value="""
 `.warn <member> <reason>` - Avisa um usuário.
-`.unwarn <member>` - Retira todos os avisos do usuário.
-`.warnings <member>` - Vê a quantidade e motivo dos avisos de um usuário.
-`.warninglist` - Vê usuários avisados e quantidade de avisos.
-`.clear <quantity>` - Apaga mensagens do chat.
-`.purge <member> <quantity>` - Vê usuários avisados e quantidade de avisos.
+`.unwarn <member>` - Limpa os avisos de um usuário.
+`.warnings <member>` - Vê a quantidade e o(s) motivo(s) dos avisos de um usuário.
+`.warninglist` - Vê a quantidade e os usuários avisados.
+`.clear <qtd>` - Apaga mensagens do chat.
+`.purge <member> <qtd>` - Apaga mensagens de um membro.
 `.slow <seconds>` - Ativa o modo lento no canal.
 `.lock` - Tranca um canal.
-`.unlock` - Destranca um canal trancado.
+`.unlock` - Destranca um canal.
 `.lockdown` - Tranca todos os canais.
 `.unlockdown` - Destranca todos os canais.
-`.mute <member> <minutes>` - Silencia um membro temporariamente.
+`.mute <member> <minutes>` - Silencia um membro por um tempo.
 `.unmute <member>` - Remove o silêncio de um membro.
 `.kick <member>` - Expulsa um membro do servidor.
 `.ban <member>` - Bane um membro do servidor.
-`.unban <ID>` - Remove o banimento de um usuário pelo ID.
-`.tempban <member> <quantity>` - Bane um membro do servidor por um tempo.
-`.softban <member>` - Bane um membro do servidor por um segundo para limpar as mensagens.
+`.unban <ID>` - Remove o banimento de um usuário.
+`.tempban <member> <qtd>` - Bane um membro do servidor por um tempo.
+`.softban <member>` - Bane um membro do servidor por um segundo.
 `.setlog <channel>` - Define um canal para receber logs de ações do servidor.
 """, inline=False)
 
