@@ -1,14 +1,19 @@
-# Usa uma imagem oficial do Python
+# Use an official Python image
+
 FROM python:3.12-slim
 
-# Define o diretório dentro do container
+# Define the directory inside the container
+
 WORKDIR /app
 
-# Copia todos os arquivos da sua pasta local para o container (. significa "essa pasta")
+# Copy all files from your local folder to the container (. means "this folder")
+
 COPY . /app
 
-# Instala as dependências
+# Install the dependencies
+
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Comando para rodar o bot
+# Command to run the bot
+
 CMD ["python", "bot.py"]
