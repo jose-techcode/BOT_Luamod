@@ -8,6 +8,8 @@ from storage import API_KEY_OPEN_ROUTER
 from checks import is_dev
 from openai import OpenAI
 
+# Cog structure (inheritance)
+
 class Ia(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -57,10 +59,10 @@ class Ia(commands.Cog):
             try:
                 completion = self.client.chat.completions.create(
                     extra_headers={
-                        "HTTP-Referer": "SITE_URL", # Substitua SITE_URL pela URL da aplicação
-                        "X-Title": "SITE_NAME", # Substitua SITE_NAME pelo nome da aplicação
+                        "HTTP-Referer": "SITE_URL", # Replace SITE_URL with the application URL
+                        "X-Title": "SITE_NAME", # Replace SITE_NAME with the name of your application
                     },
-                    model="MODEL", # Substitua MODEL pelo nome do modelo
+                    model="MODEL", # Replace MODEL with the name of the model
                     messages=[
                         {"role": "user", "content": content}
                     ]
@@ -74,6 +76,8 @@ class Ia(commands.Cog):
                     await message.channel.send(f"Erro: {e}")
                 else:
                     await message.channel.send("Algo deu errado...")
+
+# Cog registration
 
 async def setup(bot):
     await bot.add_cog(Ia(bot))

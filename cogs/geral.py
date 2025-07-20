@@ -5,13 +5,13 @@ import logging
 from datetime import timedelta
 from storage import DEV_ID
 
-# Estrutura cog (herança)
+# Cog structure (inheritance)
 
 class Geral(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    # Comando: ping
+    # Command: ping
         
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
@@ -26,7 +26,7 @@ class Geral(commands.Cog):
             else:
                 await ctx.send("Algo deu errado...")
     
-    # Comando: ajuda
+    # Command: ajuda
     
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
@@ -36,7 +36,7 @@ class Geral(commands.Cog):
             description="Veja os comandos disponíveis organizados por categoria. Considere criar um canal e usar .setlog <channel> para ter acesso ao sistema de logs do bot.",
             color=discord.Color.blurple()
         )
-        # I. Membros comuns
+        # I. Members
         embed.add_field(name="I. Gerais", value="""
 `.ping` - Mostra a latência do bot.
 `.ajuda` - Mostra a lista de comandos.
@@ -46,7 +46,7 @@ class Geral(commands.Cog):
 `.botinfo` - Mostra informações do bot.                        
 """, inline=False)
 
-        # II. Moderadores
+        # II. Moderators
         embed.add_field(name="II. Moderadores", value="""
 `.warn <member> <reason>` - Avisa um usuário.
 `.unwarn <member>` - Retira todos os avisos do usuário.
@@ -69,7 +69,7 @@ class Geral(commands.Cog):
 `.setlog <channel>` - Define um canal para receber logs de ações do servidor.
 """, inline=False)
 
-        # III. Desenvolvedores — só para DEV_ID
+        # III. Developers — DEV_ID only
         if ctx.author.id == DEV_ID:
             embed.add_field(name="III. Desenvolvedores", value="""
 `.restart` - Reinicia o bot.
@@ -90,17 +90,17 @@ class Geral(commands.Cog):
         embed.set_footer(text="Bot Luamod")
         await ctx.send(embed=embed)
 
-    # Comando: avatar
+    # Command: avatar
 
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     async def avatar(self, ctx, member: discord.Member = None):
-        # member é a variavel que trata do membro que acionou o comando ou que foi acionado por outra pessoa
-        # avatar_url é a variável referente ao avatar do membro
-        # embed, title e color servem para mostrar o avatar da pessoa que acionou ou foi acionada no comando
-        # embed.set_image serve para definir a imagem do avatar
-        # embed.set_footer coloca uma observação no embed
-        # icon_url serve para acionar a embed para quem acionou o comando ou para quem foi acionado pelo comando
+        # member is the variable that refers to the member who triggered the command or was triggered by someone else.
+        # avatar_url is the variable referring to the member's avatar.
+        # embed, title, and color are used to display the avatar of the person who triggered or was triggered by the command.
+        # embed.set_image is used to set the avatar image.
+        # embed.set_footer places a note on the embed.
+        # icon_url is used to trigger the embed for the person who triggered the command or for the person triggered by the command.
         try:
             member = member or ctx.author
             avatar_url = member.avatar.url if member.avatar else member.default_avatar.url
@@ -119,20 +119,20 @@ class Geral(commands.Cog):
             else:
                 await ctx.send("Algo deu errado...")
 
-    # Comando: userinfo
+    # Command: userinfo
 
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     async def userinfo(self, ctx, member: discord.Member = None):
-        # roles é uma variável referente aos cargos que o membro tem no servidor
-        # todos os embed.add_field são uma informação separada sobre o membro
-        # member.display_avat.url é para mostrar a imagem do membro
-        # member.name é o nome do membro
-        # {member} é a tag do membro
-        # member.id é o id do membro
-        # member.created.at.strftime é a data de criação da conta do usuário
-        # member.joined.at.strftime é a data em que o usuário entrou no servidor
-        # join(roles) é uma integração com a variável roles
+        # roles is a variable referring to the member's roles on the server
+        # all embed.add_fields are separate pieces of information about the member
+        # member.display_avat.url is to display the member's image
+        # member.name is the member's name
+        # {member} is the member's tag
+        # member.id is the member's ID
+        # member.created.at.strftime is the user's account creation date
+        # member.joined.at.strftime is the user's joined date
+        # join(roles) is an integration with the roles variable
         member = member or ctx.author
         roles = [role.mention for role in member.roles if role != ctx.guild.default_role]
         try:
@@ -154,20 +154,20 @@ class Geral(commands.Cog):
             else:
                 await ctx.send("Algo deu errado...")
 
-    # Comando: serverinfo
+    # Command: serverinfo
 
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     async def serverinfo(self, ctx):
-        # guild, embed, title e color são referentes ao servidor em que o bot foi acionado
-        # ctx.guild.icon.url é a imagem do servidor
-        # todos os embed.add_field são uma informação separada do servidor
-        # guild.id é referente ao id do servidor
-        # guild.onwer é referente ao dono do servidor
-        # guild.member_count é a quantidade total de membros no servidor
-        # guild.created_at.strftime serve para expressar a data em ano, mês, dia, hora e minuto
-        # guild.text_channels serve para mostrar o tamanho de canais de texto no servidor
-        # guild.voice_channels serve para mostrar o tamanho de canais de voz no servidor
+        # guild, embed, title, and color refer to the server where the bot was triggered
+        # ctx.guild.icon.url is the server image
+        # all embed.add_fields are separate server information
+        # guild.id refers to the server ID
+        # guild.onwer refers to the server owner
+        # guild.member_count is the total number of members on the server
+        # guild.created_at.strftime is used to express the date in year, month, day, hour, and minute
+        # guild.text_channels is used to display the size of text channels on the server
+        # guild.voice_channels is used to display the size of voice channels on the server
         try:
             guild = ctx.guild
             embed = discord.Embed(
@@ -197,15 +197,15 @@ class Geral(commands.Cog):
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     async def botinfo(self, ctx):
-        # embed, title, description e color são uma introdução à informações do bot
-        # todos os embed.add_field são uma informação separada sobre o bot
-        # ctx.me.display_avatar.url é a imagem do bot
-        # user.name é referente ao nome do bot
-        # user.id é referente ao id do bot
-        # {len(commands.guilds)} é referente a todos os servidores do bot
-        # {len(set(commands.get_all_member()))} é referente ao número total de membros que o bot abrange
-        # {round(commands.latency * 1000)} é referente ao ping do bot
-        # embed.set_footer serve para retornar uma "assinatura"
+        # embed, title, description, and color are an introduction to the bot's information
+        # all embed.add_fields are separate pieces of information about the bot
+        # ctx.me.display_avatar.url is the bot's image
+        # user.name refers to the bot's name
+        # user.id refers to the bot's ID
+        # {len(commands.guilds)} refers to all the bot's servers
+        # {len(set(commands.get_all_member()))} refers to the total number of members the bot covers
+        # {round(commands.latency * 1000)} refers to the bot's ping
+        # embed.set_footer serves to return a "signature"
         try:
             embed = discord.Embed(
             title="Informações do bot Lua",
@@ -229,7 +229,7 @@ class Geral(commands.Cog):
             else:
                 await ctx.send("Algo deu errado...")
 
-# Registro de cog
+# Cog registration
 
 async def setup(bot):
     await bot.add_cog(Geral(bot))

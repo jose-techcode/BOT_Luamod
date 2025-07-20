@@ -15,7 +15,7 @@ def status(request: Request):
         "Latência": f"{round(bot.latency * 1000)}ms"
     }
 
-# Seção: API REST
+# API REST
 
 class Item(BaseModel):
     name: str

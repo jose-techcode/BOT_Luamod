@@ -3,13 +3,13 @@ from discord.ext import commands
 import asyncio
 from datetime import timedelta
 
-# Estrutura cog (herança)
+# Cog structure (inheritance)
 
 class Log(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    # 1. Mensagens
+    # 1. Messages
 
     # Message_edit
 
@@ -20,7 +20,7 @@ class Log(commands.Cog):
             return
         
         if message_before.content == message_after.content:
-            return  # ignora edição nula
+            return  # Ignore null edit
         
         guild = message_before.guild
         channel_id = self.bot.log_channels.get(guild.id)
@@ -104,7 +104,7 @@ class Log(commands.Cog):
         if not log_channel:
             return
         
-        messages = sorted(messages, key=lambda m: m.created_at) # Ordem de horário de envio
+        messages = sorted(messages, key=lambda m: m.created_at) # Order of shipping time
 
         content_log = ""
         for msg in messages:
@@ -115,7 +115,7 @@ class Log(commands.Cog):
             content_log += f"`{timestamp}` {mention}: {content}\n"
             
         if len(content_log) > 1900:
-            content_log = content_log[:1900] + "\n... (log cortado)" # Limite de caracteres do discord: 2000
+            content_log = content_log[:1900] + "\n... (log cortado)" # Discord character limit: 2000
 
         reference_author = getattr(messages[0], 'author', None)
         reference_name = str(reference_author) if reference_author else "Autor desconhecido"
@@ -135,7 +135,7 @@ class Log(commands.Cog):
        
         await log_channel.send(embed=embed)
 
-    # 2. Membros
+    # 2. Members
 
     # Member_join
 
@@ -191,7 +191,7 @@ class Log(commands.Cog):
 
         async for entry in member.guild.audit_logs(limit=1, action=discord.AuditLogAction.ban):
             if entry.target.id == member.id:
-                continue  # Ignora
+                continue  # Ignore
 
         icon_url = member.avatar.url if member and member.avatar else None
 
@@ -280,7 +280,7 @@ class Log(commands.Cog):
         if not log_channel:
             return
         
-        # Apelido
+        # Nickname
 
         if before.display_name != after.display_name:
 
@@ -297,7 +297,7 @@ class Log(commands.Cog):
             
             await log_channel.send(embed=embed)
 
-        # Cargo
+        # Role
 
         if before.roles != after.roles:
             
@@ -330,7 +330,7 @@ class Log(commands.Cog):
                 embed.set_footer(text=f"ID do membro: {after.id}")
                 await log_channel.send(embed=embed)
             
-    # 3. Cargos e permissões
+    # 3. Roles and Permisisons
 
     # User_update
 
@@ -341,7 +341,7 @@ class Log(commands.Cog):
             
             member = guild.get_member(after.id)
             if not member:
-                continue # Ignora
+                continue # Ignore
                 
             channel_id = self.bot.log_channels.get(guild.id)
             
@@ -353,7 +353,7 @@ class Log(commands.Cog):
             if not log_channel:
                 continue
 
-            # Nome (global)
+            # Name (global)
 
             if before.name != after.name:
 
@@ -468,7 +468,7 @@ class Log(commands.Cog):
         if not log_channel:
             return
             
-        # Nome
+        # Name
 
         if before.name != after.name:
                 
@@ -485,7 +485,7 @@ class Log(commands.Cog):
             
             await log_channel.send(embed=embed)
 
-        # Cor
+        # Color
 
         if before.color != after.color:
                 
@@ -502,7 +502,7 @@ class Log(commands.Cog):
             
             await log_channel.send(embed=embed)
                 
-        # Permissões
+        # Permissions
 
         if before.permissions != after.permissions:
                 
@@ -517,7 +517,7 @@ class Log(commands.Cog):
             
             await log_channel.send(embed=embed)
     
-    # 4. Canais
+    # 4. Channels
 
     # Channel_create 
 
@@ -598,7 +598,7 @@ class Log(commands.Cog):
         if not log_channel:
             return
         
-        # Nome
+        # Name
 
         if before.name != after.name:
 
@@ -615,7 +615,7 @@ class Log(commands.Cog):
             
             await log_channel.send(embed=embed)
 
-    # 5. Voz
+    # 5. Voice
 
     @commands.Cog.listener()
     async def on_voice_state_update(self, member, before, after):
@@ -634,7 +634,7 @@ class Log(commands.Cog):
         if not log_channel:
             return
         
-        # Entrou em um canal de voz
+        # Joined a voice channel
 
         if before.channel is None and after.channel is not None:
 
@@ -649,7 +649,7 @@ class Log(commands.Cog):
             
             await log_channel.send(embed=embed)
 
-        # Saiu de um canal de voz
+        # Left a voice channel
 
         elif before.channel is not None and after.channel is None:
 
@@ -664,7 +664,7 @@ class Log(commands.Cog):
             
             await log_channel.send(embed=embed)
             
-        # Mudou de canal de voz
+        # Changed voice channel
         
         elif before.channel != after.channel:
 
@@ -700,7 +700,7 @@ class Log(commands.Cog):
         if not log_channel:
             return
         
-        # Nome
+        # Name
 
         if before.name != after.name:
             
@@ -717,7 +717,7 @@ class Log(commands.Cog):
             
             await log_channel.send(embed=embed)
 
-        # Ícone
+        # Icon
 
         if before.icon != after.icon:
             
@@ -790,7 +790,7 @@ class Log(commands.Cog):
 
         await log_channel.send(embed=embed)
 
-# Registro de cog
+# Cog registration
 
 async def setup(bot):
     await bot.add_cog(Log(bot))

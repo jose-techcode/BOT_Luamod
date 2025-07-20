@@ -14,7 +14,7 @@ from datetime import timedelta
 from storage import DEV_ID
 from checks import is_dev
 
-# Estrutura cog (herança)
+# Cog structure (inheritance)
 
 class Dev(commands.Cog):
     def __init__(self, bot):
@@ -22,19 +22,19 @@ class Dev(commands.Cog):
         self.restarting = False
         self.restart_loop.start()
         self.log_bot = "bot.log"
-        self.clean_log.start() # Inicia a limpeza quando o bot for ligado
+        self.clean_log.start() # Start cleaning when the bot is turned on
 
     def cog_unload(self):
-        self.clean_log.cancel() # Para a task quando o bot for desligado
+        self.clean_log.cancel() # Stop the task when the bot is shut down
     
-    # Comando: restart
+    # Command: restart
 
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @is_dev()
     async def restart(self, ctx):
-        # self.bot.close() fecha o bot primeiramente
-        # os.execl(sus.executable, sys.executable, *sys.argv) é a parte que reinicia o bot
+        # self.bot.close() closes the bot first
+        # os.execl(sus.executable, sys.executable, *sys.argv) is the part that restarts the bot
         try:
             await ctx.send("Reiniciando...")
             await self.bot.close()
@@ -46,13 +46,13 @@ class Dev(commands.Cog):
             else:
                 await ctx.send("Algo deu errado...")
 
-    # Comando: toswitchoff
+    # Command: toswitchoff
 
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @is_dev()
     async def toswitchoff(self, ctx):
-        # self.bot.close() fecha o bot
+        # self.bot.close() close the bot
         try:
             await ctx.send("Desligando...")
             await self.bot.close()
@@ -63,13 +63,13 @@ class Dev(commands.Cog):
             else:
                 await ctx.send("Algo deu errado...")
 
-    # Comando: log
+    # Command: log
 
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @is_dev()
     async def log(self, ctx, lines: int = 10):
-        # content é a variável que exibe as últimas linhas 
+        # content is the variable that displays the last lines 
         try:
             with open("bot.log", "r", encoding="utf-8") as f:
                 all = f.readlines()
@@ -87,13 +87,13 @@ class Dev(commands.Cog):
             else:
                 await ctx.send("Algo deu errado...")
 
-    # Comando: clearlog
+    # Command: clearlog
 
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @is_dev()
     async def clearlog(self, ctx):
-        # open serve para abrir o log do bot e o close em seguida para fechar
+        # open is used to open the bot log and close is used to close it
         try:
             open("bot.log", "w").close()
             await ctx.send("bot.log limpo com sucesso!")
@@ -104,13 +104,13 @@ class Dev(commands.Cog):
             else:
                 await ctx.send("Algo deu errado...")
 
-    # Comando: reloadcog
+    # Command: reloadcog
 
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @is_dev()
     async def reloadcog(self, ctx, name: str):
-        # self.bot.reload_extension serve para recarregar a cog selecionada
+        # self.bot.reload_extension is used to reload the selected cog
         try:
             await self.bot.reload_extension(f"cogs.{name}")
             await ctx.send(f"Cog `cogs.{name}` recarregada com sucesso!")
@@ -121,7 +121,7 @@ class Dev(commands.Cog):
             else:
                 await ctx.send("Algo deu errado...")
 
-    # Comando: debug
+    # Command: debug
 
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
@@ -186,7 +186,7 @@ class Dev(commands.Cog):
             else:
                 await ctx.send("Algo deu errado...")
 
-    # Comando: restart (automático)
+    # Command: restart (automático)
 
     @tasks.loop(minutes=30)
     async def restart_loop(self):
@@ -196,21 +196,23 @@ class Dev(commands.Cog):
 
     @restart_loop.before_loop
     async def before_reiniciar(self):
-        await self.bot.wait_until_ready() # Certifica de que a reiniciação só funcione quando o bot estiver ligado
+        await self.bot.wait_until_ready() # Make sure the restart only works when the bot is on
         print("Reiniciação em 30 minutos!")
         await asyncio.sleep(60 * 30)
 
-    # Comando: clean_log (automático)
+    # Command: clean_log (automático)
 
     @tasks.loop(minutes=15)
     async def clean_log(self):
-        # open serve para abrir o log do bot e o close em seguida para fechar
+        # open is used to open the bot log and close is used to close it
         open("bot.log", "w").close()
         print("bot.log limpo com sucesso!")
     
     @clean_log.before_loop
     async def before_clean_log(self):
-        await self.bot.wait_until_ready() # Certifica de que a limpeza só funcione quando o bot ligar
+        await self.bot.wait_until_ready() # Ensures that cleaning only works when the bot turns on
+
+# Cog registration
 
 async def setup(bot):
     await bot.add_cog(Dev(bot))

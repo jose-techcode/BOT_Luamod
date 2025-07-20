@@ -10,48 +10,48 @@ from datetime import timedelta
 from storage import DISCORD_TOKEN
 from api import application
 
-# Configuração simples de log com arquivo
+# Log configuration with file
 
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s", # asctime = data, levelname = nível do erro, message = conteúdo do erro
-    filename="bot.log", # nome do arquivo que armazena o log de terminal do bot
-    filemode="a",  # 'a' para adicionar ao final do arquivo
-    encoding="utf-8" # código universal para aceitar todos os caracteres no bot.log
+    format="%(asctime)s - %(levelname)s - %(message)s", # asctime = date, levelname = error level, message = error content
+    filename="bot.log", # name of the file that stores the bot's terminal log
+    filemode="a",  # 'a' to add to the end of the file
+    encoding="utf-8" # universal code to accept all characters in bot.log
 )
 logging.info("Teste.")
 logging.warning("Teste.")
 logging.error("Teste.")
 
-# Permissões do bot:
+# Permissions of bot:
 
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix=".", intents=intents)
 
-# Uptime do bot
+# Uptime of bot
 
 bot.start_time = time.time()
 
-# Armazenar log_channels na memória
+# Store log_channels in memory
 
 FILE_LOG = 'log_channels.json'
 
-def salvar_log_channels(dados):
+def save_log_channels(data):
     with open(FILE_LOG, 'w') as j:
-        json.dump(dados, j, indent=4)
+        json.dump(data, j, indent=4)
 
-def carregar_log_channels():
+def load_log_channels():
     if os.path.exists(FILE_LOG):
         with open(FILE_LOG, 'r') as j:
             informations = json.load(j)
             return {int(k): v for k, v in informations.items()}
     return {}
 
-# Carregar log_channels
+# Load log_channels
 
-bot.log_channels = carregar_log_channels()
+bot.log_channels = load_log_channels()
 
-# Quando o bot estiver ativo/online
+# When the bot is active/online
 
 @bot.event
 async def on_ready():
@@ -59,52 +59,54 @@ async def on_ready():
     activity = discord.Game(name="Lua")
     await bot.change_presence(status=discord.Status.online, activity=activity)
 
-# Tratamento de erros globais
+# Global error handling
 
 @bot.event
 async def on_command_error(ctx, error):
     
-    # Tratamento de erros para ignorar comandos não existentes
+    # Error handling to ignore non-existent commands
+
+
     if isinstance(error, commands.CommandNotFound):
         await ctx.send(f"Comando não encontrado: {ctx.message.content}")
         return
 
-    # Tratamento de erros com flood de comandos
+    # Error handling with command flood
 
     if isinstance(error, commands.CommandOnCooldown):
         await ctx.send(f"Aguarde {error.retry_after:.1f}s para usar esse comando novamente.")
         return
     
-    # Tratamento de erros com usuário sem permissão
+    # Error handling with user without permission
 
     if isinstance(error, commands.MissingPermissions):
         await ctx.send("Tu não tem permissão para isso.")
         return
     
-    # Tratamento de erros com bot sem permissão
+    # Error handling with bot without permission
 
     if isinstance(error, commands.BotMissingPermissions):
         await ctx.send("Eu não tenho permissão para isso.")
         return
     
-    # Tratamento de erros com argumentos inválidos
+    # Error handling with invalid arguments
 
     if isinstance(error, commands.BadArgument):
         await ctx.send("Argumento(s) inválido(s). Verifique o comando em ajuda.")
         return
 
-    # Tratamento de erros sem argumentos
+    # Error handling without arguments
 
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send("Sem argumento(s) obrigatório(s). Verifique o comando em ajuda.")
         return
 
-    # Tratamento de erros com as cogs
+    # Error handling with cogs
 
     logging.exception(f"Erro não tratado globalmente: {ctx.command}")
     raise error
 
-# Carregar cogs
+# Load cogs
 
 async def load_cogs():
     cogs = [
@@ -117,14 +119,14 @@ async def load_cogs():
     for cog in cogs:
         await bot.load_extension(cog)
 
-# Execução dos cogs:
+# Execution of cogs:
 
 async def start_bot():
     async with bot:
         await load_cogs()
         await bot.start(DISCORD_TOKEN)
 
-# API de status e API REST
+# API of status amd API REST
 
 async def start_api():
 
@@ -140,7 +142,7 @@ async def start_api():
 
     await asyncio.gather(bot_task, api_task) 
 
-# Executar o bot
+# Execution of bot
 
 if __name__ == "__main__":
     asyncio.run(start_api())
