@@ -141,11 +141,11 @@ python bot.py
 
 I. Building the Image
 
-docker build -t Bot_Luamod .
+docker build -t bot_luamod .
 
 II. Running the Container
 
-docker run -it --name container_bot_luamod Bot_Luamod
+docker run -it --name container_bot_luamod bot_luamod
 
 # 11. Contribution
 
