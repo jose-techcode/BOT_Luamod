@@ -105,7 +105,7 @@ Educational and didactic REST API separate from the simple API and also built wi
 
 - Bash
 
-git clone https://github.com/jose-techcode/Bot_Luamod
+git clone https://github.com/jose-techcode/BOT_Luamod
 
 # 6. Project Folder
 
