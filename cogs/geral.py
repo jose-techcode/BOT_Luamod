@@ -50,7 +50,7 @@ class Geral(commands.Cog):
         embed.add_field(name="II. Moderadores", value="""
 `.warn <member> <reason>` - Avisa um usuário.
 `.unwarn <member>` - Limpa os avisos de um usuário.
-`.warnings <member>` - Vê a quantidade e o(s) motivo(s) dos avisos de um usuário.
+`.warnings <member>` - Vê os avisos de um usuário.
 `.warninglist` - Vê a quantidade e os usuários avisados.
 `.clear <qtd>` - Apaga mensagens do chat.
 `.purge <member> <qtd>` - Apaga mensagens de um membro.
