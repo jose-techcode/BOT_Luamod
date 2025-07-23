@@ -1,6 +1,6 @@
 # 1. Bot Luamod
 
-The "Bot Luamod" is a Discord bot whose main function is to moderate a server, provide a logging system for monitoring, and offer features for members and developers, including AI commands (chatbot). By cloning the repository, you can enter "developer mode," control the AI, and access a local REST API, provided you configure these elements correctly.
+The "BOT Luamod" is a Discord bot whose main function is to moderate a server, provide a logging system for monitoring, and offer features for members and developers, including AI commands (chatbot). By cloning the repository, you can enter "developer mode," control the AI, and access a local REST API, provided you configure these elements correctly.
 
 # 2. Features
 
@@ -111,7 +111,7 @@ git clone https://github.com/jose-techcode/BOT_Luamod
 
 - Bash
 
-cd Bot_Luamod
+cd BOT_Luamod
 
 # 7. Install Dependencies
 
@@ -137,13 +137,13 @@ These files should not be uploaded to Github, as they contain sensitive informat
 
 python bot.py
 
-# 10. Running in Docker
+# 10. Running in Docker (lowercase)
 
-I. Building the Image
+I. Building the Image (lowercase)
 
 docker build -t bot_luamod .
 
-II. Running the Container
+II. Running the Container (lowercase)
 
 docker run -it --name container_bot_luamod bot_luamod
 
