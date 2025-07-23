@@ -25,7 +25,7 @@ class Chatbot(commands.Cog):
     async def on(self, ctx):
         try:
             self.mention_mode = True
-            await ctx.send("Modo chat ativado! Modelo de conversa: @Lua <text>")
+            await ctx.send("Modo chat ativado! Modelo de conversa: @Luamod <text>")
         except Exception as e:
             logging.exception(f"Erro no comando.")
             if ctx.author.id == DEV_ID:
