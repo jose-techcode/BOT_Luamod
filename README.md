@@ -1,4 +1,4 @@
-# 1. Bot Luamod
+# 1. BOT Luamod
 
 The "BOT Luamod" is a Discord bot whose main function is to moderate a server, provide a logging system for monitoring, and offer features for members and developers, including AI commands (chatbot). By cloning the repository, you can enter "developer mode," control the AI, and access a local REST API, provided you configure these elements correctly.
 
