@@ -22,7 +22,7 @@ __pycache__/
 .idea/
 *.swp
 
-# Files System
+# System files
 
 .DS_Store
 Thumbs.db
@@ -32,7 +32,7 @@ Thumbs.db
 *.sock
 *.db
 
-# Files JSON
+# JSON files
 
 warns.json
 log_channels.json
