@@ -9,7 +9,7 @@ from datetime import timedelta
 from storage import DEV_ID
 from bot import save_log_channels
 
-# JSON
+# JSON (warns)
 
 FILE_JSON = "warns.json"
 
@@ -28,6 +28,7 @@ def save_warns(informations):
 class Mod(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        # Regex for links
         self.regex_links = [
     re.compile(r"https?://\S+"), # Generic link regex
     re.compile(r"\[([^\]]+)\]\((https?://[^\s\)]+)\)"), # More specific link regex
