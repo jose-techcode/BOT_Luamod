@@ -208,7 +208,7 @@ class Geral(commands.Cog):
         # embed.set_footer serves to return a "signature"
         try:
             embed = discord.Embed(
-            title="Informações do bot Lua",
+            title="Informações do bot Luamod",
             color=discord.Color.blue()
             )
             embed.set_thumbnail(url=ctx.me.display_avatar.url) # ctx.me.display_avatar.url
