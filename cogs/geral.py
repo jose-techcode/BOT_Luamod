@@ -69,7 +69,7 @@ class Geral(commands.Cog):
 `.setlog <channel>` - Define um canal para receber logs de ações do servidor.
 """, inline=False)
 
-        # III. Developers — DEV_ID only
+        # III. Developers — DEV_ID only (clone the repository)
         if ctx.author.id == DEV_ID:
             embed.add_field(name="III. Desenvolvedores", value="""
 `.restart` - Reinicia o bot.
@@ -80,7 +80,7 @@ class Geral(commands.Cog):
 `.debug` - Exibe informações gerais e técnicas do bot.                           
 """, inline=False)
             
-        # IV. AI
+        # IV. AI - DEV_ID only (clone the repository)
         if ctx.author.id == DEV_ID:
             embed.add_field(name="IV. IA", value="""
 `.on` - Liga o chat da IA.
