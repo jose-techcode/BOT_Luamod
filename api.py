@@ -4,6 +4,8 @@ from pydantic import BaseModel
 
 application = FastAPI()
 
+# API (status of bot)
+
 @application.get("/")
 def status(request: Request):
     bot = request.app.state.bot
@@ -15,7 +17,7 @@ def status(request: Request):
         "Latência": f"{round(bot.latency * 1000)}ms"
     }
 
-# API REST
+# REST API
 
 class Item(BaseModel):
     name: str
