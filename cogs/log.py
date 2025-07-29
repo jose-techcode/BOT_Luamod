@@ -738,6 +738,7 @@ class Log(commands.Cog):
 
     @commands.Cog.listener()
     async def on_guild_join(self, guild):
+        # Log event only functional on Luamod bot's original private server
         
         guild_id = 1380981509808459850
         channel_id = 1387483949323915364
@@ -752,7 +753,7 @@ class Log(commands.Cog):
             return
         
         embed = discord.Embed(
-            title="Bot Lua Entrou",
+            title="Bot Luamod Entrou",
             description=f"Guild: {guild.name}",
             color=discord.Color.green(),
             timestamp=discord.utils.utcnow()
@@ -766,6 +767,7 @@ class Log(commands.Cog):
     
     @commands.Cog.listener()
     async def on_guild_remove(self, guild):
+        # Log event only functional on Luamod bot's original private server
         
         guild_id = 1380981509808459850
         channel_id = 1387483949323915364
@@ -780,7 +782,7 @@ class Log(commands.Cog):
             return
         
         embed = discord.Embed(
-            title="Bot Lua Saiu",
+            title="Bot Luamod Saiu",
             description=f"Guild: {guild.name}",
             color=discord.Color.red(),
             timestamp=discord.utils.utcnow()
