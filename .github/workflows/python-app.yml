@@ -4,15 +4,15 @@
 # CI
 
 name: Python application
+permissions:
+  contents: read
+  pull-requests: write
 
 on:
   push:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
-
-permissions:
-  contents: read
 
 jobs:
   build:
