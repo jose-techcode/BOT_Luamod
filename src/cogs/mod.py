@@ -11,7 +11,7 @@ from bot import save_log_channels
 
 # JSON (warns)
 
-FILE_JSON = "warns.json"
+FILE_JSON = os.path.join('data', "warns.json")
 
 def load_warns():
         if not os.path.exists(FILE_JSON):
@@ -20,6 +20,8 @@ def load_warns():
             return json.load(j)
     
 def save_warns(informations):
+        # The folder "data" need exist to continue
+        os.makedirs(os.path.dirname(FILE_JSON), exist_ok=True)
         with open(FILE_JSON, "w") as j:
             json.dump(informations, j, indent=4)
 

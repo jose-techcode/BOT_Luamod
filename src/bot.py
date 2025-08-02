@@ -34,9 +34,11 @@ bot.start_time = time.time()
 
 # Store log_channels in memory
 
-FILE_LOG = 'log_channels.json'
+FILE_LOG = os.path.join('data', 'log_channels.json')
 
 def save_log_channels(data):
+    # The folder "data" need exist to continue
+    os.makedirs(os.path.dirname(FILE_LOG), exist_ok=True)
     with open(FILE_LOG, 'w') as j:
         json.dump(data, j, indent=4)
 
