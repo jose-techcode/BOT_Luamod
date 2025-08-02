@@ -33,7 +33,7 @@ Thumbs.db
 *.db
 *.sock
 
-# JSON files
+# JSON files (the JSON files are in folder named "data")
 
 warns.json
 log_channels.json
