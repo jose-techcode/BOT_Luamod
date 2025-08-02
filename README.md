@@ -95,11 +95,12 @@ Educational and didactic REST API separate from the simple API and also built wi
 
 - Language: Python
 - Framework: FastAPI
-- Library: Discord.py
+- Library: Discord.py & Others
 - Environment: Linux
-- File Format: Json
+- Files Format: Json & Yaml
 - Code Versioning: Git
 - Containerization: Docker
+- CI/CD: Github Actions
 
 # 5. Clone the Repository
 
