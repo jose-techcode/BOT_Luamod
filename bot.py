@@ -66,7 +66,6 @@ async def on_command_error(ctx, error):
     
     # Error handling to ignore non-existent commands
 
-
     if isinstance(error, commands.CommandNotFound):
         await ctx.send(f"Comando não encontrado: {ctx.message.content}")
         return
