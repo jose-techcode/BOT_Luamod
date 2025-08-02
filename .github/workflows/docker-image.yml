@@ -1,18 +1,23 @@
+# CI
+
 name: Docker Image CI
+permissions:
+  contents: read
+  pull-requests: write
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
+
+env:
+  IMAGE_TAG: my-image-name:${{ github.run_id }}
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      - uses: actions/checkout@v4
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag $IMAGE_TAG
