@@ -1,6 +1,6 @@
 # 1. BOT Luamod
 
-The "BOT Luamod" is a Discord bot whose main function is to moderate a server, provide a logging system for monitoring, and offer features for members and developers, including AI commands (chatbot). By cloning the repository, you can enter "developer mode," control the AI, and access a local REST API, provided you configure these elements correctly.
+The "BOT Luamod" is a Discord bot whose main function is to moderate a server, provide a logging system for monitoring, and offer features for members and developers, including AI commands (chatbot). By cloning the repository, you can enter "developer mode," control the AI, and access a funcional REST GET API and a local REST API, provided you configure these elements correctly.
 
 # 2. Features
 
@@ -94,10 +94,11 @@ Educational and didactic REST API separate from the simple API and also built wi
 # 4. Technologies
 
 - Language: Python
+- Shell Scripting: Bash
 - Framework: FastAPI
 - Library: Discord.py & Others
 - Environment: Linux
-- Files Format: Json & Yaml
+- Files Format: Makefile, Json and Yaml
 - Code Versioning: Git
 - Containerization: Docker
 - Scanner (docker image): Trivy
@@ -135,11 +136,17 @@ API_KEY_OPEN_ROUTER=your_api_key
 
 These files should not be uploaded to Github, as they contain sensitive information. Therefore, they should be included in .gitignore.
 
-# 9. Running the Project
+# 9. Run the Project
+
+- Bash
+
+cd src/
+
+- Python
 
 python bot.py
 
-# 10. Running in Docker
+# 10. Run in Docker
 
 - Building the Image
 
@@ -152,6 +159,18 @@ trivy image bot_luamod:latest
 - Running the Container
 
 docker run -it --name container_bot_luamod bot_luamod
+
+# 10.25. Run in Docker (with bash)
+
+- Execute this script to build docker image, scan docker image and construct a container.
+
+./docker_trivy.sh
+
+# 10.5. Run in Docker (with makefile)
+
+- Execute this makefile command to build docker image, scan docker image and construct a container.
+
+make container
 
 # 11. Contribution
 
