@@ -100,6 +100,7 @@ Educational and didactic REST API separate from the simple API and also built wi
 - Files Format: Json & Yaml
 - Code Versioning: Git
 - Containerization: Docker
+- Scanner (docker image): Trivy
 - CI/CD: Github Actions
 
 # 5. Clone the Repository
@@ -138,13 +139,17 @@ These files should not be uploaded to Github, as they contain sensitive informat
 
 python bot.py
 
-# 10. Running in Docker (lowercase)
+# 10. Running in Docker
 
-I. Building the Image (lowercase)
+- Building the Image
 
 docker build -t bot_luamod .
 
-II. Running the Container (lowercase)
+- Scan the docker image with trivy tool (false positives are expected)
+
+trivy image bot_luamod:latest
+
+- Running the Container
 
 docker run -it --name container_bot_luamod bot_luamod
 
