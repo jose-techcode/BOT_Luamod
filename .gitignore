@@ -13,10 +13,6 @@ __pycache__/
 *.pyo
 *.pyd
 
-# Logs
-
-*.log
-
 # IDE/Editor Settings
 
 .vscode/
@@ -40,5 +36,6 @@ log_channels.json
 
 # Others
 
+*.log
 *.bak
 *.tmp
