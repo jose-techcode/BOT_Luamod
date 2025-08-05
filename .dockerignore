@@ -41,8 +41,3 @@ warns.json
 
 .git/
 .gitignore
-
-# Others
-
-*.md
-LICENSE
