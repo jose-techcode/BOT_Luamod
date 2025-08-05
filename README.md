@@ -82,7 +82,7 @@ IV. AI
 
 Simple API built with FastAPI to view the bot's overall status. Localhost.
 
-# 3.5. REST API
+# 3.1. REST API
 
 Educational and didactic REST API separate from the simple API and also built with FastAPI. Localhost.
 
@@ -160,13 +160,13 @@ trivy image bot_luamod:latest
 
 docker run -it --name container_bot_luamod bot_luamod
 
-# 10.25. Run in Docker (with bash)
+# 10.1. Run in Docker (with bash)
 
 - Execute this script to build docker image, scan docker image and construct a container.
 
 ./docker_trivy.sh
 
-# 10.5. Run in Docker (with makefile)
+# 10.2. Run in Docker (with makefile)
 
 - Execute this makefile command to build docker image, scan docker image and construct a container.
 
