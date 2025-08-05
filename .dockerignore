@@ -32,6 +32,11 @@ Thumbs.db
 *.sock
 *.db
 
+# JSON files
+
+log_channels.json
+warns.json
+
 # Git
 
 .git/
