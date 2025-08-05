@@ -127,7 +127,7 @@ async def start_bot():
         await load_cogs()
         await bot.start(DISCORD_TOKEN)
 
-# API of status amd API REST
+# API of status and REST API
 
 async def start_api():
 
@@ -141,9 +141,9 @@ async def start_api():
         ).serve()
     )
 
-    await asyncio.gather(bot_task, api_task) 
+    await asyncio.gather(bot_task, api_task) # start_api start API server and the bot
 
-# Execution of bot
+# Execution of bot (conditional to protect the bot from not starting automatically when imported into another file)
 
 if __name__ == "__main__":
     asyncio.run(start_api())
