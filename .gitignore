@@ -13,6 +13,12 @@ __pycache__/
 *.pyo
 *.pyd
 
+# Logs and temporaries
+
+*.log
+*.bak
+*.tmp
+
 # IDE/Editor Settings
 
 .vscode/
@@ -33,9 +39,3 @@ Thumbs.db
 
 warns.json
 log_channels.json
-
-# Others
-
-*.log
-*.bak
-*.tmp
