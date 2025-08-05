@@ -3,10 +3,10 @@ from discord.ext import commands
 import asyncio
 import logging
 from datetime import timedelta
+from openai import OpenAI
 from storage import DEV_ID
 from storage import API_KEY_OPEN_ROUTER
 from checks import is_dev
-from openai import OpenAI
 
 # Cog structure (inheritance)
 
@@ -18,6 +18,8 @@ class Chatbot(commands.Cog):
             api_key=API_KEY_OPEN_ROUTER,
         )
         self.mention_mode = False
+
+    # Command: on
 
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
@@ -33,6 +35,8 @@ class Chatbot(commands.Cog):
             else:
                 await ctx.send("Algo deu errado...")
 
+    # Command: off
+
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @is_dev()
@@ -46,6 +50,8 @@ class Chatbot(commands.Cog):
                 await ctx.send(f"Erro: {e}")
             else:
                 await ctx.send("Algo deu errado...")
+
+    # Chatbot conversation event
 
     @commands.Cog.listener()
     async def on_message(self, message):
