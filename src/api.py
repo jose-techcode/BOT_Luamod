@@ -2,6 +2,8 @@ from fastapi import FastAPI, Request, HTTPException
 import uvicorn
 from pydantic import BaseModel
 
+# Exportable variable
+
 application = FastAPI()
 
 # API (status of bot)
@@ -17,7 +19,7 @@ def status(request: Request):
         "Latência": f"{round(bot.latency * 1000)}ms"
     }
 
-# REST API
+# REST API (educational and didactic)
 
 class Item(BaseModel):
     name: str
