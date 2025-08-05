@@ -32,20 +32,10 @@ Thumbs.db
 *.sock
 *.db
 
-# JSON files
-
-warns.json
-log_channels.json
-
 # Git
 
 .git/
 .gitignore
-
-# Docker files
-
-Dockerfile
-.dockerignore
 
 # Others
 
