@@ -151,11 +151,11 @@ class Mod(commands.Cog):
             
             warns = load_warns()
             warns_guild = warns.get(guild_id, {})
-            warns_usuario = warns_guild.get(user_id, [])
+            warns_user = warns_guild.get(user_id, [])
             
-            if warns_usuario:
+            if warns_user:
                 reasons = ""
-                for i, warn in enumerate(warns_usuario):
+                for i, warn in enumerate(warns_user):
                     
                     if isinstance(warn, str):
                         reason = warn
@@ -172,7 +172,7 @@ class Mod(commands.Cog):
                 
                 embed = discord.Embed(
                     title="Avisos",
-                    description=f"{member.mention} - `{member.id}`\n\nPossui **{len(warns_usuario)} aviso(s)**.",
+                    description=f"{member.mention} - `{member.id}`\n\nPossui **{len(warns_user)} aviso(s)**.",
                     color=discord.Color.yellow()
                 )
                 
