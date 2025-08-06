@@ -571,6 +571,7 @@ class Mod(commands.Cog):
     @commands.command()
     @commands.has_permissions(manage_channels = True)
     async def setlog(self, ctx, channel: discord.TextChannel):
+        # self.bot.log_channels[ctx.guild.id] = channel.id refers to the log channel defined in a guild
         try:
             self.bot.log_channels[ctx.guild.id] = channel.id
             save_log_channels(self.bot.log_channels)
