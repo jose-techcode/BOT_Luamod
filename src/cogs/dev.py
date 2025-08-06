@@ -77,7 +77,7 @@ class Dev(commands.Cog):
 
             content = ''.join(lasts)
             if len(content) > 1900:
-                content = content[-1900:]  # Evita ultrapassar limite do Discord
+                content = content[-1900:] # Avoid Discord's limit barrier
 
             await ctx.send(f"Últimas {lines} linhas do log:\n```{content}```")
         except Exception as e:
@@ -145,7 +145,7 @@ class Dev(commands.Cog):
 
             process = psutil.Process()
             
-            cpu = process.cpu_percent(interval=0.5)  # Porcentagem (0.5s de medição)
+            cpu = process.cpu_percent(interval=0.5)  # Percentage (0.5s of measurement)
             
             memory = process.memory_info().rss / 1024**2  # MB
 
