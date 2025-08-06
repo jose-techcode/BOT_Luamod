@@ -224,15 +224,15 @@ class Mod(commands.Cog):
             
             warned = 0
 
-            for user_id, lista in warns_guild.items():
-                if not lista:
+            for user_id, list in warns_guild.items():
+                if not list:
                     continue  # Ignore if the list is empty
                 
                 try:
                     member = await self.bot.fetch_user(int(user_id))
                     
                     embed.add_field(
-                        name=f"{member} - {member.id} - {len(lista)} aviso(s)",
+                        name=f"{member} - {member.id} - {len(list)} aviso(s)",
                         value="",
                         inline=False
                     )
