@@ -182,4 +182,4 @@ This project is licensed under the AGPL license.
 
 # 13. Notes
 
-In the future, a SQL database may be added.
+In the future, a SQL database may be added. Tests of new technologies or features may appear.
