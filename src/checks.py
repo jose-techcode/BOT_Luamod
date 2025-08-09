@@ -1,7 +1,7 @@
 from discord.ext import commands
 from storage import DEV_ID
 
-# Developer role (only for those who developed the bot)
+# Developer role (only for those who developed the bot or clone the repository)
 
 def is_dev():
     def predicate(ctx):
