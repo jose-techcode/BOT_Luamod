@@ -26,7 +26,7 @@ jobs:
       run: make
 
     - name: Run check
-      run: make check
+      run: make check # Not recommended "|| true"
 
     - name: Run distcheck
-      run: make distcheck
+      run: make distcheck # Not recommended "|| true"
